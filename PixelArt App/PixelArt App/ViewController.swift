@@ -40,6 +40,34 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
+    @IBAction func Lapis(_ sender: Any) {
+        apaga = 0
+        balde = 0
+        linha = 0
+        testView.awakeFromNib()
+    }
+    
+    @IBAction func Borracha(_ sender: Any) {
+        apaga = 1
+        balde = 0
+        linha = 0
+        testView.awakeFromNib()
+    }
+    
+    @IBAction func Linha(_ sender: Any) {
+        apaga = 0
+        balde = 0
+        linha = 1
+        testView.awakeFromNib()
+    }
+    
+    @IBAction func Balde(_ sender: Any) {
+        balde = 1
+        apaga = 0
+        linha = 0
+        testView.awakeFromNib()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
