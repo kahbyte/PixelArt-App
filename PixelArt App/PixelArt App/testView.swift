@@ -11,6 +11,14 @@ var apaga = 0
 var balde = 0
 var linha = 0
 
+var color: UIColor!
+var red: CGFloat!
+var green: CGFloat!
+var blue: CGFloat!
+
+var hexCode = String()
+var hexStrings = ["0", "0", "0", "0", "0", "0"]
+
 class testView: UIView, UIGestureRecognizerDelegate {
     var x1 = 0
     var x2 = 0
@@ -101,13 +109,16 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
         
+        if color == nil{
+            color = .black
+        }
         if apaga == 1{
             cellView?.backgroundColor = .clear
         }else if balde == 1{
             colorir(i: i, j: j)
         }else{
-            if cellView?.backgroundColor != .black {
-                cellView?.backgroundColor = .black
+            if cellView?.backgroundColor != color {
+                cellView?.backgroundColor = color
                 generator.impactOccurred(intensity: 0.7)
             }
         }
@@ -153,10 +164,13 @@ class testView: UIView, UIGestureRecognizerDelegate {
     func fazLinha(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
         let dy = y2 - y1
+        if color == nil{
+            color = .black
+        }
         if x1 == x2 && y1 == y2{
             let ident = "\(x1 + 1)|\(y1 + 1)"
             let cellView = cells[ident]
-            cellView?.backgroundColor = .black
+            cellView?.backgroundColor = color
         }else if x1 == x2 || abs(dy) > abs(dx){
             if y1 < y2{
                 equacaodaReta(x1: y1, x2: y2, y1: x1, y2: x2, f: y1, g: y2, h: 1)
@@ -188,9 +202,11 @@ class testView: UIView, UIGestureRecognizerDelegate {
             }else{
                 ident = "\(y + 1)|\(x + 1)"
             }
-            
+            if color == nil{
+                color = .black
+            }
             let cellView = cells[ident]
-            cellView?.backgroundColor = .black
+            cellView?.backgroundColor = color
         }
     }
     
