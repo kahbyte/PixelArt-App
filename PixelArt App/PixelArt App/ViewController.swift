@@ -12,13 +12,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var testView: testView!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    /*copy the grid's view, remove it's borders, rescale it and then pops up a share sheet to export it*/
     @IBAction func export(_ sender: Any) {
-        
         testView.removerBordas()
         
         UIView.animate(withDuration: 0.3) {
             self.scrollView.zoomScale = 1.0
         }
+        
+        //let scaledGridView = scaleViewsToHD(view: testView.contentView)
         
         let renderer = UIGraphicsImageRenderer(size: testView.bounds.size)
         
@@ -35,8 +37,31 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         present(share, animated: true, completion: nil)
         
-        
+        //scaledGridView.removeFromSuperview()
         //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    }
+    
+    /*Scales the view and everything in it*/
+    func scaleViewsToHD(view: UIView) -> UIView {
+        
+        let hdView = view.copyView()
+        
+        hdView.frame.size = CGSize(width: 1080, height: 1080)
+        
+        hdView.layer.borderWidth = 0.0
+        
+        let scaleMultiplier = 1080 / view.bounds.width
+        let width = hdView.frame.width / 31
+        print("scaleMultiplier: \(scaleMultiplier)")
+        
+        /*scalling everything
+         I've been through hell*/
+        
+        for subview in hdView.subviews {
+            subview.frame.size = CGSize(width: subview.frame.width * scaleMultiplier, height: subview.frame.height * scaleMultiplier)
+            subview.layer.borderWidth = 0.8
+        }
+        return hdView
     }
     
     

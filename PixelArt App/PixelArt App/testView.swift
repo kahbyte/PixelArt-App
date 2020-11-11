@@ -19,6 +19,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var mainLabel: UILabel!
+    
     let generator = UIImpactFeedbackGenerator(style: .medium)
     
     var cells = [String: UIView]()
@@ -144,6 +145,8 @@ class testView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x2 = i
             y2 = j
+            
+            draw(i: i, j: j)
         }
         if linha == 1{
             fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)

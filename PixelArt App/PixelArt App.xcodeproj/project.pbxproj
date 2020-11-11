@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30A357BC255B316E00355509 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A357BB255B316E00355509 /* UIViewExtension.swift */; };
 		30F8B1552559C99200DBA8E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F8B1542559C99200DBA8E0 /* AppDelegate.swift */; };
 		30F8B1572559C99200DBA8E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F8B1562559C99200DBA8E0 /* SceneDelegate.swift */; };
 		30F8B1592559C99200DBA8E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F8B1582559C99200DBA8E0 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30A357BB255B316E00355509 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		30F8B1512559C99200DBA8E0 /* PixelArt App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PixelArt App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30F8B1542559C99200DBA8E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30F8B1562559C99200DBA8E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				30F8B15D2559C99200DBA8E0 /* Assets.xcassets */,
 				30F8B15F2559C99200DBA8E0 /* LaunchScreen.storyboard */,
 				30F8B1622559C99200DBA8E0 /* Info.plist */,
+				30A357BB255B316E00355509 /* UIViewExtension.swift */,
 			);
 			path = "PixelArt App";
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30A357BC255B316E00355509 /* UIViewExtension.swift in Sources */,
 				30F8B16B2559CA4A00DBA8E0 /* testView.swift in Sources */,
 				30F8B1592559C99200DBA8E0 /* ViewController.swift in Sources */,
 				30F8B1552559C99200DBA8E0 /* AppDelegate.swift in Sources */,
