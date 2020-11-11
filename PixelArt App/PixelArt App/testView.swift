@@ -127,8 +127,8 @@ class testView: UIView, UIGestureRecognizerDelegate {
     func colorir(i: Int, j: Int){
         let ident = "\(i + 1)|\(j+1)"
         let cell = cells[ident]
-        if cell?.backgroundColor != .black && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
-            cell?.backgroundColor = .black
+        if cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
+            cell?.backgroundColor = color
             colorir(i: i + 1, j: j)
             colorir(i: i - 1, j: j)
             colorir(i: i, j: j + 1)
