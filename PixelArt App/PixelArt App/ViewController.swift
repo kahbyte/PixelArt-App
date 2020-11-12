@@ -73,6 +73,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         apaga = 0
         balde = 0
         linha = 0
+        simetria = 0
         testView.awakeFromNib()
     }
     
@@ -80,6 +81,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         apaga = 1
         balde = 0
         linha = 0
+        simetria = 0
         testView.awakeFromNib()
     }
     
@@ -87,6 +89,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         apaga = 0
         balde = 0
         linha = 1
+        simetria = 0
         testView.awakeFromNib()
     }
     
@@ -94,8 +97,34 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         balde = 1
         apaga = 0
         linha = 0
+        simetria = 0
         testView.awakeFromNib()
     }
+    
+    @IBAction func SimetriaV(_ sender: Any) {
+        apaga = 0
+        balde = 0
+        linha = 0
+        simetria = 1
+        testView.awakeFromNib()
+    }
+    
+    @IBAction func SimetriaH(_ sender: Any) {
+        apaga = 0
+        balde = 0
+        linha = 0
+        simetria = 2
+        testView.awakeFromNib()
+    }
+    
+    @IBAction func SimetriaGeral(_ sender: Any) {
+        apaga = 0
+        balde = 0
+        linha = 0
+        simetria = 3
+        testView.awakeFromNib()
+    }
+    
     @IBAction func colorSlider(_ sender: UISlider) {
         
         if sender.tag == 0{
