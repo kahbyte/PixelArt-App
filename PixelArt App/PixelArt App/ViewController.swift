@@ -17,31 +17,55 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var blueSlider: UISlider!
     @IBOutlet var okBttn: UIButton!
     
+    /*copy the grid's view, remove it's borders, rescale it and then pops up a share sheet to export it*/
     @IBAction func export(_ sender: Any) {
-        
-        testView.removerBordas()
-        
         UIView.animate(withDuration: 0.3) {
             self.scrollView.zoomScale = 1.0
         }
         
-        let renderer = UIGraphicsImageRenderer(size: testView.bounds.size)
+        let scaledGridView = scaleViewsToHD(view: testView.contentView)
+        
+        let renderer = UIGraphicsImageRenderer(size: scaledGridView.bounds.size)
         
         
         let image = renderer.image { ctx in
-            testView.drawHierarchy(in: testView.bounds, afterScreenUpdates: true)
+            scaledGridView.drawHierarchy(in: scaledGridView.bounds, afterScreenUpdates: true)
         }
         
         let share = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        
-        share.completionWithItemsHandler = { activity, success, items, error in
-            self.testView.adicionarBordas()
-        }
-        
+
         present(share, animated: true, completion: nil)
         
+        scaledGridView.removeFromSuperview()
+    }
+    
+    /*Scales the view and everything in it*/
+    func scaleViewsToHD(view: UIView) -> UIView {
+        let newCells: [String: UIView] = testView.cells
         
-        //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        let hdView = UIView()
+        
+        hdView.frame.size = CGSize(width: 1080, height: 1080)
+        
+        hdView.layer.borderWidth = 0.0
+        
+        let scaleMultiplier = 1080 / view.bounds.width
+        let width = hdView.frame.width / 31
+        print("scaleMultiplier: \(scaleMultiplier)")
+        
+        /*scalling everything
+         I've been through hell*/
+        for j in 1 ... 31 {
+            for i in 1 ... 31 {
+                let key = "\(i)|\(j)"
+                let cell = newCells[key]?.copyView()
+                cell?.layer.borderWidth = 0.0
+                cell!.frame = CGRect(x: width * CGFloat(i-1), y: width * CGFloat(j-1), width: width, height: width)
+                hdView.addSubview(cell!)
+            }
+        }
+        
+        return hdView
     }
     
     
