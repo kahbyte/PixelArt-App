@@ -104,6 +104,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         colorMenu.isHidden = false
         colorMenu.layer.borderColor = color.cgColor
         colorMenu.layer.borderWidth = 5.0
+        }
     }
     
     @IBAction func SimetriaV(_ sender: Any) {
@@ -131,7 +132,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
    
-        }
+
        
     
     override func viewDidLoad() {
