@@ -16,8 +16,9 @@ var red: CGFloat!
 var green: CGFloat!
 var blue: CGFloat!
 
+
 var hexCode = String()
-var hexStrings = ["0", "0", "0", "0", "0", "0"]
+var hexStrings = ["", "", ""]
 
 class testView: UIView, UIGestureRecognizerDelegate {
     var x1 = 0
@@ -108,6 +109,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
+        
         
         if color == nil{
             color = .black
