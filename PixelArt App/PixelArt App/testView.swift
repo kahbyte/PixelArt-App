@@ -10,8 +10,10 @@ import UIKit
 var apaga = 0
 var balde = 0
 var linha = 0
+var simetria = 0 //0 -> desativada; 1 -> vertical; 2 -> horizontal; 3 -> ambas
 
 var color: UIColor!
+var corFundo: UIColor! = .clear
 var red: CGFloat!
 var green: CGFloat!
 var blue: CGFloat!
@@ -28,6 +30,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var mainLabel: UILabel!
+    
     let generator = UIImpactFeedbackGenerator(style: .medium)
     
     var cells = [String: UIView]()
@@ -117,7 +120,10 @@ class testView: UIView, UIGestureRecognizerDelegate {
         if apaga == 1{
             cellView?.backgroundColor = .clear
         }else if balde == 1{
+            corFundo = cellView?.backgroundColor
             colorir(i: i, j: j)
+        }else if simetria != 0{
+            FazSimetria(i: i, j: j)
         }else{
             if cellView?.backgroundColor != color {
                 cellView?.backgroundColor = color
@@ -126,11 +132,41 @@ class testView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    func FazSimetria(i: Int, j: Int){
+        let ident1 = "\(i + 1)|\(j + 1)"
+        let cellView1 = cells[ident1]
+        let ident2 = "\(numViewPerRow - (i))|\(j + 1)"
+        let ident3 = "\(i + 1)|\(numViewPerRow - (j))"
+        let ident4 = "\(numViewPerRow - (i))|\(numViewPerRow - (j))"
+        let cellView2 = cells[ident2]
+        let cellView3 = cells[ident3]
+        let cellView4 = cells[ident4]
+        switch simetria {
+        case 1:
+            espelho(cellView1: cellView1, cellView2: cellView2)
+        case 2:
+            espelho(cellView1: cellView1, cellView2: cellView3)
+        case 3:
+            espelho(cellView1: cellView1, cellView2: cellView2)
+            espelho(cellView1: cellView1, cellView2: cellView3)
+            espelho(cellView1: cellView1, cellView2: cellView4)
+        default:
+            print("F")
+        }
+        
+        
+    }
+    
+    func espelho(cellView1: UIView?, cellView2: UIView?){
+            cellView1?.backgroundColor = color
+            cellView2?.backgroundColor = color
+    }
+    
     func colorir(i: Int, j: Int){
         let ident = "\(i + 1)|\(j+1)"
         let cell = cells[ident]
-        if cell?.backgroundColor != .black && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
-            cell?.backgroundColor = .black
+        if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
+            cell?.backgroundColor = color
             colorir(i: i + 1, j: j)
             colorir(i: i - 1, j: j)
             colorir(i: i, j: j + 1)
@@ -157,6 +193,8 @@ class testView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x2 = i
             y2 = j
+            
+            draw(i: i, j: j)
         }
         if linha == 1{
             fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)

@@ -36,6 +36,30 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="CCQ-XD-sW8"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="DEq-QO-drV"/>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HML-nn-sAu">
+                                <rect key="frame" x="329" y="726" width="70" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Simetria T"/>
+                                <connections>
+                                    <action selector="SimetriaGeral:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7RQ-AO-SIm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wgH-tW-qs2">
+                                <rect key="frame" x="4" y="726" width="71" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Simetria V"/>
+                                <connections>
+                                    <action selector="SimetriaV:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PWR-Lv-KWO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cG9-Hk-bBw">
+                                <rect key="frame" x="83" y="726" width="72" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Simetria H"/>
+                                <connections>
+                                    <action selector="SimetriaH:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R0c-k2-DZH"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uk9-Ti-NBR">
                                 <rect key="frame" x="87" y="765" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
