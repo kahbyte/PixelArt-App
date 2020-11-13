@@ -101,10 +101,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func colorBttn(_ sender: Any) {
         if color == nil{
             color = .black
+        }
         colorMenu.isHidden = false
         colorMenu.layer.borderColor = color.cgColor
         colorMenu.layer.borderWidth = 5.0
-        }
     }
     
     @IBAction func SimetriaV(_ sender: Any) {
