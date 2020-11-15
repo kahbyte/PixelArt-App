@@ -47,6 +47,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
     
     let generator = UIImpactFeedbackGenerator(style: .medium)
     
+    
     var cells = [String: UIView]()
     
     var numViewPerRow = 31
@@ -62,28 +63,12 @@ class testView: UIView, UIGestureRecognizerDelegate {
         contentView.isUserInteractionEnabled = true
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTouch))
-
+        
         contentView.addGestureRecognizer(panGestureRecognizer)
         
         panGestureRecognizer.delegate = self
         
         isPanGestureRecognizerActive = true
-        
-        tool = .line //experimental because the app is being initialized without any tool setted.
-    }
-    
-    func removeGesture() {
-//        for recognizer in contentView.gestureRecognizers ?? [] {
-//            contentView.removeGestureRecognizer(recognizer)
-//        }
-//        
-//        isPanGestureRecognizerActive = false
-    }
-    
-    func addGesture() {
-//        contentView.addGestureRecognizer(panGestureRecognizer)
-//        panGestureRecognizer.delegate = self
-//        isPanGestureRecognizerActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
