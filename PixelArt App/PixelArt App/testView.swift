@@ -7,20 +7,30 @@
 
 import UIKit
 
-var apaga = 0
-var balde = 0
-var linha = 0
-var simetria = 0 //0 -> desativada; 1 -> vertical; 2 -> horizontal; 3 -> ambas
-
+//MARK: Global Variables
+//TODO: Conversar com o Denys sobre essas variaves globais de cor
 var color: UIColor!
 var corFundo: UIColor! = .clear
 var red: CGFloat!
 var green: CGFloat!
 var blue: CGFloat!
 
-
 var hexCode = String()
 var hexStrings = ["", "", ""]
+
+var isPanGestureRecognizerActive: Bool?
+
+enum Tool {
+    case pen
+    case eraser
+    case bucket
+    case line
+    case symmetryY
+    case symmetryX
+    case symmetryXY
+}
+
+var tool: Tool = .pen
 
 class testView: UIView, UIGestureRecognizerDelegate {
     var x1 = 0
@@ -28,30 +38,40 @@ class testView: UIView, UIGestureRecognizerDelegate {
     var y1 = 0
     var y2 = 0
     
+    //TODO: Trocar isso com o Rafa
+    var initialPosition = (x: 0, y: 0)
+    var finalPosition = (x: 0, y: 0)
+    
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var mainLabel: UILabel!
     
     let generator = UIImpactFeedbackGenerator(style: .medium)
+    
     
     var cells = [String: UIView]()
     
     var numViewPerRow = 31
     
+    
+    //MARK: Initialization functions
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        
     }
     
+    /*Is called after the xib is loaded, should not be abused.*/
     override func awakeFromNib() {
         contentView.isUserInteractionEnabled = true
-        if linha == 1{
+        
+        if tool == .line {
             for recognizer in contentView.gestureRecognizers ?? [] {
                 contentView.removeGestureRecognizer(recognizer)
             }
-        }else{
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTouch))
-        contentView.addGestureRecognizer(panGestureRecognizer)
-        
+            
+        } else {
+            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTouch))
+            contentView.addGestureRecognizer(panGestureRecognizer)
+            
             panGestureRecognizer.delegate = self
         }
     }
@@ -61,6 +81,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
         commonInit()
     }
     
+    //TODO: This function should be better written and called
     private func commonInit() {
         Bundle.main.loadNibNamed("grid", owner: self, options: nil)
         addSubview(contentView)
@@ -95,6 +116,8 @@ class testView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    //MARK: Touch Functions
+    
     @objc func handleTouch(gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: contentView)
         //print(location)
@@ -104,11 +127,126 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let i = Int(location.x / width)
         let j = Int(location.y / width)
         
-        DispatchQueue.main.async {
-            self.draw(i: i, j: j)
+        
+        switch tool {
+        case .pen:
+            draw(i: i, j: j)
+            
+        case .eraser:
+            erase(i: i, j: j)
+            
+        case .bucket:
+            bucket(i: i, j: j)
+            
+        case .line:
+            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+            
+        case .symmetryX:
+            FazSimetria(i: i, j: j)
+            
+        case .symmetryY:
+            FazSimetria(i: i, j: j)
+            
+        case .symmetryXY:
+            FazSimetria(i: i, j: j)
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first{
+            let local = touch.location(in: contentView)
+            let width = contentView.frame.width / CGFloat(numViewPerRow)
+            let i = Int(local.x / width)
+            let j = Int(local.y / width)
+            x1 = i
+            y1 = j
+            
+            switch tool {
+            case .pen:
+                draw(i: i, j: j)
+                
+            case .eraser:
+                erase(i: i, j: j)
+                
+            case .bucket:
+                bucket(i: i, j: j)
+                
+            case .line:
+                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+                
+            case .symmetryX:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryY:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryXY:
+                FazSimetria(i: i, j: j)
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches{
+            let local = touch.location(in: contentView)
+            let width = contentView.frame.width / CGFloat(numViewPerRow)
+            let i = Int(local.x / width)
+            let j = Int(local.y / width)
+            x2 = i
+            y2 = j
+            
+            switch tool {
+            case .pen:
+                draw(i: i, j: j)
+                
+            case .eraser:
+                erase(i: i, j: j)
+                
+            case .bucket:
+                bucket(i: i, j: j)
+                
+            case .line:
+                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+                
+            case .symmetryX:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryY:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryXY:
+                FazSimetria(i: i, j: j)
+            }
+        }
+    }
+    
+//    func calledTool(i: Int, j: Int) {
+//        switch tool {
+//        case .pen:
+//            draw(i: i, j: j)
+//
+//        case .eraser:
+//            erase(i: i, j: j)
+//
+//        case .bucket:
+//            bucket(i: i, j: j)
+//
+//        case .line:
+//            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+//
+//        case .symmetryX:
+//            FazSimetria(i: i, j: j)
+//
+//        case .symmetryY:
+//            FazSimetria(i: i, j: j)
+//
+//        case .symmetryXY:
+//            FazSimetria(i: i, j: j)
+//        }
+//    }
+    
+
+    //MARK: Grid functions
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
@@ -117,19 +255,26 @@ class testView: UIView, UIGestureRecognizerDelegate {
         if color == nil{
             color = .black
         }
-        if apaga == 1{
-            cellView?.backgroundColor = .clear
-        }else if balde == 1{
-            corFundo = cellView?.backgroundColor
-            colorir(i: i, j: j)
-        }else if simetria != 0{
-            FazSimetria(i: i, j: j)
-        }else{
-            if cellView?.backgroundColor != color {
-                cellView?.backgroundColor = color
-                generator.impactOccurred(intensity: 0.7)
-            }
+        
+        if cellView?.backgroundColor != color {
+            cellView?.backgroundColor = color
+            generator.impactOccurred(intensity: 0.7)
         }
+    }
+    
+    func erase(i: Int, j: Int) {
+        let ident = "\(i + 1)|\(j + 1)"
+        let cellView = cells[ident]
+        
+        cellView?.backgroundColor = .clear
+    }
+    
+    func bucket(i: Int, j: Int) {
+        let ident = "\(i + 1)|\(j + 1)"
+        let cellView = cells[ident]
+        
+        corFundo = cellView?.backgroundColor
+        colorir(i: i, j: j)
     }
     
     func FazSimetria(i: Int, j: Int){
@@ -141,12 +286,15 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let cellView2 = cells[ident2]
         let cellView3 = cells[ident3]
         let cellView4 = cells[ident4]
-        switch simetria {
-        case 1:
+        
+        switch tool {
+        case .symmetryX:
             espelho(cellView1: cellView1, cellView2: cellView2)
-        case 2:
+            
+        case .symmetryY:
             espelho(cellView1: cellView1, cellView2: cellView3)
-        case 3:
+            
+        case .symmetryXY:
             espelho(cellView1: cellView1, cellView2: cellView2)
             espelho(cellView1: cellView1, cellView2: cellView3)
             espelho(cellView1: cellView1, cellView2: cellView4)
@@ -174,32 +322,6 @@ class testView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first{
-            let local = touch.location(in: contentView)
-            let width = contentView.frame.width / CGFloat(numViewPerRow)
-            let i = Int(local.x / width)
-            let j = Int(local.y / width)
-            x1 = i
-            y1 = j
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches{
-            let local = touch.location(in: contentView)
-            let width = contentView.frame.width / CGFloat(numViewPerRow)
-            let i = Int(local.x / width)
-            let j = Int(local.y / width)
-            x2 = i
-            y2 = j
-            
-            draw(i: i, j: j)
-        }
-        if linha == 1{
-            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
-        }
-    }
     
     func fazLinha(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
@@ -237,6 +359,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
             let a = x - x1
             b = (Float(a) / Float(dx)) * Float(dy)
             y = quebradeLinha(x: x, x1: x1, x2: x2, y1: y1, f: f, g: g, dy: dy, b: b)
+            
             if h == 0{
                 ident = "\(x + 1)|\(y + 1)"
             }else{
@@ -265,28 +388,4 @@ class testView: UIView, UIGestureRecognizerDelegate {
         return y
     }
     
-    
-    func removerBordas() {
-        
-        for (key, _) in self.cells {
-            UIView.animate(withDuration: 1.0) {
-                self.cells[key]!.layer.borderWidth = 0.0
-            }
-        }
-    
-        
-        contentView.layer.borderWidth = 0.0
-    }
-    
-    func adicionarBordas() {
-        
-        UIView.animate(withDuration: 0.5) {
-            for(key, _) in self.cells {
-                self.cells[key]!.layer.borderWidth = 0.3
-            }
-            
-            self.contentView.layer.borderWidth = 0.4
-        }
-    }
-
 }

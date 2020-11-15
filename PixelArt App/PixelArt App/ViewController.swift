@@ -14,6 +14,19 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var colorMenu: ctxtMenu!
     @IBOutlet var colorBttn: UIButton!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 5.0
+        scrollView.zoomScale = 1
+        scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
+        
+        testView.isUserInteractionEnabled = true
+    }
+    
+    //MARK: Export Functions
     /*copy the grid's view, remove it's borders, rescale it and then pops up a share sheet to export it*/
     @IBAction func export(_ sender: Any) {
         UIView.animate(withDuration: 0.3) {
@@ -66,35 +79,33 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return testView
+    }
+    
+    //MARK: IBActions!
     @IBAction func Lapis(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 0
+        tool = .pen
+        
         testView.awakeFromNib()
     }
     
     @IBAction func Borracha(_ sender: Any) {
-        apaga = 1
-        balde = 0
-        linha = 0
-        simetria = 0
+        tool = .eraser
+        
         testView.awakeFromNib()
     }
     
     @IBAction func Linha(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 1
-        simetria = 0
+        tool = .line
+        
         testView.awakeFromNib()
     }
     
     @IBAction func Balde(_ sender: Any) {
-        balde = 1
-        apaga = 0
-        linha = 0
-        simetria = 0
+        tool = .bucket
+        
         testView.awakeFromNib()
     }
 
@@ -102,56 +113,29 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         if color == nil{
             color = .black
         }
+        
         colorMenu.isHidden = false
         colorMenu.layer.borderColor = color.cgColor
         colorMenu.layer.borderWidth = 5.0
     }
     
     @IBAction func SimetriaV(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 1
+        tool = .symmetryY
+        
         testView.awakeFromNib()
     }
     
     @IBAction func SimetriaH(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 2
+        tool = .symmetryX
+        
         testView.awakeFromNib()
     }
     
     @IBAction func SimetriaGeral(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 3
+        tool = .symmetryXY
+        
         testView.awakeFromNib()
-    }
     
-   
-
-       
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-//        hexCode = hexStrings.joined(separator: "")
-        
-        scrollView.delegate = self
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 5.0
-        scrollView.zoomScale = 1
-        scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
-        
-        testView.isUserInteractionEnabled = true
-    }
-    
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return testView
     }
 }
 
