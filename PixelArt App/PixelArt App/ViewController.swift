@@ -14,6 +14,19 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var colorMenu: ctxtMenu!
     @IBOutlet var colorBttn: UIButton!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 5.0
+        scrollView.zoomScale = 1
+        scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
+        
+        testView.isUserInteractionEnabled = true
+    }
+    
+    //MARK: Export Functions
     /*copy the grid's view, remove it's borders, rescale it and then pops up a share sheet to export it*/
     @IBAction func export(_ sender: Any) {
         UIView.animate(withDuration: 0.3) {
@@ -66,40 +79,41 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return testView
+    }
+    
+    //MARK: IBActions!
     @IBAction func Lapis(_ sender: Any) {
         tool = .pen
         
-        if isPanGestureRecognizerActive == false {
-            testView.addGesture()
-        }
+        testView.awakeFromNib()
     }
     
     @IBAction func Borracha(_ sender: Any) {
         tool = .eraser
         
-        if isPanGestureRecognizerActive == false {
-            testView.addGesture()
-        }
+        testView.awakeFromNib()
     }
     
     @IBAction func Linha(_ sender: Any) {
         tool = .line
         
-        testView.removeGesture()
+        testView.awakeFromNib()
     }
     
     @IBAction func Balde(_ sender: Any) {
         tool = .bucket
         
-        if isPanGestureRecognizerActive == false {
-            testView.addGesture()
-        }
+        testView.awakeFromNib()
     }
 
     @IBAction func colorBttn(_ sender: Any) {
         if color == nil{
             color = .black
         }
+        
         colorMenu.isHidden = false
         colorMenu.layer.borderColor = color.cgColor
         colorMenu.layer.borderWidth = 5.0
@@ -108,49 +122,20 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func SimetriaV(_ sender: Any) {
         tool = .symmetryY
         
-        if isPanGestureRecognizerActive == false {
-            testView.addGesture()
-        }
+        testView.awakeFromNib()
     }
     
     @IBAction func SimetriaH(_ sender: Any) {
         tool = .symmetryX
         
-        if isPanGestureRecognizerActive == false {
-            testView.addGesture()
-        }
+        testView.awakeFromNib()
     }
     
     @IBAction func SimetriaGeral(_ sender: Any) {
         tool = .symmetryXY
         
-        if isPanGestureRecognizerActive == false {
-            testView.addGesture()
-        }
+        testView.awakeFromNib()
     
-    }
-    
-   
-
-       
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-//        hexCode = hexStrings.joined(separator: "")
-        
-        scrollView.delegate = self
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 5.0
-        scrollView.zoomScale = 1
-        scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
-        
-        testView.isUserInteractionEnabled = true
-    }
-    
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return testView
     }
 }
 

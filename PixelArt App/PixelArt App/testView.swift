@@ -7,17 +7,13 @@
 
 import UIKit
 
-var apaga = 0
-var balde = 0
-var linha = 0
-var simetria = 0 //0 -> desativada; 1 -> vertical; 2 -> horizontal; 3 -> ambas
-
+//MARK: Global Variables
+//TODO: Conversar com o Denys sobre essas variaves globais de cor
 var color: UIColor!
 var corFundo: UIColor! = .clear
 var red: CGFloat!
 var green: CGFloat!
 var blue: CGFloat!
-
 
 var hexCode = String()
 var hexStrings = ["", "", ""]
@@ -42,8 +38,11 @@ class testView: UIView, UIGestureRecognizerDelegate {
     var y1 = 0
     var y2 = 0
     
+    //TODO: Trocar isso com o Rafa
+    var initialPosition = (x: 0, y: 0)
+    var finalPosition = (x: 0, y: 0)
+    
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var mainLabel: UILabel!
     
     let generator = UIImpactFeedbackGenerator(style: .medium)
     
@@ -53,22 +52,28 @@ class testView: UIView, UIGestureRecognizerDelegate {
     var numViewPerRow = 31
     
     
+    //MARK: Initialization functions
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        
     }
     
     /*Is called after the xib is loaded, should not be abused.*/
     override func awakeFromNib() {
         contentView.isUserInteractionEnabled = true
         
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTouch))
-        
-        contentView.addGestureRecognizer(panGestureRecognizer)
-        
-        panGestureRecognizer.delegate = self
-        
-        isPanGestureRecognizerActive = true
+        if tool == .line {
+            for recognizer in contentView.gestureRecognizers ?? [] {
+                contentView.removeGestureRecognizer(recognizer)
+            }
+            
+        } else {
+            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTouch))
+            contentView.addGestureRecognizer(panGestureRecognizer)
+            
+            panGestureRecognizer.delegate = self
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -111,6 +116,8 @@ class testView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    //MARK: Touch Functions
+    
     @objc func handleTouch(gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: contentView)
         //print(location)
@@ -120,9 +127,6 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let i = Int(location.x / width)
         let j = Int(location.y / width)
         
-        DispatchQueue.main.async {
-            
-        }
         
         switch tool {
         case .pen:
@@ -135,7 +139,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
             bucket(i: i, j: j)
             
         case .line:
-            return
+            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
             
         case .symmetryX:
             FazSimetria(i: i, j: j)
@@ -147,8 +151,102 @@ class testView: UIView, UIGestureRecognizerDelegate {
             FazSimetria(i: i, j: j)
         }
     }
-
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first{
+            let local = touch.location(in: contentView)
+            let width = contentView.frame.width / CGFloat(numViewPerRow)
+            let i = Int(local.x / width)
+            let j = Int(local.y / width)
+            x1 = i
+            y1 = j
+            
+            switch tool {
+            case .pen:
+                draw(i: i, j: j)
+                
+            case .eraser:
+                erase(i: i, j: j)
+                
+            case .bucket:
+                bucket(i: i, j: j)
+                
+            case .line:
+                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+                
+            case .symmetryX:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryY:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryXY:
+                FazSimetria(i: i, j: j)
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches{
+            let local = touch.location(in: contentView)
+            let width = contentView.frame.width / CGFloat(numViewPerRow)
+            let i = Int(local.x / width)
+            let j = Int(local.y / width)
+            x2 = i
+            y2 = j
+            
+            switch tool {
+            case .pen:
+                draw(i: i, j: j)
+                
+            case .eraser:
+                erase(i: i, j: j)
+                
+            case .bucket:
+                bucket(i: i, j: j)
+                
+            case .line:
+                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+                
+            case .symmetryX:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryY:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryXY:
+                FazSimetria(i: i, j: j)
+            }
+        }
+    }
+    
+//    func calledTool(i: Int, j: Int) {
+//        switch tool {
+//        case .pen:
+//            draw(i: i, j: j)
+//
+//        case .eraser:
+//            erase(i: i, j: j)
+//
+//        case .bucket:
+//            bucket(i: i, j: j)
+//
+//        case .line:
+//            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+//
+//        case .symmetryX:
+//            FazSimetria(i: i, j: j)
+//
+//        case .symmetryY:
+//            FazSimetria(i: i, j: j)
+//
+//        case .symmetryXY:
+//            FazSimetria(i: i, j: j)
+//        }
+//    }
+    
+
+    //MARK: Grid functions
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
@@ -162,17 +260,6 @@ class testView: UIView, UIGestureRecognizerDelegate {
             cellView?.backgroundColor = color
             generator.impactOccurred(intensity: 0.7)
         }
-        
-//        if apaga == 1{
-//            cellView?.backgroundColor = .clear
-//        }else if balde == 1{
-//            corFundo = cellView?.backgroundColor
-//            colorir(i: i, j: j)
-//        }else if simetria != 0{
-//            FazSimetria(i: i, j: j)
-//        }else{
-//
-//        }
     }
     
     func erase(i: Int, j: Int) {
@@ -235,73 +322,6 @@ class testView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first{
-            let local = touch.location(in: contentView)
-            let width = contentView.frame.width / CGFloat(numViewPerRow)
-            let i = Int(local.x / width)
-            let j = Int(local.y / width)
-            x1 = i
-            y1 = j
-            
-            switch tool {
-            case .pen:
-                draw(i: i, j: j)
-                
-            case .eraser:
-                erase(i: i, j: j)
-                
-            case .bucket:
-                bucket(i: i, j: j)
-                
-            case .line:
-                return
-                
-            case .symmetryX:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryY:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryXY:
-                FazSimetria(i: i, j: j)
-            }
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches{
-            let local = touch.location(in: contentView)
-            let width = contentView.frame.width / CGFloat(numViewPerRow)
-            let i = Int(local.x / width)
-            let j = Int(local.y / width)
-            x2 = i
-            y2 = j
-            
-            switch tool {
-            case .pen:
-                draw(i: i, j: j)
-                
-            case .eraser:
-                erase(i: i, j: j)
-                
-            case .bucket:
-                bucket(i: i, j: j)
-                
-            case .line:
-                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
-                
-            case .symmetryX:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryY:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryXY:
-                FazSimetria(i: i, j: j)
-            }
-        }
-    }
     
     func fazLinha(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
@@ -368,28 +388,4 @@ class testView: UIView, UIGestureRecognizerDelegate {
         return y
     }
     
-    
-    //MARK: FUNCOES QUE CAIRAM EM DESUSO. 
-    func removerBordas() {
-        
-        for (key, _) in self.cells {
-            UIView.animate(withDuration: 1.0) {
-                self.cells[key]!.layer.borderWidth = 0.0
-            }
-        }
-    
-        
-        contentView.layer.borderWidth = 0.0
-    }
-    
-    func adicionarBordas() {
-        
-        UIView.animate(withDuration: 0.5) {
-            for(key, _) in self.cells {
-                self.cells[key]!.layer.borderWidth = 0.3
-            }
-            
-            self.contentView.layer.borderWidth = 0.4
-        }
-    }
 }
