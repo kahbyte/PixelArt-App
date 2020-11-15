@@ -22,6 +22,20 @@ var blue: CGFloat!
 var hexCode = String()
 var hexStrings = ["", "", ""]
 
+var isPanGestureRecognizerActive: Bool?
+
+enum Tool {
+    case pen
+    case eraser
+    case bucket
+    case line
+    case symmetryY
+    case symmetryX
+    case symmetryXY
+}
+
+var tool: Tool = .pen
+
 class testView: UIView, UIGestureRecognizerDelegate {
     var x1 = 0
     var x2 = 0
@@ -37,23 +51,39 @@ class testView: UIView, UIGestureRecognizerDelegate {
     
     var numViewPerRow = 31
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
     
+    /*Is called after the xib is loaded, should not be abused.*/
     override func awakeFromNib() {
         contentView.isUserInteractionEnabled = true
-        if linha == 1{
-            for recognizer in contentView.gestureRecognizers ?? [] {
-                contentView.removeGestureRecognizer(recognizer)
-            }
-        }else{
+        
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTouch))
+
         contentView.addGestureRecognizer(panGestureRecognizer)
         
-            panGestureRecognizer.delegate = self
-        }
+        panGestureRecognizer.delegate = self
+        
+        isPanGestureRecognizerActive = true
+        
+        tool = .line //experimental because the app is being initialized without any tool setted.
+    }
+    
+    func removeGesture() {
+//        for recognizer in contentView.gestureRecognizers ?? [] {
+//            contentView.removeGestureRecognizer(recognizer)
+//        }
+//        
+//        isPanGestureRecognizerActive = false
+    }
+    
+    func addGesture() {
+//        contentView.addGestureRecognizer(panGestureRecognizer)
+//        panGestureRecognizer.delegate = self
+//        isPanGestureRecognizerActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,6 +91,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
         commonInit()
     }
     
+    //TODO: This function should be better written and called
     private func commonInit() {
         Bundle.main.loadNibNamed("grid", owner: self, options: nil)
         addSubview(contentView)
@@ -105,9 +136,33 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let j = Int(location.y / width)
         
         DispatchQueue.main.async {
-            self.draw(i: i, j: j)
+            
+        }
+        
+        switch tool {
+        case .pen:
+            draw(i: i, j: j)
+            
+        case .eraser:
+            erase(i: i, j: j)
+            
+        case .bucket:
+            bucket(i: i, j: j)
+            
+        case .line:
+            return
+            
+        case .symmetryX:
+            FazSimetria(i: i, j: j)
+            
+        case .symmetryY:
+            FazSimetria(i: i, j: j)
+            
+        case .symmetryXY:
+            FazSimetria(i: i, j: j)
         }
     }
+
     
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
@@ -117,19 +172,37 @@ class testView: UIView, UIGestureRecognizerDelegate {
         if color == nil{
             color = .black
         }
-        if apaga == 1{
-            cellView?.backgroundColor = .clear
-        }else if balde == 1{
-            corFundo = cellView?.backgroundColor
-            colorir(i: i, j: j)
-        }else if simetria != 0{
-            FazSimetria(i: i, j: j)
-        }else{
-            if cellView?.backgroundColor != color {
-                cellView?.backgroundColor = color
-                generator.impactOccurred(intensity: 0.7)
-            }
+        
+        if cellView?.backgroundColor != color {
+            cellView?.backgroundColor = color
+            generator.impactOccurred(intensity: 0.7)
         }
+        
+//        if apaga == 1{
+//            cellView?.backgroundColor = .clear
+//        }else if balde == 1{
+//            corFundo = cellView?.backgroundColor
+//            colorir(i: i, j: j)
+//        }else if simetria != 0{
+//            FazSimetria(i: i, j: j)
+//        }else{
+//
+//        }
+    }
+    
+    func erase(i: Int, j: Int) {
+        let ident = "\(i + 1)|\(j + 1)"
+        let cellView = cells[ident]
+        
+        cellView?.backgroundColor = .clear
+    }
+    
+    func bucket(i: Int, j: Int) {
+        let ident = "\(i + 1)|\(j + 1)"
+        let cellView = cells[ident]
+        
+        corFundo = cellView?.backgroundColor
+        colorir(i: i, j: j)
     }
     
     func FazSimetria(i: Int, j: Int){
@@ -141,12 +214,15 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let cellView2 = cells[ident2]
         let cellView3 = cells[ident3]
         let cellView4 = cells[ident4]
-        switch simetria {
-        case 1:
+        
+        switch tool {
+        case .symmetryX:
             espelho(cellView1: cellView1, cellView2: cellView2)
-        case 2:
+            
+        case .symmetryY:
             espelho(cellView1: cellView1, cellView2: cellView3)
-        case 3:
+            
+        case .symmetryXY:
             espelho(cellView1: cellView1, cellView2: cellView2)
             espelho(cellView1: cellView1, cellView2: cellView3)
             espelho(cellView1: cellView1, cellView2: cellView4)
@@ -182,6 +258,29 @@ class testView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x1 = i
             y1 = j
+            
+            switch tool {
+            case .pen:
+                draw(i: i, j: j)
+                
+            case .eraser:
+                erase(i: i, j: j)
+                
+            case .bucket:
+                bucket(i: i, j: j)
+                
+            case .line:
+                return
+                
+            case .symmetryX:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryY:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryXY:
+                FazSimetria(i: i, j: j)
+            }
         }
     }
     
@@ -194,10 +293,28 @@ class testView: UIView, UIGestureRecognizerDelegate {
             x2 = i
             y2 = j
             
-            draw(i: i, j: j)
-        }
-        if linha == 1{
-            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+            switch tool {
+            case .pen:
+                draw(i: i, j: j)
+                
+            case .eraser:
+                erase(i: i, j: j)
+                
+            case .bucket:
+                bucket(i: i, j: j)
+                
+            case .line:
+                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
+                
+            case .symmetryX:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryY:
+                FazSimetria(i: i, j: j)
+                
+            case .symmetryXY:
+                FazSimetria(i: i, j: j)
+            }
         }
     }
     
@@ -237,6 +354,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
             let a = x - x1
             b = (Float(a) / Float(dx)) * Float(dy)
             y = quebradeLinha(x: x, x1: x1, x2: x2, y1: y1, f: f, g: g, dy: dy, b: b)
+            
             if h == 0{
                 ident = "\(x + 1)|\(y + 1)"
             }else{
@@ -266,6 +384,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
     }
     
     
+    //MARK: FUNCOES QUE CAIRAM EM DESUSO. 
     func removerBordas() {
         
         for (key, _) in self.cells {
@@ -288,5 +407,4 @@ class testView: UIView, UIGestureRecognizerDelegate {
             self.contentView.layer.borderWidth = 0.4
         }
     }
-
 }

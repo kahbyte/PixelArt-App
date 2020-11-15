@@ -67,35 +67,33 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     
     @IBAction func Lapis(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 0
-        testView.awakeFromNib()
+        tool = .pen
+        
+        if isPanGestureRecognizerActive == false {
+            testView.addGesture()
+        }
     }
     
     @IBAction func Borracha(_ sender: Any) {
-        apaga = 1
-        balde = 0
-        linha = 0
-        simetria = 0
-        testView.awakeFromNib()
+        tool = .eraser
+        
+        if isPanGestureRecognizerActive == false {
+            testView.addGesture()
+        }
     }
     
     @IBAction func Linha(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 1
-        simetria = 0
-        testView.awakeFromNib()
+        tool = .line
+        
+        testView.removeGesture()
     }
     
     @IBAction func Balde(_ sender: Any) {
-        balde = 1
-        apaga = 0
-        linha = 0
-        simetria = 0
-        testView.awakeFromNib()
+        tool = .bucket
+        
+        if isPanGestureRecognizerActive == false {
+            testView.addGesture()
+        }
     }
 
     @IBAction func colorBttn(_ sender: Any) {
@@ -108,27 +106,28 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func SimetriaV(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 1
-        testView.awakeFromNib()
+        tool = .symmetryY
+        
+        if isPanGestureRecognizerActive == false {
+            testView.addGesture()
+        }
     }
     
     @IBAction func SimetriaH(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 2
-        testView.awakeFromNib()
+        tool = .symmetryX
+        
+        if isPanGestureRecognizerActive == false {
+            testView.addGesture()
+        }
     }
     
     @IBAction func SimetriaGeral(_ sender: Any) {
-        apaga = 0
-        balde = 0
-        linha = 0
-        simetria = 3
-        testView.awakeFromNib()
+        tool = .symmetryXY
+        
+        if isPanGestureRecognizerActive == false {
+            testView.addGesture()
+        }
+    
     }
     
    
