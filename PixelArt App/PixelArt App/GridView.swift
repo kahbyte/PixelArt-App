@@ -32,7 +32,7 @@ enum Tool {
 
 var tool: Tool = .pen
 
-class testView: UIView, UIGestureRecognizerDelegate {
+class GridView: UIView, UIGestureRecognizerDelegate {
     var x1 = 0
     var x2 = 0
     var y1 = 0
@@ -128,28 +128,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let j = Int(location.y / width)
         
         
-        switch tool {
-        case .pen:
-            draw(i: i, j: j)
-            
-        case .eraser:
-            erase(i: i, j: j)
-            
-        case .bucket:
-            bucket(i: i, j: j)
-            
-        case .line:
-            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
-            
-        case .symmetryX:
-            FazSimetria(i: i, j: j)
-            
-        case .symmetryY:
-            FazSimetria(i: i, j: j)
-            
-        case .symmetryXY:
-            FazSimetria(i: i, j: j)
-        }
+        calledTool(i: i, j: j)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -160,29 +139,6 @@ class testView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x1 = i
             y1 = j
-            
-            switch tool {
-            case .pen:
-                draw(i: i, j: j)
-                
-            case .eraser:
-                erase(i: i, j: j)
-                
-            case .bucket:
-                bucket(i: i, j: j)
-                
-            case .line:
-                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
-                
-            case .symmetryX:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryY:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryXY:
-                FazSimetria(i: i, j: j)
-            }
         }
     }
     
@@ -195,55 +151,38 @@ class testView: UIView, UIGestureRecognizerDelegate {
             x2 = i
             y2 = j
             
-            switch tool {
-            case .pen:
-                draw(i: i, j: j)
-                
-            case .eraser:
-                erase(i: i, j: j)
-                
-            case .bucket:
-                bucket(i: i, j: j)
-                
-            case .line:
-                fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
-                
-            case .symmetryX:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryY:
-                FazSimetria(i: i, j: j)
-                
-            case .symmetryXY:
-                FazSimetria(i: i, j: j)
-            }
+            draw(i: i, j: j)
+        }
+        
+        if tool == .line {
+            doLine(x1: x1, x2: x2, y1: y1, y2: y2)
         }
     }
     
-//    func calledTool(i: Int, j: Int) {
-//        switch tool {
-//        case .pen:
-//            draw(i: i, j: j)
-//
-//        case .eraser:
-//            erase(i: i, j: j)
-//
-//        case .bucket:
-//            bucket(i: i, j: j)
-//
-//        case .line:
-//            fazLinha(x1: x1, x2: x2, y1: y1, y2: y2)
-//
-//        case .symmetryX:
-//            FazSimetria(i: i, j: j)
-//
-//        case .symmetryY:
-//            FazSimetria(i: i, j: j)
-//
-//        case .symmetryXY:
-//            FazSimetria(i: i, j: j)
-//        }
-//    }
+    func calledTool(i: Int, j: Int) {
+        switch tool {
+        case .pen:
+            draw(i: i, j: j)
+
+        case .eraser:
+            erase(i: i, j: j)
+
+        case .bucket:
+            bucket(i: i, j: j)
+
+        case .line:
+            doLine(x1: x1, x2: x2, y1: y1, y2: y2)
+
+        case .symmetryX:
+            doSymmetry(i: i, j: j)
+
+        case .symmetryY:
+            doSymmetry(i: i, j: j)
+
+        case .symmetryXY:
+            doSymmetry(i: i, j: j)
+        }
+    }
     
 
     //MARK: Grid functions
@@ -274,10 +213,10 @@ class testView: UIView, UIGestureRecognizerDelegate {
         let cellView = cells[ident]
         
         corFundo = cellView?.backgroundColor
-        colorir(i: i, j: j)
+        fillColor(i: i, j: j)
     }
     
-    func FazSimetria(i: Int, j: Int){
+    func doSymmetry(i: Int, j: Int){
         let ident1 = "\(i + 1)|\(j + 1)"
         let cellView1 = cells[ident1]
         let ident2 = "\(numViewPerRow - (i))|\(j + 1)"
@@ -289,15 +228,15 @@ class testView: UIView, UIGestureRecognizerDelegate {
         
         switch tool {
         case .symmetryX:
-            espelho(cellView1: cellView1, cellView2: cellView2)
+            mirror(cellView1: cellView1, cellView2: cellView2)
             
         case .symmetryY:
-            espelho(cellView1: cellView1, cellView2: cellView3)
+            mirror(cellView1: cellView1, cellView2: cellView3)
             
         case .symmetryXY:
-            espelho(cellView1: cellView1, cellView2: cellView2)
-            espelho(cellView1: cellView1, cellView2: cellView3)
-            espelho(cellView1: cellView1, cellView2: cellView4)
+            mirror(cellView1: cellView1, cellView2: cellView2)
+            mirror(cellView1: cellView1, cellView2: cellView3)
+            mirror(cellView1: cellView1, cellView2: cellView4)
         default:
             print("F")
         }
@@ -305,25 +244,25 @@ class testView: UIView, UIGestureRecognizerDelegate {
         
     }
     
-    func espelho(cellView1: UIView?, cellView2: UIView?){
+    func mirror(cellView1: UIView?, cellView2: UIView?){
             cellView1?.backgroundColor = color
             cellView2?.backgroundColor = color
     }
     
-    func colorir(i: Int, j: Int){
+    func fillColor(i: Int, j: Int){
         let ident = "\(i + 1)|\(j+1)"
         let cell = cells[ident]
         if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
             cell?.backgroundColor = color
-            colorir(i: i + 1, j: j)
-            colorir(i: i - 1, j: j)
-            colorir(i: i, j: j + 1)
-            colorir(i: i, j: j - 1)
+            fillColor(i: i + 1, j: j)
+            fillColor(i: i - 1, j: j)
+            fillColor(i: i, j: j + 1)
+            fillColor(i: i, j: j - 1)
         }
     }
     
     
-    func fazLinha(x1: Int, x2: Int, y1: Int, y2: Int){
+    func doLine(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
         let dy = y2 - y1
         if color == nil{
@@ -335,21 +274,21 @@ class testView: UIView, UIGestureRecognizerDelegate {
             cellView?.backgroundColor = color
         }else if x1 == x2 || abs(dy) > abs(dx){
             if y1 < y2{
-                equacaodaReta(x1: y1, x2: y2, y1: x1, y2: x2, f: y1, g: y2, h: 1)
+                lineEquation(x1: y1, x2: y2, y1: x1, y2: x2, f: y1, g: y2, h: 1)
             }else{
-                equacaodaReta(x1: y1, x2: y2, y1: x1, y2: x2, f: y2, g: y1, h: 1)
+                lineEquation(x1: y1, x2: y2, y1: x1, y2: x2, f: y2, g: y1, h: 1)
             }
         }else{
             if x1 < x2{
-                equacaodaReta(x1: x1, x2: x2, y1: y1, y2: y2, f: x1, g: x2, h: 0)
+                lineEquation(x1: x1, x2: x2, y1: y1, y2: y2, f: x1, g: x2, h: 0)
             }else{
-                equacaodaReta(x1: x1, x2: x2, y1: y1, y2: y2, f: x2, g: x1, h: 0)
+                lineEquation(x1: x1, x2: x2, y1: y1, y2: y2, f: x2, g: x1, h: 0)
             }
         }
         
     }
     
-    func equacaodaReta(x1: Int, x2: Int, y1: Int, y2: Int, f: Int, g: Int, h: Int){
+    func lineEquation(x1: Int, x2: Int, y1: Int, y2: Int, f: Int, g: Int, h: Int){
         let dx = x2 - x1
         let dy = y2 - y1
         var ident = "0|0"
@@ -358,7 +297,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
         for x in f...g{
             let a = x - x1
             b = (Float(a) / Float(dx)) * Float(dy)
-            y = quebradeLinha(x: x, x1: x1, x2: x2, y1: y1, f: f, g: g, dy: dy, b: b)
+            y = lineBreak(x: x, x1: x1, x2: x2, y1: y1, f: f, g: g, dy: dy, b: b)
             
             if h == 0{
                 ident = "\(x + 1)|\(y + 1)"
@@ -373,7 +312,7 @@ class testView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    func quebradeLinha(x: Int, x1: Int, x2: Int, y1: Int, f: Int, g: Int, dy: Int, b: Float) -> Int{
+    func lineBreak(x: Int, x1: Int, x2: Int, y1: Int, f: Int, g: Int, dy: Int, b: Float) -> Int{
         var y: Int
         if abs(dy) == 1 && ((x2 > x1 && x > (((g - f)/2) + f)) || (x1 > x2 && x < (((f - g)/2) + g))){
             if dy < 0{

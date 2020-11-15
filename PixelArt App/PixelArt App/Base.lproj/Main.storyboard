@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,7 +19,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moM-o9-xau">
                                 <rect key="frame" x="0.0" y="54" width="414" height="818"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZaQ-Qp-QOm" customClass="testView" customModule="PixelArt_App" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZaQ-Qp-QOm" customClass="GridView" customModule="PixelArt_App" customModuleProvider="target">
                                         <rect key="frame" x="7" y="209" width="400" height="400"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -41,7 +41,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Simetria T"/>
                                 <connections>
-                                    <action selector="SimetriaGeral:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7RQ-AO-SIm"/>
+                                    <action selector="symmetryXY:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7RQ-AO-SIm"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wgH-tW-qs2">
@@ -49,7 +49,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Simetria V"/>
                                 <connections>
-                                    <action selector="SimetriaV:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PWR-Lv-KWO"/>
+                                    <action selector="symmetryY:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PWR-Lv-KWO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cG9-Hk-bBw">
@@ -57,7 +57,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Simetria H"/>
                                 <connections>
-                                    <action selector="SimetriaH:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R0c-k2-DZH"/>
+                                    <action selector="symmetryX:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R0c-k2-DZH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uk9-Ti-NBR">
@@ -65,7 +65,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Borracha"/>
                                 <connections>
-                                    <action selector="Borracha:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bj9-vH-6iM"/>
+                                    <action selector="eraser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bj9-vH-6iM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRB-RH-t5o">
@@ -73,7 +73,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Balde"/>
                                 <connections>
-                                    <action selector="Balde:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yhT-ct-7Sw"/>
+                                    <action selector="bucket:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yhT-ct-7Sw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BiN-r3-6HQ">
@@ -89,7 +89,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Linha"/>
                                 <connections>
-                                    <action selector="Linha:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ki6-qW-wc2"/>
+                                    <action selector="line:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ki6-qW-wc2"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz8-nb-A7b" userLabel="Export">
@@ -100,7 +100,7 @@
                                     <action selector="export:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cc5-6a-hk3"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UyN-vc-3u4" customClass="ctxtMenu" customModule="PixelArt_App" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UyN-vc-3u4" customClass="ColorMenu" customModule="PixelArt_App" customModuleProvider="target">
                                 <rect key="frame" x="21" y="483" width="280" height="275"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -126,8 +126,8 @@
                     <connections>
                         <outlet property="colorBttn" destination="6K9-eX-bQE" id="8nZ-Om-EQ3"/>
                         <outlet property="colorMenu" destination="UyN-vc-3u4" id="2pY-cS-Btp"/>
+                        <outlet property="gridView" destination="ZaQ-Qp-QOm" id="o8L-1Y-lL2"/>
                         <outlet property="scrollView" destination="moM-o9-xau" id="e2Y-to-qN0"/>
-                        <outlet property="testView" destination="ZaQ-Qp-QOm" id="o8L-1Y-lL2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

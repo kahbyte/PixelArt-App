@@ -9,9 +9,9 @@ import UIKit
 
 class ViewController: UIViewController, UIScrollViewDelegate {
     
-    @IBOutlet weak var testView: testView!
+    @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet var colorMenu: ctxtMenu!
+    @IBOutlet var colorMenu: ColorMenu!
     @IBOutlet var colorBttn: UIButton!
     
     override func viewDidLoad() {
@@ -23,7 +23,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = 1
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
         
-        testView.isUserInteractionEnabled = true
+        gridView.isUserInteractionEnabled = true
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return gridView
     }
     
     //MARK: Export Functions
@@ -33,7 +37,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             self.scrollView.zoomScale = 1.0
         }
         
-        let scaledGridView = scaleViewsToHD(view: testView.contentView)
+        let scaledGridView = scaleViewsToHD(view: gridView.contentView)
         
         let renderer = UIGraphicsImageRenderer(size: scaledGridView.bounds.size)
         
@@ -51,7 +55,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     /*Scales the view and everything in it*/
     func scaleViewsToHD(view: UIView) -> UIView {
-        let newCells: [String: UIView] = testView.cells
+        let newCells: [String: UIView] = gridView.cells
         
         let hdView = UIView()
         
@@ -79,34 +83,30 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return testView
-    }
     
     //MARK: IBActions!
-    @IBAction func Lapis(_ sender: Any) {
+    @IBAction func pen(_ sender: Any) {
         tool = .pen
         
-        testView.awakeFromNib()
+        gridView.awakeFromNib()
     }
     
-    @IBAction func Borracha(_ sender: Any) {
+    @IBAction func eraser(_ sender: Any) {
         tool = .eraser
         
-        testView.awakeFromNib()
+        gridView.awakeFromNib()
     }
     
-    @IBAction func Linha(_ sender: Any) {
+    @IBAction func line(_ sender: Any) {
         tool = .line
         
-        testView.awakeFromNib()
+        gridView.awakeFromNib()
     }
     
-    @IBAction func Balde(_ sender: Any) {
+    @IBAction func bucket(_ sender: Any) {
         tool = .bucket
         
-        testView.awakeFromNib()
+        gridView.awakeFromNib()
     }
 
     @IBAction func colorBttn(_ sender: Any) {
@@ -119,22 +119,22 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         colorMenu.layer.borderWidth = 5.0
     }
     
-    @IBAction func SimetriaV(_ sender: Any) {
+    @IBAction func symmetryY(_ sender: Any) {
         tool = .symmetryY
         
-        testView.awakeFromNib()
+        gridView.awakeFromNib()
     }
     
-    @IBAction func SimetriaH(_ sender: Any) {
+    @IBAction func symmetryX(_ sender: Any) {
         tool = .symmetryX
         
-        testView.awakeFromNib()
+        gridView.awakeFromNib()
     }
     
-    @IBAction func SimetriaGeral(_ sender: Any) {
+    @IBAction func symmetryXY(_ sender: Any) {
         tool = .symmetryXY
         
-        testView.awakeFromNib()
+        gridView.awakeFromNib()
     
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ctxtMenu: UIView {
+class ColorMenu: UIView {
 
     @IBOutlet var contentView: UIView!
     @IBOutlet var redSlider: UISlider!
