@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: Global Variables
 //TODO: Conversar com o Denys sobre essas variaves globais de cor
-var color: UIColor!
+var color: UIColor = .black
 var corFundo: UIColor! = .clear
 var red: CGFloat!
 var green: CGFloat!
@@ -51,6 +51,15 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     var numViewPerRow = 31
     
+    struct Action {
+        var key: String
+        var lastColor: UIColor
+        var currentColor: UIColor
+        var lastAction: Tool
+    }
+    
+    var recentActions: [Action] = []
+    var redoActions: [Action] = []
     
     //MARK: Initialization functions
     override init(frame: CGRect) {
@@ -191,11 +200,14 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let cellView = cells[ident]
         
         
-        if color == nil{
-            color = .black
-        }
+//        if color == nil{
+//            color = .black
+//        }
         
         if cellView?.backgroundColor != color {
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen)
+            recentActions.append(action)
+            
             cellView?.backgroundColor = color
             generator.impactOccurred(intensity: 0.7)
         }
@@ -206,6 +218,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let cellView = cells[ident]
         
         cellView?.backgroundColor = .clear
+        
+        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser)
+        recentActions.append(action)
     }
     
     func bucket(i: Int, j: Int) {
@@ -265,9 +280,10 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func doLine(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
         let dy = y2 - y1
-        if color == nil{
-            color = .black
-        }
+//        if color == nil{
+//            color = .black
+//        }
+        
         if x1 == x2 && y1 == y2{
             let ident = "\(x1 + 1)|\(y1 + 1)"
             let cellView = cells[ident]
@@ -304,9 +320,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             }else{
                 ident = "\(y + 1)|\(x + 1)"
             }
-            if color == nil{
-                color = .black
-            }
+//            if color == nil{
+//                color = .black
+//            }
             let cellView = cells[ident]
             cellView?.backgroundColor = color
         }
@@ -325,6 +341,80 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         }
         
         return y
+    }
+    
+    func undoAction() {
+        let action = recentActions.popLast()
+        
+        switch action?.lastAction {
+        case .pen:
+            let pixel = cells[action!.key]
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            redoActions.append(redoAction)
+            
+        case .eraser:
+            return
+        
+        case .bucket:
+            return
+            
+        case .line:
+            return
+            
+        case .symmetryX:
+            return
+            
+        case .symmetryY:
+            return
+            
+        case .symmetryXY:
+            return
+            
+        case .none:
+            return
+        }
+    }
+    
+    func redoAction() {
+        let action = redoActions.popLast()
+        
+        switch action?.lastAction {
+        case .pen:
+            let pixel = cells[action!.key]
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            recentActions.append(redoAction)
+            
+        case .eraser:
+            return
+        
+        case .bucket:
+            return
+            
+        case .line:
+            return
+            
+        case .symmetryX:
+            return
+            
+        case .symmetryY:
+            return
+            
+        case .symmetryXY:
+            return
+            
+        case .none:
+            return
+        }
+    }
+    
+    func hapticFeedback(tool: Tool) {
+        
     }
     
 }

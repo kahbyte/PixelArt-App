@@ -90,6 +90,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         gridView.awakeFromNib()
     }
+
     
     @IBAction func eraser(_ sender: Any) {
         tool = .eraser
@@ -136,6 +137,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         gridView.awakeFromNib()
     
+    }
+    @IBAction func undo(_ sender: Any) {
+        gridView.undoAction()
+    }
+    @IBAction func redo(_ sender: Any) {
+        gridView.redoAction()
     }
 }
 
