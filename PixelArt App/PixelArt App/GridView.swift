@@ -11,6 +11,7 @@ import UIKit
 //TODO: Conversar com o Denys sobre essas variaves globais de cor
 var color: UIColor = .black
 var corFundo: UIColor! = .clear
+
 var red: CGFloat!
 var green: CGFloat!
 var blue: CGFloat!
@@ -129,7 +130,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     @objc func handleTouch(gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: contentView)
-        //print(location)
+        
         
         let width = contentView.frame.width / CGFloat(numViewPerRow)
         
@@ -148,10 +149,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x1 = i
             y1 = j
-            
-            if tool == .bucket {
-                bucket(i: i, j: j)
-            }
         }
     }
     
@@ -164,12 +161,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             x2 = i
             y2 = j
             
-            draw(i: i, j: j)
         }
         
-        if tool == .line {
-            doLine(x1: x1, x2: x2, y1: y1, y2: y2)
-        }
+        calledTool(i: x2, j: y2)
     }
     
     func calledTool(i: Int, j: Int) {
@@ -181,7 +175,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             erase(i: i, j: j)
 
         case .bucket:
-//            bucket(i: i, j: j)
+            bucket(i: i, j: j)
         return
 
         case .line:
@@ -204,10 +198,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
         
-        
-//        if color == nil{
-//            color = .black
-//        }
         
         if cellView?.backgroundColor != color {
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen)
@@ -331,9 +321,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             }else{
                 ident = "\(y + 1)|\(x + 1)"
             }
-//            if color == nil{
-//                color = .black
-//            }
+
             let cellView = cells[ident]
             cellView?.backgroundColor = color
         }
