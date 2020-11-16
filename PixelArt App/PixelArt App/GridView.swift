@@ -148,10 +148,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x1 = i
             y1 = j
-            
-            if tool == .bucket {
-                bucket(i: i, j: j)
-            }
         }
     }
     
@@ -176,7 +172,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             erase(i: i, j: j)
 
         case .bucket:
-//            bucket(i: i, j: j)
+            bucket(i: i, j: j)
         return
 
         case .line:
