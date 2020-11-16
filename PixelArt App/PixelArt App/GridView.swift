@@ -301,12 +301,14 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
             if h == 0{
                 ident = "\(x + 1)|\(y + 1)"
-            }else{
+            } else {
                 ident = "\(y + 1)|\(x + 1)"
             }
+            
             if color == nil{
                 color = .black
             }
+            
             let cellView = cells[ident]
             cellView?.backgroundColor = color
         }
