@@ -150,13 +150,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x2 = i
             y2 = j
-            
-            draw(i: i, j: j)
         }
-        
-        if tool == .line {
-            doLine(x1: x1, x2: x2, y1: y1, y2: y2)
-        }
+        calledTool(i: x2, j: y2)
     }
     
     func calledTool(i: Int, j: Int) {
