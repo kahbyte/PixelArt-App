@@ -148,6 +148,10 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x1 = i
             y1 = j
+            
+            if tool == .bucket {
+                bucket(i: i, j: j)
+            }
         }
     }
     
@@ -177,7 +181,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             erase(i: i, j: j)
 
         case .bucket:
-            bucket(i: i, j: j)
+//            bucket(i: i, j: j)
+        return
 
         case .line:
             doLine(x1: x1, x2: x2, y1: y1, y2: y2)
@@ -217,15 +222,21 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
         
-        cellView?.backgroundColor = .clear
         
-        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser)
-        recentActions.append(action)
+        if cellView?.backgroundColor != .clear {
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser)
+            
+            cellView?.backgroundColor = .clear
+            recentActions.append(action)
+        }
     }
     
     func bucket(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
+        
+        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .bucket)
+        recentActions.append(action)
         
         corFundo = cellView?.backgroundColor
         fillColor(i: i, j: j)
@@ -333,10 +344,10 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         if abs(dy) == 1 && ((x2 > x1 && x > (((g - f)/2) + f)) || (x1 > x2 && x < (((f - g)/2) + g))){
             if dy < 0{
                 y = y1 - 1
-            }else{
+            } else {
                 y = y1 + 1
             }
-        }else{
+        } else {
             y = y1 + Int(b)
         }
         
@@ -345,10 +356,14 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     func undoAction() {
         let action = recentActions.popLast()
+        let pixel = cells[action!.key]
+        let key = action!.key.split(separator: "|")
+        
+        let i = Int(key[0]) ?? 0
+        let j = Int(key[1]) ?? 0
         
         switch action?.lastAction {
         case .pen:
-            let pixel = cells[action!.key]
             let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
             
             pixel?.backgroundColor = action?.lastColor
@@ -356,10 +371,20 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             redoActions.append(redoAction)
             
         case .eraser:
-            return
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            redoActions.append(redoAction)
         
         case .bucket:
-            return
+            //TODO: CRY
+            /*Retirando tudo até as bordas. Estudar um algoritmo melhor*/
+            
+            corFundo = action?.currentColor
+            color = action!.lastColor
+            fillColor(i: i, j: j)
+            
             
         case .line:
             return
@@ -391,7 +416,12 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             recentActions.append(redoAction)
             
         case .eraser:
-            return
+            let pixel = cells[action!.key]
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            recentActions.append(redoAction)
         
         case .bucket:
             return
