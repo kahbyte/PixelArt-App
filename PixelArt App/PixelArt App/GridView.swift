@@ -163,7 +163,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
         }
         
-//        calledTool(i: x2, j: y2)
+        calledTool(i: x2, j: y2)
     }
     
     func calledTool(i: Int, j: Int) {
