@@ -166,8 +166,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func calledTool(i: Int, j: Int) {
         switch tool {
         case .pen:
-            draw(i: i, j: j)
-
+            if i < numViewPerRow && j < numViewPerRow && i >= 0 && j >= 0{
+                draw(i: i, j: j)
+            }
         case .eraser:
             erase(i: i, j: j)
 
