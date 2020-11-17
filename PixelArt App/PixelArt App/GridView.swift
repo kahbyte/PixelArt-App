@@ -318,7 +318,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             b = (Float(a) / Float(dx)) * Float(dy)
             y = lineBreak(x: x, x1: x1, x2: x2, y1: y1, f: f, g: g, dy: dy, b: b)
             
-            if h == 0{
+            if h == 0{  
                 ident = "\(x + 1)|\(y + 1)"
             } else {
                 ident = "\(y + 1)|\(x + 1)"
@@ -327,6 +327,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
 //            if color == nil{
 //                color = .black
 //            }
+            
             let cellView = cells[ident]
             cellView?.backgroundColor = color
         }
