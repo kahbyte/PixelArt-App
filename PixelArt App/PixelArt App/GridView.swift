@@ -11,9 +11,7 @@ import UIKit
 //TODO: Conversar com o Denys sobre essas variaves globais de cor
 var color: UIColor!
 var corFundo: UIColor! = .clear
-var red: CGFloat!
-var green: CGFloat!
-var blue: CGFloat!
+
 
 var hexCode = String()
 var hexStrings = ["", "", ""]
@@ -28,6 +26,7 @@ enum Tool {
     case symmetryY
     case symmetryX
     case symmetryXY
+    case dropper
 }
 
 var tool: Tool = .pen
@@ -181,6 +180,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
 
         case .symmetryXY:
             doSymmetry(i: i, j: j)
+        
+        case .dropper:
+           dropNewColor(i: i, j: j)
         }
     }
     
@@ -325,6 +327,13 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         }
         
         return y
+    }
+    
+    func dropNewColor(i: Int, j: Int){
+        let ident = "\(i + 1)|\(j + 1)"
+        let cellView = cells[ident]
+        
+        color = cellView?.backgroundColor
     }
     
 }

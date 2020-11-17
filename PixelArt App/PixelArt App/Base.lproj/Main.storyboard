@@ -100,17 +100,95 @@
                                     <action selector="export:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cc5-6a-hk3"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UyN-vc-3u4" customClass="ColorMenu" customModule="PixelArt_App" customModuleProvider="target">
-                                <rect key="frame" x="21" y="483" width="280" height="275"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6K9-eX-bQE">
                                 <rect key="frame" x="21" y="803" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Cor"/>
                                 <connections>
                                     <action selector="colorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OJ8-y6-ytU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6el-if-ddQ">
+                                <rect key="frame" x="21" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rCN-dI-S8b"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-Bc-zMY">
+                                <rect key="frame" x="60" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jb7-O5-Dlo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xnv-fZ-74z">
+                                <rect key="frame" x="98" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0R0-Q3-Iv3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yl7-IE-gCn">
+                                <rect key="frame" x="136" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wWq-9B-D6h"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QaQ-P4-eQf">
+                                <rect key="frame" x="174" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Jo-Zu-Bcv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6x-6W-Oh1">
+                                <rect key="frame" x="211" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JxG-ix-4dH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLy-UH-vRi">
+                                <rect key="frame" x="247" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ags-k0-qOQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="7" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5LW-Ae-p0p">
+                                <rect key="frame" x="282" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h2m-qP-vad"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHV-YN-pcI">
+                                <rect key="frame" x="317" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Nx-bY-m33"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEO-Lg-ooU">
+                                <rect key="frame" x="354" y="695" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="lastColorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="70f-ml-OEA"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UyN-vc-3u4" customClass="ColorMenu" customModule="PixelArt_App" customModuleProvider="target">
+                                <rect key="frame" x="21" y="483" width="280" height="275"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iZ-1b-gup">
+                                <rect key="frame" x="87" y="803" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="eyedropper" catalog="system"/>
+                                <connections>
+                                    <action selector="dropperBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YgV-y1-r91"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -127,6 +205,16 @@
                         <outlet property="colorBttn" destination="6K9-eX-bQE" id="8nZ-Om-EQ3"/>
                         <outlet property="colorMenu" destination="UyN-vc-3u4" id="2pY-cS-Btp"/>
                         <outlet property="gridView" destination="ZaQ-Qp-QOm" id="o8L-1Y-lL2"/>
+                        <outlet property="lastColorBttn0" destination="6el-if-ddQ" id="gBS-w2-0k0"/>
+                        <outlet property="lastColorBttn1" destination="I3x-Bc-zMY" id="4Ak-xM-rM4"/>
+                        <outlet property="lastColorBttn2" destination="xnv-fZ-74z" id="ruP-1f-tZE"/>
+                        <outlet property="lastColorBttn3" destination="yl7-IE-gCn" id="g2X-TB-BbD"/>
+                        <outlet property="lastColorBttn4" destination="QaQ-P4-eQf" id="SAt-GC-NnE"/>
+                        <outlet property="lastColorBttn5" destination="v6x-6W-Oh1" id="v1A-1J-arj"/>
+                        <outlet property="lastColorBttn6" destination="gLy-UH-vRi" id="Rdh-Uz-WZL"/>
+                        <outlet property="lastColorBttn7" destination="5LW-Ae-p0p" id="ydw-vX-AY3"/>
+                        <outlet property="lastColorBttn8" destination="RHV-YN-pcI" id="9xk-18-Dmw"/>
+                        <outlet property="lastColorBttn9" destination="hEO-Lg-ooU" id="siy-Rb-qPx"/>
                         <outlet property="scrollView" destination="moM-o9-xau" id="e2Y-to-qN0"/>
                     </connections>
                 </viewController>
@@ -136,6 +224,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="eyedropper" catalog="system" width="128" height="119"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

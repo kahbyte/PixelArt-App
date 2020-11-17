@@ -7,6 +7,8 @@
 
 import UIKit
 
+var colors = [UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white]
+
 class ColorMenu: UIView {
 
     @IBOutlet var contentView: UIView!
@@ -16,6 +18,9 @@ class ColorMenu: UIView {
     @IBOutlet var textField: UITextField!
     
     var hexUsed = false
+    var red: CGFloat!
+    var green: CGFloat!
+    var blue: CGFloat!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,6 +44,7 @@ class ColorMenu: UIView {
     @IBAction func colorSlider(_ sender: UISlider) {
         
         textField.text = nil
+        textField.placeholder = hexCode
         var hexValue: String
         var value: Int
         
@@ -164,9 +170,14 @@ class ColorMenu: UIView {
             self.layer.borderColor = color.cgColor
         }
     }
-    @IBAction func backButton(_ sender: Any) {
-        self.isHidden = true
+    func changeLastColors(color: UIColor){
+        if color != colors[0] {
+            
+            for i in -9...(-1){
+                colors[i*(-1)] = colors[(i*(-1)) - 1]
+            }
+            
+            colors[0] = color
+        }
     }
-    
-
 }
