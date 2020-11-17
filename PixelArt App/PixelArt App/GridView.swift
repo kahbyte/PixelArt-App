@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: Global Variables
 //TODO: Conversar com o Denys sobre essas variaves globais de cor
-var color: UIColor!
+var color: UIColor = .black
 var corFundo: UIColor! = .clear
 
 
@@ -50,6 +50,15 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     var numViewPerRow = 31
     
+    struct Action {
+        var key: String
+        var lastColor: UIColor
+        var currentColor: UIColor
+        var lastAction: Tool
+    }
+    
+    var recentActions: [Action] = []
+    var redoActions: [Action] = []
     
     //MARK: Initialization functions
     override init(frame: CGRect) {
@@ -149,25 +158,22 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             let j = Int(local.y / width)
             x2 = i
             y2 = j
-            
-            draw(i: i, j: j)
         }
-        
-        if tool == .line {
-            doLine(x1: x1, x2: x2, y1: y1, y2: y2)
-        }
+        calledTool(i: x2, j: y2)
     }
     
     func calledTool(i: Int, j: Int) {
         switch tool {
         case .pen:
-            draw(i: i, j: j)
-
+            if i < numViewPerRow && j < numViewPerRow && i >= 0 && j >= 0{
+                draw(i: i, j: j)
+            }
         case .eraser:
             erase(i: i, j: j)
 
         case .bucket:
             bucket(i: i, j: j)
+        return
 
         case .line:
             doLine(x1: x1, x2: x2, y1: y1, y2: y2)
@@ -193,11 +199,14 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let cellView = cells[ident]
         
         
-        if color == nil{
-            color = .black
-        }
+//        if color == nil{
+//            color = .black
+//        }
         
         if cellView?.backgroundColor != color {
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen)
+            recentActions.append(action)
+            
             cellView?.backgroundColor = color
             generator.impactOccurred(intensity: 0.7)
         }
@@ -207,12 +216,21 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
         
-        cellView?.backgroundColor = .clear
+        
+        if cellView?.backgroundColor != .clear {
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser)
+            
+            cellView?.backgroundColor = .clear
+            recentActions.append(action)
+        }
     }
     
     func bucket(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
+        
+        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .bucket)
+        recentActions.append(action)
         
         corFundo = cellView?.backgroundColor
         fillColor(i: i, j: j)
@@ -267,9 +285,10 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func doLine(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
         let dy = y2 - y1
-        if color == nil{
-            color = .black
-        }
+//        if color == nil{
+//            color = .black
+//        }
+        
         if x1 == x2 && y1 == y2{
             let ident = "\(x1 + 1)|\(y1 + 1)"
             let cellView = cells[ident]
@@ -301,14 +320,16 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             b = (Float(a) / Float(dx)) * Float(dy)
             y = lineBreak(x: x, x1: x1, x2: x2, y1: y1, f: f, g: g, dy: dy, b: b)
             
-            if h == 0{
+            if h == 0{  
                 ident = "\(x + 1)|\(y + 1)"
-            }else{
+            } else {
                 ident = "\(y + 1)|\(x + 1)"
             }
-            if color == nil{
-                color = .black
-            }
+
+//            if color == nil{
+//                color = .black
+//            }
+            
             let cellView = cells[ident]
             cellView?.backgroundColor = color
         }
@@ -319,16 +340,109 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         if abs(dy) == 1 && ((x2 > x1 && x > (((g - f)/2) + f)) || (x1 > x2 && x < (((f - g)/2) + g))){
             if dy < 0{
                 y = y1 - 1
-            }else{
+            } else {
                 y = y1 + 1
             }
-        }else{
+        } else {
             y = y1 + Int(b)
         }
         
         return y
     }
     
+    func undoAction() {
+        let action = recentActions.popLast()
+        let pixel = cells[action!.key]
+        let key = action!.key.split(separator: "|")
+        
+        let i = Int(key[0]) ?? 0
+        let j = Int(key[1]) ?? 0
+        
+        switch action?.lastAction {
+        case .pen:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            redoActions.append(redoAction)
+            
+        case .eraser:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            redoActions.append(redoAction)
+        
+        case .bucket:
+            //TODO: CRY
+            /*Retirando tudo até as bordas. Estudar um algoritmo melhor*/
+            
+            corFundo = action?.currentColor
+            color = action!.lastColor
+            fillColor(i: i, j: j)
+            
+            
+        case .line:
+            return
+            
+        case .symmetryX:
+            return
+            
+        case .symmetryY:
+            return
+            
+        case .symmetryXY:
+            return
+            
+        case .none:
+            return
+        }
+    }
+    
+    func redoAction() {
+        let action = redoActions.popLast()
+        
+        switch action?.lastAction {
+        case .pen:
+            let pixel = cells[action!.key]
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            recentActions.append(redoAction)
+            
+        case .eraser:
+            let pixel = cells[action!.key]
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            recentActions.append(redoAction)
+        
+        case .bucket:
+            return
+            
+        case .line:
+            return
+            
+        case .symmetryX:
+            return
+            
+        case .symmetryY:
+            return
+            
+        case .symmetryXY:
+            return
+            
+        case .none:
+            return
+        }
+    }
+    
+    func hapticFeedback(tool: Tool) {
+        
+    }
+        
     func dropNewColor(i: Int, j: Int){
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]

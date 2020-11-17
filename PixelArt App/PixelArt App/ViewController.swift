@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var gridView: GridView!
@@ -35,7 +33,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.maximumZoomScale = 5.0
         scrollView.zoomScale = 1
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
-
         
         gridView.isUserInteractionEnabled = true
     }
@@ -169,10 +166,16 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         gridView.awakeFromNib()
     
     }
-    @IBAction func dropperBttn(_ sender: Any) {
-        tool = .dropper
+    @IBAction func undo(_ sender: Any) {
+        gridView.undoAction()
     }
-    
+        @IBAction func dropperBttn(_ sender: Any) {
+        tool = .dropper
+        }
+    @IBAction func redo(_ sender: Any) {
+        gridView.redoAction()
+    }
+            
     @IBAction func lastColorBttn(_ sender: UIButton) {
         color = colors[sender.tag]
     }
