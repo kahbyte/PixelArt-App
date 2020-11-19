@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ColorMenu" customModule="PixelArt_App" customModuleProvider="target">
             <connections>
                 <outlet property="blueSlider" destination="neJ-PN-1kc" id="kLY-wj-a67"/>
+                <outlet property="colorView" destination="a6D-EE-egr" id="xaC-Ot-PZH"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="6V5-f2-J3Z"/>
                 <outlet property="greenSlider" destination="wrm-dZ-aje" id="K7K-OR-6pl"/>
                 <outlet property="redSlider" destination="W6f-vn-FbD" id="KLX-FJ-4cC"/>
@@ -22,9 +23,20 @@
             <rect key="frame" x="0.0" y="0.0" width="280" height="275"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="W6f-vn-FbD">
+                    <rect key="frame" x="11" y="38" width="255" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="minimumTrackTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="maximumTrackTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="colorSlider:" destination="-1" eventType="valueChanged" id="VhK-7C-JY9"/>
+                    </connections>
+                </slider>
                 <slider opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="wrm-dZ-aje">
                     <rect key="frame" x="11" y="109" width="255" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="minimumTrackTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="maximumTrackTintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="colorSlider:" destination="-1" eventType="valueChanged" id="C59-su-Bwa"/>
                     </connections>
@@ -32,6 +44,8 @@
                 <slider opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="neJ-PN-1kc">
                     <rect key="frame" x="11" y="178" width="255" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="minimumTrackTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="maximumTrackTintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="colorSlider:" destination="-1" eventType="valueChanged" id="t79-dr-W1f"/>
                     </connections>
@@ -50,13 +64,6 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="W6f-vn-FbD">
-                    <rect key="frame" x="11" y="38" width="255" height="31"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <connections>
-                        <action selector="colorSlider:" destination="-1" eventType="valueChanged" id="VhK-7C-JY9"/>
-                    </connections>
-                </slider>
                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="HexCode" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="W1K-ce-A3k">
                     <rect key="frame" x="34" y="227" width="143" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -85,6 +92,11 @@
                         <action selector="okBttn:" destination="-1" eventType="touchUpInside" id="ZER-Uy-hcS"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a6D-EE-egr">
+                    <rect key="frame" x="223" y="227" width="41" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

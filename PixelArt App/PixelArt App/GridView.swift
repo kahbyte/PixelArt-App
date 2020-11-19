@@ -14,7 +14,8 @@ var corFundo: UIColor! = .clear
 
 
 var hexCode = String()
-var hexStrings = ["", "", ""]
+var hexStrings = ["00", "00", "00"]
+let colorMenu = ColorMenu()
 
 var isPanGestureRecognizerActive: Bool?
 
@@ -197,11 +198,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
-        
-        
-//        if color == nil{
-//            color = .black
-//        }
         
         if cellView?.backgroundColor != color {
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen)
@@ -394,6 +390,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         case .symmetryXY:
             return
             
+        case .dropper:
+            return
+            
         case .none:
             return
         }
@@ -434,6 +433,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         case .symmetryXY:
             return
             
+        case .dropper:
+            return
+            
         case .none:
             return
         }
@@ -445,9 +447,10 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         
     func dropNewColor(i: Int, j: Int){
         let ident = "\(i + 1)|\(j + 1)"
-        let cellView = cells[ident]
-        
-        color = cellView?.backgroundColor
+        let pixel = cells[ident]
+    
+        color = pixel?.backgroundColor ?? .black
+        colorMenu.changeLastColors(newColor: color)
     }
     
 }

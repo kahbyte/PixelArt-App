@@ -220,6 +220,7 @@
                     <connections>
                         <outlet property="colorBttn" destination="6K9-eX-bQE" id="8nZ-Om-EQ3"/>
                         <outlet property="colorMenu" destination="UyN-vc-3u4" id="2pY-cS-Btp"/>
+                        <outlet property="dropperBttn" destination="1iZ-1b-gup" id="11F-9a-y8Y"/>
                         <outlet property="gridView" destination="ZaQ-Qp-QOm" id="o8L-1Y-lL2"/>
                         <outlet property="lastColorBttn0" destination="6el-if-ddQ" id="gBS-w2-0k0"/>
                         <outlet property="lastColorBttn1" destination="I3x-Bc-zMY" id="4Ak-xM-rM4"/>
