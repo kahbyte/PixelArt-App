@@ -46,6 +46,7 @@ class ColorMenu: UIView {
         setSlider(slider: greenSlider, minColor: UIColor.black, maxColor: UIColor.green)
         setSlider(slider: blueSlider, minColor: UIColor.black, maxColor: UIColor.blue)
         colorView.backgroundColor = color
+        colorView.layer.borderWidth = 0.7
        
         
     }
@@ -228,9 +229,11 @@ class ColorMenu: UIView {
         let frame = CGRect.init(x:0, y:0, width:slider.frame.size.width, height:5)
         
         gradientLayer.frame = frame
-        gradientLayer.colors = [UIColor.black.cgColor, maxColor.cgColor]
+        gradientLayer.colors = [minColor.cgColor, maxColor.cgColor]
         gradientLayer.startPoint = CGPoint.init(x:0.0, y:0.5)
-        gradientLayer.endPoint = CGPoint.init(x:1.0, y:0.3)
+        gradientLayer.endPoint = CGPoint.init(x:1.0, y:0.5)
+        gradientLayer.borderWidth = 0.1
+        gradientLayer.borderColor = UIColor.black.cgColor
 
         UIGraphicsBeginImageContextWithOptions(gradientLayer.frame.size, gradientLayer.isOpaque, 0.0);
         gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
@@ -238,7 +241,6 @@ class ColorMenu: UIView {
             UIGraphicsEndImageContext()
 
             image.resizableImage(withCapInsets: UIEdgeInsets.zero)
-
             slider.setMinimumTrackImage(image, for: .normal)
             slider.setMaximumTrackImage(image, for: .normal)
         }
