@@ -152,8 +152,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             colorMenu.isHidden = true
         }
         
-        colorMenu.layer.borderColor = color.cgColor
-        colorMenu.layer.borderWidth = 5.0
+        colorMenu.layer.borderColor = UIColor.black.cgColor
+        colorMenu.layer.borderWidth = 0.5
         refreshLastColors()
        
     }
