@@ -449,11 +449,11 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         case .pen:
             generator.impactOccurred(intensity: 0.7)
         case .eraser:
-            generator.impactOccurred(intensity: 0.7)
+            generator.impactOccurred(intensity: 0.4)
         case .bucket:
-            generator.impactOccurred(intensity: 0.7)
+            generator.impactOccurred(intensity: 1.0)
         case .line:
-            generator.impactOccurred(intensity: 0.7)
+            generator.impactOccurred(intensity: 0.8)
         case .symmetryY:
             generator.impactOccurred(intensity: 0.7)
         case .symmetryX:
