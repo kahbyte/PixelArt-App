@@ -206,7 +206,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             recentActions.append(action)
             
             cellView?.backgroundColor = color
-            generator.impactOccurred(intensity: 0.7)
+            
+            hapticFeedback(tool: .pen)
         }
     }
     
@@ -217,7 +218,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         
         if cellView?.backgroundColor != .clear {
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser)
-            
+            hapticFeedback(tool: .eraser)
             cellView?.backgroundColor = .clear
             recentActions.append(action)
         }
@@ -231,6 +232,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         recentActions.append(action)
         
         corFundo = cellView?.backgroundColor
+        
+        hapticFeedback(tool: .bucket)
         fillColor(i: i, j: j)
     }
     
@@ -259,7 +262,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             print("F")
         }
         
-        
+        hapticFeedback(tool: .symmetryX)
     }
     
     func mirror(cellView1: UIView?, cellView2: UIView?){
@@ -272,10 +275,13 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let cell = cells[ident]
         if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
             cell?.backgroundColor = color
-            fillColor(i: i + 1, j: j)
-            fillColor(i: i - 1, j: j)
-            fillColor(i: i, j: j + 1)
-            fillColor(i: i, j: j - 1)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.fillColor(i: i + 1, j: j)
+                self.fillColor(i: i - 1, j: j)
+                self.fillColor(i: i, j: j + 1)
+                self.fillColor(i: i, j: j - 1)
+            }
         }
     }
     
@@ -305,6 +311,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             }
         }
         
+        hapticFeedback(tool: .line)
     }
     
     func lineEquation(x1: Int, x2: Int, y1: Int, y2: Int, f: Int, g: Int, h: Int){
@@ -438,7 +445,22 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     }
     
     func hapticFeedback(tool: Tool) {
-        
+        switch tool {
+        case .pen:
+            generator.impactOccurred(intensity: 0.7)
+        case .eraser:
+            generator.impactOccurred(intensity: 0.7)
+        case .bucket:
+            generator.impactOccurred(intensity: 0.7)
+        case .line:
+            generator.impactOccurred(intensity: 0.7)
+        case .symmetryY:
+            generator.impactOccurred(intensity: 0.7)
+        case .symmetryX:
+            generator.impactOccurred(intensity: 0.7)
+        case .symmetryXY:
+            generator.impactOccurred(intensity: 0.7)
+        }
     }
     
 }
