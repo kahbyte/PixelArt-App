@@ -51,13 +51,15 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     var cells = [String: UIView]()
     
     var numViewPerRow = 31
-    var paintedByBucket = [[Int]](repeating: Array(repeating: 0, count: 32), count: 32)
+    var paintedByBucket = [[Bool]](repeating: Array(repeating: false, count: 32), count: 32)
     
     struct Action {
         var key: String
         var lastColor: UIColor
         var currentColor: UIColor
         var lastAction: Tool
+        var lastState: Bool
+        var currentState: Bool
     }
     
     var recentActions: [Action] = []
@@ -199,11 +201,12 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
-        paintedByBucket[i][j] = 0
         
         if cellView?.backgroundColor != color {
-            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen)
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: false)
             recentActions.append(action)
+            
+            paintedByBucket[i][j] = false
             
             cellView?.backgroundColor = color
             generator.impactOccurred(intensity: 0.7)
@@ -213,11 +216,12 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func erase(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
-        paintedByBucket[i][j] = 0
         
         
         if cellView?.backgroundColor != .clear {
-            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser)
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: false)
+            
+            paintedByBucket[i][j] = false
             
             cellView?.backgroundColor = .clear
             recentActions.append(action)
@@ -228,7 +232,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
         
-        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .bucket)
+        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: true)
         recentActions.append(action)
         
         corFundo = cellView?.backgroundColor
@@ -249,22 +253,22 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             switch tool {
             case .symmetryX:
                 mirror(cellView1: cellView1, cellView2: cellView2)
-                paintedByBucket[i][j] = 0
-                paintedByBucket[numViewPerRow - (i + 1)][j] = 0
+                paintedByBucket[i][j] = false
+                paintedByBucket[numViewPerRow - (i + 1)][j] = false
                 
             case .symmetryY:
                 mirror(cellView1: cellView1, cellView2: cellView3)
-                paintedByBucket[i][j] = 0
-                paintedByBucket[i][numViewPerRow - (j + 1)] = 0
+                paintedByBucket[i][j] = false
+                paintedByBucket[i][numViewPerRow - (j + 1)] = false
                 
             case .symmetryXY:
                 mirror(cellView1: cellView1, cellView2: cellView2)
                 mirror(cellView1: cellView1, cellView2: cellView3)
                 mirror(cellView1: cellView1, cellView2: cellView4)
-                paintedByBucket[i][j] = 0
-                paintedByBucket[numViewPerRow - (i + 1)][j] = 0
-                paintedByBucket[i][numViewPerRow - (j + 1)] = 0
-                paintedByBucket[numViewPerRow - (i + 1)][numViewPerRow - (j + 1)] = 0
+                paintedByBucket[i][j] = false
+                paintedByBucket[numViewPerRow - (i + 1)][j] = false
+                paintedByBucket[i][numViewPerRow - (j + 1)] = false
+                paintedByBucket[numViewPerRow - (i + 1)][numViewPerRow - (j + 1)] = false
             default:
                 print("F")
             }
@@ -285,7 +289,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j+1)"
         let cell = cells[ident]
         if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
-            paintedByBucket[i][j] = 1
+            paintedByBucket[i][j] = true
             cell?.backgroundColor = color
             fillColor(i: i + 1, j: j)
             fillColor(i: i - 1, j: j)
@@ -294,16 +298,16 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    func removeColor(i: Int, j: Int){
+    func removeColor(i: Int, j: Int, action: Action){
         let ident = "\(i + 1)|\(j + 1)"
         let cell = cells[ident]
-        if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow && paintedByBucket[i][j] == 1{
-            paintedByBucket[i][j] = 0
+        if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow && paintedByBucket[i][j] == true{
+            paintedByBucket[i][j] = action.lastState
             cell?.backgroundColor = color
-            removeColor(i: i + 1, j: j)
-            removeColor(i: i - 1, j: j)
-            removeColor(i: i, j: j + 1)
-            removeColor(i: i, j: j - 1)
+            removeColor(i: i + 1, j: j, action: action)
+            removeColor(i: i - 1, j: j, action: action)
+            removeColor(i: i, j: j + 1, action: action)
+            removeColor(i: i, j: j - 1, action: action)
         }
     }
     
@@ -370,104 +374,101 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     }
     
     func undoAction() {
-        if recentActions.count != 0 {
-            let action = recentActions.popLast()
-            let pixel = cells[action!.key]
-            let key = action!.key.split(separator: "|")
+        let action = recentActions.popLast()
+        let pixel = cells[action!.key]
+        let key = action!.key.split(separator: "|")
+        
+        let i = Int(key[0]) ?? 0
+        let j = Int(key[1]) ?? 0
+        
+        switch action?.lastAction {
+        case .pen:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState)
             
-            let i = Int(key[0]) ?? 0
-            let j = Int(key[1]) ?? 0
+            pixel?.backgroundColor = action?.lastColor
             
-            switch action?.lastAction {
-            case .pen:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
-                
-                pixel?.backgroundColor = action?.lastColor
-                
-                redoActions.append(redoAction)
-                
-            case .eraser:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser)
-                
-                pixel?.backgroundColor = action?.lastColor
-                
-                redoActions.append(redoAction)
-                
-            case .bucket:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket)
-                
-                corFundo = action?.currentColor
-                color = action!.lastColor
-                removeColor(i: i, j: j)
-                
-                redoActions.append(redoAction)
-                
-            case .line:
-                return
-                
-            case .symmetryX:
-                return
-                
-            case .symmetryY:
-                return
-                
-            case .symmetryXY:
-                return
-                
-            case .none:
-                return
-            }
+            redoActions.append(redoAction)
+            
+        case .eraser:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: action!.lastState)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            redoActions.append(redoAction)
+        
+        case .bucket:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: action!.lastState)
+            
+            corFundo = action?.currentColor
+            color = action!.lastColor
+            removeColor(i: i, j: j, action: action!)
+            color = action!.currentColor
+            
+            redoActions.append(redoAction)
+            
+        case .line:
+            return
+            
+        case .symmetryX:
+            return
+            
+        case .symmetryY:
+            return
+            
+        case .symmetryXY:
+            return
+            
+        case .none:
+            return
         }
     }
     
     func redoAction() {
-        if redoActions.count != 0{
-            let action = redoActions.popLast()
-            let pixel = cells[action!.key]
-            let key = action!.key.split(separator: "|")
+        let action = redoActions.popLast()
+        let pixel = cells[action!.key]
+        let key = action!.key.split(separator: "|")
+        
+        let i = Int(key[0]) ?? 0
+        let j = Int(key[1]) ?? 0
+        
+        switch action?.lastAction {
+        case .pen:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState)
             
-            let i = Int(key[0]) ?? 0
-            let j = Int(key[1]) ?? 0
+            pixel?.backgroundColor = action?.lastColor
             
-            switch action?.lastAction {
-            case .pen:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
-                
-                pixel?.backgroundColor = action?.lastColor
-                
-                recentActions.append(redoAction)
-                
-            case .eraser:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser)
-                
-                pixel?.backgroundColor = action?.lastColor
-                
-                recentActions.append(redoAction)
-                
-            case .bucket:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket)
-                
-                corFundo = action?.currentColor
-                color = action!.lastColor
-                fillColor(i: i, j: j)
-                
-                recentActions.append(redoAction)
-                
-            case .line:
-                return
-                
-            case .symmetryX:
-                return
-                
-            case .symmetryY:
-                return
-                
-            case .symmetryXY:
-                return
-                
-            case .none:
-                return
-            }
+            recentActions.append(redoAction)
+            
+        case .eraser:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: action!.lastState)
+            
+            pixel?.backgroundColor = action?.lastColor
+            
+            recentActions.append(redoAction)
+        
+        case .bucket:
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: action!.lastState)
+            
+            corFundo = action?.currentColor
+            color = action!.lastColor
+            fillColor(i: i, j: j)
+            
+            recentActions.append(redoAction)
+            
+        case .line:
+            return
+            
+        case .symmetryX:
+            return
+            
+        case .symmetryY:
+            return
+            
+        case .symmetryXY:
+            return
+            
+        case .none:
+            return
         }
     }
     
