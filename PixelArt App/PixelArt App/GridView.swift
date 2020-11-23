@@ -45,6 +45,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var contentView: UIView!
     
     let generator = UIImpactFeedbackGenerator(style: .medium)
+    let stronGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     
     var cells = [String: UIView]()
@@ -274,7 +275,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
             cell?.backgroundColor = color
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+           DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 self.fillColor(i: i + 1, j: j)
                 self.fillColor(i: i - 1, j: j)
                 self.fillColor(i: i, j: j + 1)
@@ -455,7 +456,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         case .eraser:
             generator.impactOccurred(intensity: 0.4)
         case .bucket:
-            generator.impactOccurred(intensity: 1.0)
+            stronGenerator.impactOccurred()
         case .line:
             generator.impactOccurred(intensity: 0.8)
         case .symmetryY:
@@ -464,6 +465,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             generator.impactOccurred(intensity: 0.7)
         case .symmetryXY:
             generator.impactOccurred(intensity: 0.7)
+        case .dropper:
+            return
         }
     }
         
