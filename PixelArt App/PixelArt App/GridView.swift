@@ -51,6 +51,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     var cells = [String: UIView]()
     
     var numViewPerRow = 31
+    var paintedByBucket = [[Int]](repeating: Array(repeating: 0, count: 32), count: 32)
     
     struct Action {
         var key: String
@@ -197,7 +198,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
-        
+        paintedByBucket[i][j] = 0
         
         if cellView?.backgroundColor != color {
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen)
@@ -211,6 +212,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func erase(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
+        paintedByBucket[i][j] = 0
         
         
         if cellView?.backgroundColor != .clear {
@@ -234,29 +236,38 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     func doSymmetry(i: Int, j: Int){
         let ident1 = "\(i + 1)|\(j + 1)"
-        let cellView1 = cells[ident1]
         let ident2 = "\(numViewPerRow - (i))|\(j + 1)"
         let ident3 = "\(i + 1)|\(numViewPerRow - (j))"
         let ident4 = "\(numViewPerRow - (i))|\(numViewPerRow - (j))"
+        let cellView1 = cells[ident1]
         let cellView2 = cells[ident2]
         let cellView3 = cells[ident3]
         let cellView4 = cells[ident4]
         
-        switch tool {
-        case .symmetryX:
-            mirror(cellView1: cellView1, cellView2: cellView2)
-            
-        case .symmetryY:
-            mirror(cellView1: cellView1, cellView2: cellView3)
-            
-        case .symmetryXY:
-            mirror(cellView1: cellView1, cellView2: cellView2)
-            mirror(cellView1: cellView1, cellView2: cellView3)
-            mirror(cellView1: cellView1, cellView2: cellView4)
-        default:
-            print("F")
+        if i >= 0 && i < numViewPerRow && j >= 0 && j < numViewPerRow{
+            switch tool {
+            case .symmetryX:
+                mirror(cellView1: cellView1, cellView2: cellView2)
+                paintedByBucket[i][j] = 0
+                paintedByBucket[numViewPerRow - (i + 1)][j] = 0
+                
+            case .symmetryY:
+                mirror(cellView1: cellView1, cellView2: cellView3)
+                paintedByBucket[i][j] = 0
+                paintedByBucket[i][numViewPerRow - (j + 1)] = 0
+                
+            case .symmetryXY:
+                mirror(cellView1: cellView1, cellView2: cellView2)
+                mirror(cellView1: cellView1, cellView2: cellView3)
+                mirror(cellView1: cellView1, cellView2: cellView4)
+                paintedByBucket[i][j] = 0
+                paintedByBucket[numViewPerRow - (i + 1)][j] = 0
+                paintedByBucket[i][numViewPerRow - (j + 1)] = 0
+                paintedByBucket[numViewPerRow - (i + 1)][numViewPerRow - (j + 1)] = 0
+            default:
+                print("F")
+            }
         }
-        
         
     }
     
@@ -269,6 +280,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j+1)"
         let cell = cells[ident]
         if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow{
+            paintedByBucket[i][j] = 1
             cell?.backgroundColor = color
             fillColor(i: i + 1, j: j)
             fillColor(i: i - 1, j: j)
@@ -277,13 +289,23 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    func removeColor(i: Int, j: Int){
+        let ident = "\(i + 1)|\(j + 1)"
+        let cell = cells[ident]
+        if cell?.backgroundColor == corFundo && cell?.backgroundColor != color && i >= 0 && j >= 0 && i < numViewPerRow && j < numViewPerRow && paintedByBucket[i][j] == 1{
+            paintedByBucket[i][j] = 0
+            cell?.backgroundColor = color
+            removeColor(i: i + 1, j: j)
+            removeColor(i: i - 1, j: j)
+            removeColor(i: i, j: j + 1)
+            removeColor(i: i, j: j - 1)
+        }
+    }
+    
     
     func doLine(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
         let dy = y2 - y1
-//        if color == nil{
-//            color = .black
-//        }
         
         if x1 == x2 && y1 == y2{
             let ident = "\(x1 + 1)|\(y1 + 1)"
@@ -318,7 +340,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
             if h == 0{
                 ident = "\(x + 1)|\(y + 1)"
-            }else{
+            } else {
                 ident = "\(y + 1)|\(x + 1)"
             }
 
@@ -366,13 +388,13 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             redoActions.append(redoAction)
         
         case .bucket:
-            //TODO: CRY
-            /*Retirando tudo até as bordas. Estudar um algoritmo melhor*/
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket)
             
             corFundo = action?.currentColor
             color = action!.lastColor
-            fillColor(i: i, j: j)
+            removeColor(i: i, j: j)
             
+            redoActions.append(redoAction)
             
         case .line:
             return
@@ -393,10 +415,14 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     func redoAction() {
         let action = redoActions.popLast()
+        let pixel = cells[action!.key]
+        let key = action!.key.split(separator: "|")
+        
+        let i = Int(key[0]) ?? 0
+        let j = Int(key[1]) ?? 0
         
         switch action?.lastAction {
         case .pen:
-            let pixel = cells[action!.key]
             let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen)
             
             pixel?.backgroundColor = action?.lastColor
@@ -404,7 +430,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             recentActions.append(redoAction)
             
         case .eraser:
-            let pixel = cells[action!.key]
             let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser)
             
             pixel?.backgroundColor = action?.lastColor
@@ -412,7 +437,13 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             recentActions.append(redoAction)
         
         case .bucket:
-            return
+            let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket)
+            
+            corFundo = action?.currentColor
+            color = action!.lastColor
+            fillColor(i: i, j: j)
+            
+            recentActions.append(redoAction)
             
         case .line:
             return
