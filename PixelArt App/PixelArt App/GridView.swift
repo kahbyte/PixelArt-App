@@ -137,8 +137,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let i = Int(location.x / width)
         let j = Int(location.y / width)
         
-        
-        calledTool(i: i, j: j)
+        if tool != .bucket {
+            calledTool(i: i, j: j)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
