@@ -14,17 +14,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var colorMenu: ColorMenu!
     @IBOutlet weak var colorBttn: UIButton!
     @IBOutlet weak var dropperBttn: UIButton!
-    @IBOutlet weak var lastColorBttn0: UIButton!
-    @IBOutlet weak var lastColorBttn1: UIButton!
-    @IBOutlet weak var lastColorBttn2: UIButton!
-    @IBOutlet weak var lastColorBttn3: UIButton!
-    @IBOutlet weak var lastColorBttn4: UIButton!
-    @IBOutlet weak var lastColorBttn5: UIButton!
-    @IBOutlet weak var lastColorBttn6: UIButton!
-    @IBOutlet weak var lastColorBttn7: UIButton!
-    @IBOutlet weak var lastColorBttn8: UIButton!
-    @IBOutlet weak var lastColorBttn9: UIButton!
-    
+    @IBOutlet var colorBttns: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,26 +24,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.maximumZoomScale = 5.0
         scrollView.zoomScale = 1
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
-        lastColorBttn0.layer.cornerRadius = lastColorBttn0.frame.size.width / 2
-        lastColorBttn1.layer.cornerRadius = lastColorBttn1.frame.size.width / 2
-        lastColorBttn2.layer.cornerRadius = lastColorBttn2.frame.size.width / 2
-        lastColorBttn3.layer.cornerRadius = lastColorBttn3.frame.size.width / 2
-        lastColorBttn4.layer.cornerRadius = lastColorBttn4.frame.size.width / 2
-        lastColorBttn5.layer.cornerRadius = lastColorBttn5.frame.size.width / 2
-        lastColorBttn6.layer.cornerRadius = lastColorBttn6.frame.size.width / 2
-        lastColorBttn7.layer.cornerRadius = lastColorBttn7.frame.size.width / 2
-        lastColorBttn8.layer.cornerRadius = lastColorBttn8.frame.size.width / 2
-        lastColorBttn9.layer.cornerRadius = lastColorBttn9.frame.size.width / 2
-        lastColorBttn0.layer.borderWidth = 0.1
-        lastColorBttn1.layer.borderWidth = 0.1
-        lastColorBttn2.layer.borderWidth = 0.1
-        lastColorBttn3.layer.borderWidth = 0.1
-        lastColorBttn4.layer.borderWidth = 0.1
-        lastColorBttn5.layer.borderWidth = 0.1
-        lastColorBttn6.layer.borderWidth = 0.1
-        lastColorBttn7.layer.borderWidth = 0.1
-        lastColorBttn8.layer.borderWidth = 0.1
-        lastColorBttn9.layer.borderWidth = 0.1
+        
+        for i in 0...9{
+            colorBttns[i].layer.cornerRadius = colorBttns[i].frame.size.width / 2
+            colorBttns[i].layer.borderWidth = 0.1
+        }
         
         gridView.isUserInteractionEnabled = true
     }
@@ -115,16 +90,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func refreshLastColors(){
-        lastColorBttn0.backgroundColor = colors[0]
-        lastColorBttn1.backgroundColor = colors[1]
-        lastColorBttn2.backgroundColor = colors[2]
-        lastColorBttn3.backgroundColor = colors[3]
-        lastColorBttn4.backgroundColor = colors[4]
-        lastColorBttn5.backgroundColor = colors[5]
-        lastColorBttn6.backgroundColor = colors[6]
-        lastColorBttn7.backgroundColor = colors[7]
-        lastColorBttn8.backgroundColor = colors[8]
-        lastColorBttn9.backgroundColor = colors[9]
+        for i in 0...9{
+            colorBttns[i].backgroundColor = colors[i]
+        }
         lastColorChanged = false
     }
     
@@ -174,7 +142,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         colorMenu.layer.borderColor = UIColor.black.cgColor
         colorMenu.layer.borderWidth = 0.5
         refreshLastColors()
-       
+        
     }
     
     @IBAction func symmetryY(_ sender: Any) {
@@ -215,14 +183,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         color = colors[sender.tag]
         
         for i in 0...9{
+            colorBttns[i].transform = CGAffineTransform(scaleX: 1, y: 1)
             if sender.tag == i{
-                
-            }
-            if sender.tag != i{
-                
+                sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
             }
         }
-       
+        
     }
 }
 
