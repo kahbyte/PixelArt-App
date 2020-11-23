@@ -34,7 +34,26 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.maximumZoomScale = 5.0
         scrollView.zoomScale = 1
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
-        
+        lastColorBttn0.layer.cornerRadius = lastColorBttn0.frame.size.width / 2
+        lastColorBttn1.layer.cornerRadius = lastColorBttn1.frame.size.width / 2
+        lastColorBttn2.layer.cornerRadius = lastColorBttn2.frame.size.width / 2
+        lastColorBttn3.layer.cornerRadius = lastColorBttn3.frame.size.width / 2
+        lastColorBttn4.layer.cornerRadius = lastColorBttn4.frame.size.width / 2
+        lastColorBttn5.layer.cornerRadius = lastColorBttn5.frame.size.width / 2
+        lastColorBttn6.layer.cornerRadius = lastColorBttn6.frame.size.width / 2
+        lastColorBttn7.layer.cornerRadius = lastColorBttn7.frame.size.width / 2
+        lastColorBttn8.layer.cornerRadius = lastColorBttn8.frame.size.width / 2
+        lastColorBttn9.layer.cornerRadius = lastColorBttn9.frame.size.width / 2
+        lastColorBttn0.layer.borderWidth = 0.1
+        lastColorBttn1.layer.borderWidth = 0.1
+        lastColorBttn2.layer.borderWidth = 0.1
+        lastColorBttn3.layer.borderWidth = 0.1
+        lastColorBttn4.layer.borderWidth = 0.1
+        lastColorBttn5.layer.borderWidth = 0.1
+        lastColorBttn6.layer.borderWidth = 0.1
+        lastColorBttn7.layer.borderWidth = 0.1
+        lastColorBttn8.layer.borderWidth = 0.1
+        lastColorBttn9.layer.borderWidth = 0.1
         
         gridView.isUserInteractionEnabled = true
     }
@@ -194,6 +213,16 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func lastColorBttn(_ sender: UIButton) {
         color = colors[sender.tag]
+        
+        for i in 0...9{
+            if sender.tag == i{
+                
+            }
+            if sender.tag != i{
+                
+            }
+        }
+       
     }
 }
 

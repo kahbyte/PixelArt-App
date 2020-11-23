@@ -46,7 +46,8 @@ class ColorMenu: UIView {
         setSlider(slider: greenSlider, minColor: UIColor.black, maxColor: UIColor.green)
         setSlider(slider: blueSlider, minColor: UIColor.black, maxColor: UIColor.blue)
         colorView.backgroundColor = color
-        colorView.layer.borderWidth = 0.7
+        colorView.layer.borderWidth = 0.5
+        colorView.layer.cornerRadius = colorView.frame.size.width / 2
         
         
     }
