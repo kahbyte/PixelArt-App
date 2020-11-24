@@ -14,17 +14,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var colorMenu: ColorMenu!
     @IBOutlet weak var colorBttn: UIButton!
     @IBOutlet weak var dropperBttn: UIButton!
-    @IBOutlet weak var lastColorBttn0: UIButton!
-    @IBOutlet weak var lastColorBttn1: UIButton!
-    @IBOutlet weak var lastColorBttn2: UIButton!
-    @IBOutlet weak var lastColorBttn3: UIButton!
-    @IBOutlet weak var lastColorBttn4: UIButton!
-    @IBOutlet weak var lastColorBttn5: UIButton!
-    @IBOutlet weak var lastColorBttn6: UIButton!
-    @IBOutlet weak var lastColorBttn7: UIButton!
-    @IBOutlet weak var lastColorBttn8: UIButton!
-    @IBOutlet weak var lastColorBttn9: UIButton!
-    
+    @IBOutlet var colorBttns: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +25,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = 1
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
         
+        for i in 0...9{
+            colorBttns[i].layer.cornerRadius = colorBttns[i].frame.size.width / 2
+            colorBttns[i].layer.borderWidth = 0.1
+        }
         
         gridView.isUserInteractionEnabled = true
     }
@@ -96,16 +90,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func refreshLastColors(){
-        lastColorBttn0.backgroundColor = colors[0]
-        lastColorBttn1.backgroundColor = colors[1]
-        lastColorBttn2.backgroundColor = colors[2]
-        lastColorBttn3.backgroundColor = colors[3]
-        lastColorBttn4.backgroundColor = colors[4]
-        lastColorBttn5.backgroundColor = colors[5]
-        lastColorBttn6.backgroundColor = colors[6]
-        lastColorBttn7.backgroundColor = colors[7]
-        lastColorBttn8.backgroundColor = colors[8]
-        lastColorBttn9.backgroundColor = colors[9]
+        for i in 0...9{
+            colorBttns[i].backgroundColor = colors[i]
+        }
         lastColorChanged = false
     }
     
@@ -152,10 +139,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             colorMenu.isHidden = true
         }
         
-        colorMenu.layer.borderColor = color.cgColor
+
+        colorMenu.layer.borderColor = UIColor.black.cgColor
+
         colorMenu.layer.borderWidth = 0.5
         refreshLastColors()
-       
+        
     }
     
     @IBAction func symmetryY(_ sender: Any) {
@@ -194,6 +183,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func lastColorBttn(_ sender: UIButton) {
         color = colors[sender.tag]
+        
+        for i in 0...9{
+            colorBttns[i].transform = CGAffineTransform(scaleX: 1, y: 1)
+            if sender.tag == i{
+                sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+            }
+        }
+        
     }
 }
 

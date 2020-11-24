@@ -11,7 +11,7 @@ var colors = [UIColor.clear, UIColor.clear, UIColor.clear, UIColor.clear, UIColo
 var lastColorChanged = false
 
 class ColorMenu: UIView {
-
+    
     @IBOutlet var contentView: UIView!
     @IBOutlet var redSlider: UISlider!
     @IBOutlet var greenSlider: UISlider!
@@ -46,20 +46,21 @@ class ColorMenu: UIView {
         setSlider(slider: greenSlider, minColor: UIColor.black, maxColor: UIColor.green)
         setSlider(slider: blueSlider, minColor: UIColor.black, maxColor: UIColor.blue)
         colorView.backgroundColor = color
-        colorView.layer.borderWidth = 0.7
-       
+        colorView.layer.borderWidth = 0.5
+        colorView.layer.cornerRadius = colorView.frame.size.width / 2
+        
         
     }
     
     @IBAction func colorSlider(_ sender: UISlider) {
         
-        textField.text = nil
-        textField.placeholder = hexCode
+        
         var hexValue: String
         var value: Int
         
         if hexUsed == true{
             hexStrings = ["00","00","00"]
+            hexCode = hexStrings.joined()
         }
         
         if sender.tag == 0{
@@ -99,7 +100,7 @@ class ColorMenu: UIView {
             hexUsed = false
             green = CGFloat(sender.value)
             
-           
+            
             if red == nil{
                 red = 0.0
             }
@@ -107,7 +108,7 @@ class ColorMenu: UIView {
                 blue = 0.0
             }
             
-           value = Int(green * 255)
+            value = Int(green * 255)
             hexValue = String(value, radix: 16)
             hexStrings[1] = (hexValue)
             
@@ -158,7 +159,7 @@ class ColorMenu: UIView {
         
     }
     @IBAction func okBttn(_ sender: Any) {
-          
+        
         var value = 0
         hexStrings = ["", "", ""]
         
@@ -173,13 +174,13 @@ class ColorMenu: UIView {
             hexCode = textField.text!
             
             for char in hexCode{
-               hexStrings[i] = hexStrings[i] + String(char)
+                hexStrings[i] = hexStrings[i] + String(char)
                 if j % 2 == 0{
                     i += 1
                 }
                 j += 1
             }
-
+            
             for k in 0...2 {
                 switch k {
                 case 0:
@@ -234,16 +235,16 @@ class ColorMenu: UIView {
         gradientLayer.endPoint = CGPoint.init(x:1.0, y:0.5)
         gradientLayer.borderWidth = 0.1
         gradientLayer.borderColor = UIColor.black.cgColor
-
+        
         UIGraphicsBeginImageContextWithOptions(gradientLayer.frame.size, gradientLayer.isOpaque, 0.0);
         gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
         if let image = UIGraphicsGetImageFromCurrentImageContext() {
             UIGraphicsEndImageContext()
-
+            
             image.resizableImage(withCapInsets: UIEdgeInsets.zero)
             slider.setMinimumTrackImage(image, for: .normal)
             slider.setMaximumTrackImage(image, for: .normal)
         }
     }
-   
+    
 }
