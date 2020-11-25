@@ -253,25 +253,17 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             switch tool {
             case .symmetryX:
                 mirror(cellView1: cellView1, cellView2: cellView2)
-                paintedByBucket[i][j] = false
-                paintedByBucket[numViewPerRow - (i + 1)][j] = false
                 
             case .symmetryY:
                 mirror(cellView1: cellView1, cellView2: cellView3)
-                paintedByBucket[i][j] = false
-                paintedByBucket[i][numViewPerRow - (j + 1)] = false
                 
             case .symmetryXY:
                 mirror(cellView1: cellView1, cellView2: cellView2)
-                mirror(cellView1: cellView1, cellView2: cellView3)
-                mirror(cellView1: cellView1, cellView2: cellView4)
-                paintedByBucket[i][j] = false
-                paintedByBucket[numViewPerRow - (i + 1)][j] = false
-                paintedByBucket[i][numViewPerRow - (j + 1)] = false
-                paintedByBucket[numViewPerRow - (i + 1)][numViewPerRow - (j + 1)] = false
+                mirror(cellView1: cellView3, cellView2: cellView4)
             default:
                 print("F")
             }
+            removeBucketStateInSemmetry(i: i, j: j)
         }
     }
     
@@ -282,6 +274,26 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         
         if color != cellView2?.backgroundColor {
             cellView2?.backgroundColor = color
+        }
+    }
+    
+    func removeBucketStateInSemmetry (i: Int, j: Int){
+        switch tool {
+        case .symmetryX:
+            paintedByBucket[i][j] = false
+            paintedByBucket[numViewPerRow - (i + 1)][j] = false
+            
+        case .symmetryY:
+            paintedByBucket[i][j] = false
+            paintedByBucket[i][numViewPerRow - (j + 1)] = false
+            
+        case .symmetryXY:
+            paintedByBucket[i][j] = false
+            paintedByBucket[numViewPerRow - (i + 1)][j] = false
+            paintedByBucket[i][numViewPerRow - (j + 1)] = false
+            paintedByBucket[numViewPerRow - (i + 1)][numViewPerRow - (j + 1)] = false
+        default:
+            print("F")
         }
     }
     
