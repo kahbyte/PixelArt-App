@@ -11,24 +11,18 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var colorMenu: ColorMenu!
     @IBOutlet weak var colorBttn: UIButton!
-    @IBOutlet weak var dropperBttn: UIButton!
-    @IBOutlet var colorBttns: [UIButton]!
+    let colorPicker = UIColorPickerViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        colorPicker.delegate = self
         scrollView.delegate = self
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
         scrollView.zoomScale = 1
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
-        
-        for i in 0...9{
-            colorBttns[i].layer.cornerRadius = colorBttns[i].frame.size.width / 2
-            colorBttns[i].layer.borderWidth = 0.1
-        }
         
         gridView.isUserInteractionEnabled = true
     }
@@ -89,20 +83,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         return hdView
     }
     
-    func refreshLastColors(){
-        for i in 0...9{
-            colorBttns[i].backgroundColor = colors[i]
-        }
-        lastColorChanged = false
+    private func selectColor(){
+        colorPicker.supportsAlpha = true
+        colorPicker.selectedColor = color
+        present(colorPicker, animated: true)
     }
-    
-    
+
     //MARK: IBActions!
     @IBAction func pen(_ sender: Any) {
         tool = .pen
-        if lastColorChanged == true{
-            refreshLastColors()
-        }
         gridView.awakeFromNib()
     }
     
@@ -114,83 +103,45 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func line(_ sender: Any) {
         tool = .line
-        if lastColorChanged == true{
-            refreshLastColors()
-        }
         gridView.awakeFromNib()
     }
     
     @IBAction func bucket(_ sender: Any) {
         tool = .bucket
-        if lastColorChanged == true{
-            refreshLastColors()
-        }
         gridView.awakeFromNib()
     }
     
-    @IBAction func colorBttn(_ sender: Any) {
-        
-        if colorMenu.isHidden == true{
-            colorMenu.isHidden = false
-        }
-        
-        else if colorMenu.isHidden == false{
-            colorMenu.changeLastColors(newColor: color)
-            colorMenu.isHidden = true
-        }
-        
-
-        colorMenu.layer.borderColor = UIColor.black.cgColor
-
-        colorMenu.layer.borderWidth = 0.5
-        refreshLastColors()
-        
+    @IBAction func colorBttn(_ sender: UIButton) {
+       selectColor()
     }
     
     @IBAction func symmetryY(_ sender: Any) {
         tool = .symmetryY
-        if lastColorChanged == true{
-            refreshLastColors()
-        }
         gridView.awakeFromNib()
     }
     
     @IBAction func symmetryX(_ sender: Any) {
         tool = .symmetryX
-        if lastColorChanged == true{
-            refreshLastColors()
-        }
         gridView.awakeFromNib()
     }
     
     @IBAction func symmetryXY(_ sender: Any) {
         tool = .symmetryXY
-        if lastColorChanged == true{
-            refreshLastColors()
-        }
         gridView.awakeFromNib()
         
     }
     @IBAction func undo(_ sender: Any) {
         gridView.undoAction()
     }
-    @IBAction func dropperBttn(_ sender: UIButton) {
-        tool = .dropper
-    }
+
     @IBAction func redo(_ sender: Any) {
         gridView.redoAction()
     }
     
-    @IBAction func lastColorBttn(_ sender: UIButton) {
-        color = colors[sender.tag]
-        
-        for i in 0...9{
-            colorBttns[i].transform = CGAffineTransform(scaleX: 1, y: 1)
-            if sender.tag == i{
-                sender.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-            }
-        }
-        
+}
+extension ViewController: UIColorPickerViewControllerDelegate{
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        color = viewController.selectedColor
     }
 }
 
