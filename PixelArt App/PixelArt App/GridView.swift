@@ -186,7 +186,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
 
         case .symmetryXY:
             doSymmetry(i: i, j: j)
-        
         }
     }
     
@@ -427,7 +426,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
         case .symmetryXY:
             return
-            
+          
         case .none:
             return
         }
