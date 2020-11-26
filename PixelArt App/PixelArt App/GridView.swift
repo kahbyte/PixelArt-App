@@ -399,7 +399,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
                 let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState)
                 
                 pixel?.backgroundColor = action?.lastColor
-                
+                paintedByBucket[i - 1][j - 1] = action!.lastState
                 redoActions.append(redoAction)
                 
             case .eraser:
