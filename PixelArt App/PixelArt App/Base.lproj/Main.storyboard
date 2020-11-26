@@ -204,16 +204,6 @@
                         <outlet property="colorMenu" destination="UyN-vc-3u4" id="2pY-cS-Btp"/>
                         <outlet property="gridView" destination="ZaQ-Qp-QOm" id="o8L-1Y-lL2"/>
                         <outlet property="scrollView" destination="moM-o9-xau" id="e2Y-to-qN0"/>
-                        <outletCollection property="colorBttns" destination="6el-if-ddQ" collectionClass="NSMutableArray" id="Qmo-S4-5XP"/>
-                        <outletCollection property="colorBttns" destination="I3x-Bc-zMY" collectionClass="NSMutableArray" id="cVN-wD-rQa"/>
-                        <outletCollection property="colorBttns" destination="xnv-fZ-74z" collectionClass="NSMutableArray" id="fCA-Nw-W2e"/>
-                        <outletCollection property="colorBttns" destination="yl7-IE-gCn" collectionClass="NSMutableArray" id="jJ2-JI-UFP"/>
-                        <outletCollection property="colorBttns" destination="QaQ-P4-eQf" collectionClass="NSMutableArray" id="81s-iB-GGg"/>
-                        <outletCollection property="colorBttns" destination="v6x-6W-Oh1" collectionClass="NSMutableArray" id="DsX-aK-fId"/>
-                        <outletCollection property="colorBttns" destination="gLy-UH-vRi" collectionClass="NSMutableArray" id="P3L-lg-4MG"/>
-                        <outletCollection property="colorBttns" destination="5LW-Ae-p0p" collectionClass="NSMutableArray" id="qCi-UK-9Ex"/>
-                        <outletCollection property="colorBttns" destination="RHV-YN-pcI" collectionClass="NSMutableArray" id="WvL-ko-Vdd"/>
-                        <outletCollection property="colorBttns" destination="hEO-Lg-ooU" collectionClass="NSMutableArray" id="41U-m3-374"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
