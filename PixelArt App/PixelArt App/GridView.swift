@@ -27,7 +27,6 @@ enum Tool {
     case symmetryY
     case symmetryX
     case symmetryXY
-    case dropper
 }
 
 var tool: Tool = .pen
@@ -189,9 +188,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
 
         case .symmetryXY:
             doSymmetry(i: i, j: j)
-        
-        case .dropper:
-           dropNewColor(i: i, j: j)
         }
     }
     
@@ -399,9 +395,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         case .symmetryXY:
             return
             
-        case .dropper:
-            return
-            
         case .none:
             return
         }
@@ -441,9 +434,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
         case .symmetryXY:
             return
-            
-        case .dropper:
-            return
+
             
         case .none:
             return
@@ -466,8 +457,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             generator.impactOccurred(intensity: 0.7)
         case .symmetryXY:
             generator.impactOccurred(intensity: 0.7)
-        case .dropper:
-            return
         }
     }
         

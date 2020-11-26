@@ -174,9 +174,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func undo(_ sender: Any) {
         gridView.undoAction()
     }
-    @IBAction func dropperBttn(_ sender: UIButton) {
-        tool = .dropper
-    }
+    
     @IBAction func redo(_ sender: Any) {
         gridView.redoAction()
     }

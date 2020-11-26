@@ -16,11 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moM-o9-xau">
-                                <rect key="frame" x="0.0" y="54" width="414" height="818"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moM-o9-xau">
+                                <rect key="frame" x="7" y="184" width="400" height="400"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZaQ-Qp-QOm" customClass="GridView" customModule="PixelArt_App" customModuleProvider="target">
-                                        <rect key="frame" x="7" y="209" width="400" height="400"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="400" id="7vO-in-o2n"/>
@@ -28,98 +29,85 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="ZaQ-Qp-QOm" firstAttribute="leading" relation="lessThanOrEqual" secondItem="moM-o9-xau" secondAttribute="leading" constant="7" id="FFu-iQ-8lt"/>
-                                    <constraint firstItem="ZaQ-Qp-QOm" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="moM-o9-xau" secondAttribute="trailing" constant="-7" id="TIV-za-3nc"/>
-                                    <constraint firstItem="ZaQ-Qp-QOm" firstAttribute="centerY" secondItem="moM-o9-xau" secondAttribute="centerY" id="g3d-Za-xFx"/>
-                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="CCQ-XD-sW8"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="DEq-QO-drV"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lst-U6-uAB">
-                                <rect key="frame" x="229" y="163" width="36" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lst-U6-uAB">
+                                <rect key="frame" x="301" y="110" width="21" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Redo"/>
+                                <state key="normal" title="Redo" image="Pictogramas em Pixel-23"/>
                                 <connections>
                                     <action selector="redo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o5g-iZ-lai"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJg-G7-5NB" userLabel="Undo">
-                                <rect key="frame" x="141" y="162" width="37" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJg-G7-5NB" userLabel="Undo">
+                                <rect key="frame" x="94" y="110" width="21" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Undo"/>
+                                <state key="normal" title="Undo" image="Pictogramas em Pixel-24"/>
                                 <connections>
                                     <action selector="undo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dqh-CT-pxj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HML-nn-sAu">
-                                <rect key="frame" x="329" y="726" width="70" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HML-nn-sAu">
+                                <rect key="frame" x="351" y="726" width="21" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Simetria T"/>
+                                <state key="normal" title="Simetria T" image="Pictogramas em Pixel-50"/>
                                 <connections>
                                     <action selector="symmetryXY:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7RQ-AO-SIm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wgH-tW-qs2">
-                                <rect key="frame" x="4" y="726" width="71" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wgH-tW-qs2">
+                                <rect key="frame" x="24" y="730" width="24" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Simetria V"/>
+                                <state key="normal" title="Simetria V" image="Pictogramas em Pixel-49"/>
                                 <connections>
                                     <action selector="symmetryY:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PWR-Lv-KWO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cG9-Hk-bBw">
-                                <rect key="frame" x="83" y="726" width="72" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cG9-Hk-bBw">
+                                <rect key="frame" x="91" y="724" width="23" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Simetria H"/>
+                                <state key="normal" title="Simetria H" image="Pictogramas em Pixel-21"/>
                                 <connections>
                                     <action selector="symmetryX:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R0c-k2-DZH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uk9-Ti-NBR">
-                                <rect key="frame" x="87" y="765" width="63" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uk9-Ti-NBR">
+                                <rect key="frame" x="103" y="766" width="21" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Borracha"/>
+                                <state key="normal" title="Borracha" image="Pictogramas em Pixel-55"/>
                                 <connections>
                                     <action selector="eraser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bj9-vH-6iM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRB-RH-t5o">
-                                <rect key="frame" x="345" y="765" width="39" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRB-RH-t5o">
+                                <rect key="frame" x="353" y="767" width="22" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Balde"/>
+                                <state key="normal" title="Balde" image="Pictogramas em Pixel-57"/>
                                 <connections>
                                     <action selector="bucket:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yhT-ct-7Sw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BiN-r3-6HQ">
-                                <rect key="frame" x="21" y="765" width="37" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TwS-hl-CJZ">
+                                <rect key="frame" x="282" y="767" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Lapis"/>
-                                <connections>
-                                    <action selector="pen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NCn-c0-hmz"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TwS-hl-CJZ">
-                                <rect key="frame" x="269" y="765" width="37" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Linha"/>
+                                <state key="normal" title="Linha" image="Pictogramas em Pixel-60"/>
                                 <connections>
                                     <action selector="line:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ki6-qW-wc2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz8-nb-A7b" userLabel="Export">
-                                <rect key="frame" x="184" y="765" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz8-nb-A7b" userLabel="Export">
+                                <rect key="frame" x="178" y="766" width="21" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Export"/>
+                                <state key="normal" title="Export" image="Pictogramas em Pixel-11"/>
                                 <connections>
                                     <action selector="export:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cc5-6a-hk3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6K9-eX-bQE">
-                                <rect key="frame" x="21" y="803" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6K9-eX-bQE">
+                                <rect key="frame" x="20" y="807" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Cor"/>
+                                <state key="normal" title="Cor" image="Pictogramas em Pixel-20"/>
                                 <connections>
                                     <action selector="colorBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OJ8-y6-ytU"/>
                                 </connections>
@@ -199,28 +187,21 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iZ-1b-gup">
-                                <rect key="frame" x="87" y="803" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BiN-r3-6HQ">
+                                <rect key="frame" x="31" y="767" width="22" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="eyedropper" catalog="system"/>
+                                <state key="normal" title="Lapis" image="Pictogramas em Pixel-15"/>
                                 <connections>
-                                    <action selector="dropperBttn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YgV-y1-r91"/>
+                                    <action selector="pen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NCn-c0-hmz"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="moM-o9-xau" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="686-XS-Svc"/>
-                            <constraint firstItem="moM-o9-xau" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Gxl-Xt-rbv"/>
-                            <constraint firstItem="moM-o9-xau" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="eOk-Nc-ux4"/>
-                            <constraint firstItem="moM-o9-xau" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="m14-m3-Vhh"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="colorBttn" destination="6K9-eX-bQE" id="8nZ-Om-EQ3"/>
                         <outlet property="colorMenu" destination="UyN-vc-3u4" id="2pY-cS-Btp"/>
-                        <outlet property="dropperBttn" destination="1iZ-1b-gup" id="11F-9a-y8Y"/>
                         <outlet property="gridView" destination="ZaQ-Qp-QOm" id="o8L-1Y-lL2"/>
                         <outlet property="scrollView" destination="moM-o9-xau" id="e2Y-to-qN0"/>
                         <outletCollection property="colorBttns" destination="6el-if-ddQ" collectionClass="NSMutableArray" id="Qmo-S4-5XP"/>
@@ -241,7 +222,17 @@
         </scene>
     </scenes>
     <resources>
-        <image name="eyedropper" catalog="system" width="128" height="119"/>
+        <image name="Pictogramas em Pixel-11" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-15" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-20" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-21" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-23" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-24" width="135" height="134"/>
+        <image name="Pictogramas em Pixel-49" width="135" height="134"/>
+        <image name="Pictogramas em Pixel-50" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-55" width="135" height="134"/>
+        <image name="Pictogramas em Pixel-57" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-60" width="134" height="134"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
