@@ -139,6 +139,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
 }
+
 extension ViewController: UIColorPickerViewControllerDelegate{
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         color = viewController.selectedColor
