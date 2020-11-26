@@ -15,7 +15,7 @@ var corFundo: UIColor! = .clear
 
 var hexCode = String()
 var hexStrings = ["00", "00", "00"]
-let colorMenu = ColorMenu()
+
 
 var isPanGestureRecognizerActive: Bool?
 
@@ -99,7 +99,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         contentView.layer.borderWidth = 0.4
         contentView.layer.borderColor = UIColor.black.cgColor
         
-        
         initGrid()
     }
     
@@ -129,7 +128,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     @objc func handleTouch(gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: contentView)
-        //print(location)
         
         let width = contentView.frame.width / CGFloat(numViewPerRow)
         
@@ -285,9 +283,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     func doLine(x1: Int, x2: Int, y1: Int, y2: Int){
         let dx = x2 - x1
         let dy = y2 - y1
-//        if color == nil{
-//            color = .black
-//        }
+
         
         if x1 == x2 && y1 == y2{
             let ident = "\(x1 + 1)|\(y1 + 1)"
@@ -326,10 +322,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             } else {
                 ident = "\(y + 1)|\(x + 1)"
             }
-
-//            if color == nil{
-//                color = .black
-//            }
             
             let cellView = cells[ident]
             cellView?.backgroundColor = color
@@ -434,8 +426,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
         case .symmetryXY:
             return
-
-            
+          
         case .none:
             return
         }
@@ -458,14 +449,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         case .symmetryXY:
             generator.impactOccurred(intensity: 0.7)
         }
-    }
-        
-    func dropNewColor(i: Int, j: Int){
-        let ident = "\(i + 1)|\(j + 1)"
-        let pixel = cells[ident]
-    
-        color = pixel?.backgroundColor ?? .black
-        colorMenu.changeLastColors(newColor: color)
     }
     
 }
