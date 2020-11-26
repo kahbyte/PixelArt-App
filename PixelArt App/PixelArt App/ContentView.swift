@@ -25,12 +25,18 @@ struct ContentView: View {
                 
                 Home()
                     .tabItem{
-                        Image(systemName: "house")
+                        VStack{
+                            Image("home")
+                            Text("Home")
+                        }
                     }
                     .tag(Tab.home)
                 Galeria()
                     .tabItem{
-                        Image(systemName: "folder")
+                        VStack{
+                            Image("album")
+                            Text("Home")
+                        }
                     }
                     .tag(Tab.album)
                 

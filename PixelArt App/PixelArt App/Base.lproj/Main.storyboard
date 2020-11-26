@@ -96,14 +96,6 @@
                                     <action selector="line:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ki6-qW-wc2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz8-nb-A7b" userLabel="Export">
-                                <rect key="frame" x="178" y="766" width="21" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Export" image="Pictogramas em Pixel-11"/>
-                                <connections>
-                                    <action selector="export:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cc5-6a-hk3"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6K9-eX-bQE">
                                 <rect key="frame" x="20" y="807" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -118,6 +110,14 @@
                                 <state key="normal" title="Lapis" image="Pictogramas em Pixel-15"/>
                                 <connections>
                                     <action selector="pen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NCn-c0-hmz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz8-nb-A7b" userLabel="Export">
+                                <rect key="frame" x="354" y="44" width="21" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Export" image="Pictogramas em Pixel-11"/>
+                                <connections>
+                                    <action selector="export:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cc5-6a-hk3"/>
                                 </connections>
                             </button>
                         </subviews>

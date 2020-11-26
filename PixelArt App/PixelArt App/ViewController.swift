@@ -47,6 +47,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             scaledGridView.drawHierarchy(in: scaledGridView.bounds, afterScreenUpdates: true)
         }
         
+        _ = saveImage(image: image)
+        
         let share = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         
         present(share, animated: true, completion: nil)
@@ -68,8 +70,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         let width = hdView.frame.width / 31
         print("scaleMultiplier: \(scaleMultiplier)")
         
-        /*scalling everything
-         I've been through hell*/
         for j in 1 ... 31 {
             for i in 1 ... 31 {
                 let key = "\(i)|\(j)"
@@ -81,6 +81,25 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         }
         
         return hdView
+    }
+    
+    func saveImage(image: UIImage) -> Bool {
+        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
+            return false
+        }
+        
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return false
+        }
+        
+        do {
+            let str = "draw_\(UUID())"
+            try data.write(to: directory.appendingPathComponent("\(str).png")!)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
     }
     
     private func selectColor(){
