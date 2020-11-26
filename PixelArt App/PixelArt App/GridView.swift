@@ -445,10 +445,10 @@ class GridView: UIView, UIGestureRecognizerDelegate {
                 redoActions.append(redoAction)
                 
             case .line:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: counterLine)
-                for x in 1...counterLine {
+                for x in 1...action!.bitsInLine {
                     undoAction()
                 }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .line, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: action!.bitsInLine)
                 redoActions.append(redoAction)
                 
             case .symmetryX:
@@ -500,7 +500,11 @@ class GridView: UIView, UIGestureRecognizerDelegate {
                 recentActions.append(redoAction)
                 
             case .line:
-                return
+                for x in 1...action!.bitsInLine {
+                    redoAction()
+                }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .line, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: action!.bitsInLine)
+                recentActions.append(redoAction)
                 
             case .symmetryX:
                 return
