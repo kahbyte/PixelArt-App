@@ -38,7 +38,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     var x2 = 0
     var y1 = 0
     var y2 = 0
-    var counterLine: Int = 0
+    var counter: Int = 0
     
     //TODO: Trocar isso com o Rafa
     var initialPosition = (x: 0, y: 0)
@@ -61,7 +61,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         var lastAction: Tool
         var lastState: Bool
         var currentState: Bool
-        var bitsInLine: Int
+        var bitsInAction: Int
     }
     
     var recentActions: [Action] = []
@@ -156,7 +156,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             x1 = i
             y1 = j
         }
-        counterLine = 0
+        counter = 0
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -177,7 +177,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         if tool == .line{
             let ident = "\(i + 1)|\(j + 1)"
             let cellView = cells[ident]
-            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .line, lastState: paintedByBucket[i][j], currentState: false, bitsInLine: counterLine)
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .line, lastState: paintedByBucket[i][j], currentState: false, bitsInAction: counter)
             recentActions.append(action)
         }
 
@@ -216,7 +216,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let cellView = cells[ident]
         
         if cellView?.backgroundColor != color {
-            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: false, bitsInLine: 0)
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: false, bitsInAction: 0)
             recentActions.append(action)
             
             paintedByBucket[i][j] = false
@@ -232,7 +232,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         
         
         if cellView?.backgroundColor != .clear {
-            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: false, bitsInLine: 0)
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: false, bitsInAction: 0)
             
             paintedByBucket[i][j] = false
             
@@ -245,7 +245,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i + 1)|\(j + 1)"
         let cellView = cells[ident]
         
-        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: true, bitsInLine: 0)
+        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: true, bitsInAction: 0)
         recentActions.append(action)
         
         corFundo = cellView?.backgroundColor
@@ -253,26 +253,48 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     }
     
     func doSymmetry(i: Int, j: Int){
-        let ident1 = "\(i + 1)|\(j + 1)"
-        let ident2 = "\(numViewPerRow - (i))|\(j + 1)"
-        let ident3 = "\(i + 1)|\(numViewPerRow - (j))"
-        let ident4 = "\(numViewPerRow - (i))|\(numViewPerRow - (j))"
+        let i1 = i + 1
+        let j1 = j + 1
+        let i2 = numViewPerRow - (i)
+        let j2 = j + 1
+        let i3 = i + 1
+        let j3 = numViewPerRow - (j)
+        let i4 = numViewPerRow - (i)
+        let j4 = numViewPerRow - (j)
+        let ident1 = "\(i1)|\(j1)"
         let cellView1 = cells[ident1]
+        let ident2 = "\(i2)|\(j2)"
         let cellView2 = cells[ident2]
+        let ident3 = "\(i3)|\(j3)"
         let cellView3 = cells[ident3]
+        let ident4 = "\(i4)|\(j4)"
         let cellView4 = cells[ident4]
         
         if i >= 0 && i < numViewPerRow && j >= 0 && j < numViewPerRow{
             switch tool {
             case .symmetryX:
-                mirror(cellView1: cellView1, cellView2: cellView2)
+                if color != cellView1?.backgroundColor || color != cellView2?.backgroundColor{
+                    mirror(i1: i1, j1: j1, i2: i2, j2: j2)
+                    SymmetryAction(i: i1, j: j1)
+                    counter = 0
+                }
                 
             case .symmetryY:
-                mirror(cellView1: cellView1, cellView2: cellView3)
+                if color != cellView1?.backgroundColor || color != cellView3?.backgroundColor{
+                    mirror(i1: i1, j1: j1, i2: i3, j2: j3)
+                    SymmetryAction(i: i1, j: j1)
+                    counter = 0
+                }
                 
             case .symmetryXY:
-                mirror(cellView1: cellView1, cellView2: cellView2)
-                mirror(cellView1: cellView3, cellView2: cellView4)
+                if color != cellView1?.backgroundColor || color != cellView2?.backgroundColor || color != cellView3?.backgroundColor || color != cellView4?.backgroundColor{
+                    
+                    mirror(i1: i1, j1: j1, i2: i2, j2: j2)
+                    mirror(i1: i3, j1: j3, i2: i4, j2: j4)
+                    SymmetryAction(i: i1, j: j1)
+                    counter = 0
+                }
+                
             default:
                 print("F")
             }
@@ -280,13 +302,44 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    func mirror(cellView1: UIView?, cellView2: UIView?){
+    func mirror(i1: Int, j1: Int, i2: Int, j2: Int){
+        let ident1 = "\(i1)|\(j1)"
+        let cellView1 = cells[ident1]
+        let ident2 = "\(i2)|\(j2)"
+        let cellView2 = cells[ident2]
         if color != cellView1?.backgroundColor {
+            let action = Action(key: ident1, lastColor: (cellView1?.backgroundColor)!, currentColor: color, lastAction: .pen, lastState: paintedByBucket[i1][j1], currentState: false, bitsInAction: 0)
+            recentActions.append(action)
             cellView1?.backgroundColor = color
+            counter += 1
         }
         
         if color != cellView2?.backgroundColor {
+            let action2 = Action(key: ident2, lastColor: (cellView2?.backgroundColor)!, currentColor: color, lastAction: .pen, lastState: paintedByBucket[i2][j2], currentState: false, bitsInAction: 0)
+            recentActions.append(action2)
             cellView2?.backgroundColor = color
+            counter += 1
+        }
+    }
+    
+    func SymmetryAction(i: Int, j: Int){
+        let ident = "\(i)|\(j)"
+        let cellView = cells[ident]
+        switch tool {
+        case .symmetryX:
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .symmetryX, lastState: paintedByBucket[i][j], currentState: false, bitsInAction: counter)
+            print(counter)
+                recentActions.append(action)
+            
+        case .symmetryY:
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .symmetryY, lastState: paintedByBucket[i][j], currentState: false, bitsInAction: counter)
+                recentActions.append(action)
+            
+        case .symmetryXY:
+            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .symmetryXY, lastState: paintedByBucket[i][j], currentState: false, bitsInAction: counter)
+                recentActions.append(action)
+        default:
+            print("F")
         }
     }
     
@@ -403,11 +456,11 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident = "\(i)|\(j)"
         let cellView = cells[ident]
         
-        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: false, bitsInLine: 0)
+        let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: false, bitsInAction: 0)
         recentActions.append(action)
     
         cellView?.backgroundColor = color
-        counterLine += 1
+        counter += 1
     }
     
     func undoAction() {
@@ -421,21 +474,20 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
             switch action?.lastAction {
             case .pen:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: 0)
-                
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: 0)
                 pixel?.backgroundColor = action?.lastColor
                 paintedByBucket[i - 1][j - 1] = action!.lastState
                 redoActions.append(redoAction)
                 
             case .eraser:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: 0)
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: 0)
                 
                 pixel?.backgroundColor = action?.lastColor
                 
                 redoActions.append(redoAction)
                 
             case .bucket:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: 0)
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: 0)
                 
                 corFundo = action?.currentColor
                 color = action!.lastColor
@@ -445,20 +497,31 @@ class GridView: UIView, UIGestureRecognizerDelegate {
                 redoActions.append(redoAction)
                 
             case .line:
-                for x in 1...action!.bitsInLine {
+                for _ in 1...action!.bitsInAction {
                     undoAction()
                 }
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .line, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: action!.bitsInLine)
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .line, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
                 redoActions.append(redoAction)
                 
             case .symmetryX:
-                return
+                for _ in 1...action!.bitsInAction {
+                    undoAction()
+                }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .symmetryX, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
+                redoActions.append(redoAction)
                 
             case .symmetryY:
-                return
-                
+                for _ in 1...action!.bitsInAction {
+                    undoAction()
+                }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .symmetryY, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
+                redoActions.append(redoAction)
             case .symmetryXY:
-                return
+                for _ in 1...action!.bitsInAction {
+                    undoAction()
+                }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .symmetryXY, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
+                redoActions.append(redoAction)
                 
             case .none:
                 return
@@ -477,21 +540,21 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
             switch action?.lastAction {
             case .pen:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: 0)
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .pen, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: 0)
                 
                 pixel?.backgroundColor = action?.lastColor
                 
                 recentActions.append(redoAction)
                 
             case .eraser:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: 0)
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .eraser, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: 0)
                 
                 pixel?.backgroundColor = action?.lastColor
                 
                 recentActions.append(redoAction)
                 
             case .bucket:
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: 0)
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .bucket, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: 0)
                 
                 corFundo = action?.currentColor
                 color = action!.lastColor
@@ -500,20 +563,32 @@ class GridView: UIView, UIGestureRecognizerDelegate {
                 recentActions.append(redoAction)
                 
             case .line:
-                for x in 1...action!.bitsInLine {
+                for _ in 1...action!.bitsInAction {
                     redoAction()
                 }
-                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .line, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInLine: action!.bitsInLine)
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .line, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
                 recentActions.append(redoAction)
                 
             case .symmetryX:
-                return
+                for _ in 1...action!.bitsInAction {
+                    redoAction()
+                }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .symmetryX, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
+                recentActions.append(redoAction)
                 
             case .symmetryY:
-                return
+                for _ in 1...action!.bitsInAction {
+                    redoAction()
+                }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .symmetryY, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
+                recentActions.append(redoAction)
                 
             case .symmetryXY:
-                return
+                for _ in 1...action!.bitsInAction {
+                    redoAction()
+                }
+                let redoAction = Action(key: action!.key, lastColor: (action?.currentColor)!, currentColor: action!.lastColor, lastAction: .symmetryXY, lastState: paintedByBucket[i][j], currentState: action!.lastState, bitsInAction: action!.bitsInAction)
+                recentActions.append(redoAction)
                 
             case .none:
                 return
