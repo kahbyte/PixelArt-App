@@ -15,24 +15,6 @@ struct Home: View {
         
         VStack{
             
-            Button(action: {
-                print("Tema")
-                pixelArtViewModel.createFakeData()
-            }){
-                HStack{
-                    Text("Ver desafio diário")
-                        .padding(.horizontal)
-                    
-                    Image(systemName: "eye")
-                        .padding(.horizontal)
-                }
-                    .padding()
-                    .background(Color.purple)
-                    .foregroundColor(.white)
-                    .cornerRadius(40)
-            }
-                .padding()
-            
 //            let data = (1...25).map { "Item \($0)" }
             
             let columns = [
@@ -49,11 +31,6 @@ struct Home: View {
                             .aspectRatio(1, contentMode: .fill)
                             .contextMenu{
                                 ContMenu(pixelArt: item)
-                            }
-                            .alert(isPresented: $pixelArtViewModel.nav.confirmandoDelete) {
-                                Alert(title: Text("Deseja mesmo deletar?"), message: Text("Essa operação não poderá ser disfeita"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Confirmar"), action: {
-                                        pixelArtViewModel.deletePX(px: item)
-                                }))
                             }
                     }
                     

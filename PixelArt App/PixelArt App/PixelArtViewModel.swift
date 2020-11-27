@@ -54,101 +54,97 @@ struct Navegacao {
     
     var criandoAlbum : Bool = false
     var nomeAlbum : String = ""
-    var confirmandoDelete : Bool = false
     
-}
-
-class PixelArtViewModel : ObservableObject {
-    
-    @Published var nav = Navegacao()
-    
-
-    init() {
-        fetch()
+    private var desenhandoControle : Bool = false
+    var desenhando : Bool {
+        get {
+            return desenhandoControle
+        }
+        set {
+            fetch()
+            desenhandoControle = newValue
+        }
     }
     
-    func fetch() {
+    mutating func fetch() {
+            
+        self.pixelArts = []
+        self.albuns = []
+     
+        var draws = [String]()
+        var drawAls = [String]()
+        var albs = [String]()
         
-        DispatchQueue.main.async {
-            
-            self.nav.pixelArts = []
-            self.nav.albuns = []
-         
-            var draws = [String]()
-            var drawAls = [String]()
-            var albs = [String]()
-            
-            guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-                return
-            }
-
-            let enumerator = FileManager.default.enumerator(atPath: directory.path!)
-
-            while let filename = enumerator?.nextObject() as? String {
-                print(filename)
-                if filename.hasPrefix("alb_") && filename.hasSuffix(".png") {
-                    albs.append(filename)
-                }
-                else if filename.hasPrefix("draw_") && filename.hasSuffix(".png") {
-                    draws.append(filename)
-                }
-                else if filename.hasPrefix("drawAl_") && filename.hasSuffix(".png") {
-                    drawAls.append(filename)
-                }
-            }
-            
-            for alb in albs {
-                var str = alb
-                var range = str.startIndex..<str.index(str.startIndex, offsetBy: 4)
-                str.removeSubrange(range)//remove o alb_
-                range = str.index(str.endIndex, offsetBy: -4)..<str.endIndex
-                str.removeSubrange(range)//remove o .png
-                
-                var id = str
-                range = id.startIndex..<str.index(id.firstIndex(of: "_")!, offsetBy: 1)
-                id.removeSubrange(range)
-                
-                var nome = str
-                range = nome.index(str.firstIndex(of: "_")!, offsetBy: 0)..<nome.endIndex
-                nome .removeSubrange(range)
-                
-                let al = Album(id: UUID(uuidString: id) ?? UUID(), name: nome, imageName: str, image: self.fetchImage(named: alb))
-                self.nav.albuns.append(al)
-            }
-            
-            for drawAl in drawAls {
-                var str = drawAl
-                
-                var range = str.startIndex..<str.index(str.startIndex, offsetBy: 7)
-                str.removeSubrange(range)//remove o albAl_
-                range = str.index(str.endIndex, offsetBy: -4)..<str.endIndex
-                str.removeSubrange(range)//remove o .png
-                
-                var album = str
-                range = album.startIndex..<album.index(album.firstIndex(of: "_")!, offsetBy: 1)
-                album.removeSubrange(range)
-                
-                var id = str
-                range = id.index(id.firstIndex(of: "_")!, offsetBy: 0)..<id.endIndex
-                id.removeSubrange(range)
-                
-                let draw = PixelArt(id: UUID(uuidString: id) ?? UUID(), imageName: drawAl, image: self.fetchImage(named: drawAl), album: UUID(uuidString: album))
-                self.nav.pixelArts.append(draw)
-            }
-            
-            for draw in draws {
-                var str = draw
-                var range = str.startIndex..<str.index(str.startIndex, offsetBy: 5)
-                str.removeSubrange(range)
-                range = str.index(str.endIndex, offsetBy: -4)..<str.endIndex
-                str.removeSubrange(range)
-//                print(str)
-                let px = PixelArt(id: UUID(uuidString: str) ?? UUID(), imageName: draw, image: self.fetchImage(named: draw), album: nil)
-//                print(px)
-                self.nav.pixelArts.append(px)
-            }
-            
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return
         }
+
+        let enumerator = FileManager.default.enumerator(atPath: directory.path!)
+
+        while let filename = enumerator?.nextObject() as? String {
+            print(filename)
+            if filename.hasPrefix("alb_") && filename.hasSuffix(".png") {
+                albs.append(filename)
+            }
+            else if filename.hasPrefix("draw_") && filename.hasSuffix(".png") {
+                draws.append(filename)
+            }
+            else if filename.hasPrefix("drawAl_") && filename.hasSuffix(".png") {
+                drawAls.append(filename)
+            }
+        }
+        
+        for alb in albs {
+            var str = alb
+            var range = str.startIndex..<str.index(str.startIndex, offsetBy: 4)
+            str.removeSubrange(range)//remove o alb_
+            range = str.index(str.endIndex, offsetBy: -4)..<str.endIndex
+            str.removeSubrange(range)//remove o .png
+            
+            var id = str
+            range = id.startIndex..<str.index(id.firstIndex(of: "_")!, offsetBy: 1)
+            id.removeSubrange(range)
+            
+            var nome = str
+            range = nome.index(str.firstIndex(of: "_")!, offsetBy: 0)..<nome.endIndex
+            nome .removeSubrange(range)
+            
+            let al = Album(id: UUID(uuidString: id) ?? UUID(), name: nome, imageName: str, image: self.fetchImage(named: alb))
+            self.albuns.append(al)
+        }
+        
+        for drawAl in drawAls {
+            var str = drawAl
+            
+            var range = str.startIndex..<str.index(str.startIndex, offsetBy: 7)
+            str.removeSubrange(range)//remove o albAl_
+            range = str.index(str.endIndex, offsetBy: -4)..<str.endIndex
+            str.removeSubrange(range)//remove o .png
+            
+            var album = str
+            range = album.startIndex..<album.index(album.firstIndex(of: "_")!, offsetBy: 1)
+            album.removeSubrange(range)
+            
+            var id = str
+            range = id.index(id.firstIndex(of: "_")!, offsetBy: 0)..<id.endIndex
+            id.removeSubrange(range)
+            
+            let draw = PixelArt(id: UUID(uuidString: id) ?? UUID(), imageName: drawAl, image: self.fetchImage(named: drawAl), album: UUID(uuidString: album))
+            self.pixelArts.append(draw)
+        }
+        
+        for draw in draws {
+            var str = draw
+            var range = str.startIndex..<str.index(str.startIndex, offsetBy: 5)
+            str.removeSubrange(range)
+            range = str.index(str.endIndex, offsetBy: -4)..<str.endIndex
+            str.removeSubrange(range)
+//                print(str)
+            let px = PixelArt(id: UUID(uuidString: str) ?? UUID(), imageName: draw, image: self.fetchImage(named: draw), album: nil)
+//                print(px)
+            self.pixelArts.append(px)
+        }
+    
     }
     
     func fetchImage(named: String) -> UIImage? {
@@ -158,12 +154,22 @@ class PixelArtViewModel : ObservableObject {
         return nil
     }
     
+}
 
+class PixelArtViewModel : ObservableObject {
+    
+    @Published var nav = Navegacao()
+    
+
+    init() {
+        nav.fetch()
+    }
+    
     
     //MARK: Intents
     
     func createFakeData(){
-        fetch()
+        nav.fetch()
     }
     
     func exitAlbum() {
@@ -216,7 +222,7 @@ class PixelArtViewModel : ObservableObject {
             }
         }
         
-        fetch()
+        nav.fetch()
     }
     
     func newAlbum() -> Void {
@@ -234,7 +240,7 @@ class PixelArtViewModel : ObservableObject {
             nav.nomeAlbum = ""
         }
         
-        fetch()
+        nav.fetch()
     }
     
     func touchAlbum(album: Album) {
@@ -246,7 +252,7 @@ class PixelArtViewModel : ObservableObject {
         nav.salvandoEmAlbum = nil
         nav.criandoAlbum = false
         nav.AlbumAberto = album
-        fetch()
+        nav.fetch()
     }
     
     private func salvarPxNoAlbum(album: Album){
@@ -289,7 +295,7 @@ class PixelArtViewModel : ObservableObject {
         }
         
         
-        fetch()
+        nav.fetch()
     }
     
     func deletePX(px : PixelArt){
@@ -304,7 +310,7 @@ class PixelArtViewModel : ObservableObject {
             print(error)
         }
         
-        fetch()
+        nav.fetch()
     }
     
     private func saveImageAlbum(image: UIImage, album: Album){

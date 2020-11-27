@@ -16,7 +16,6 @@
 		307C2FDE257036B900A1231A /* IfViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C2FD3257036B900A1231A /* IfViewModifier.swift */; };
 		307C2FDF257036B900A1231A /* PocNavegacao3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C2FD4257036B900A1231A /* PocNavegacao3App.swift */; };
 		307C2FE0257036B900A1231A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C2FD5257036B900A1231A /* Home.swift */; };
-		307C2FE1257036B900A1231A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C2FD6257036B900A1231A /* HomeViewModel.swift */; };
 		307C2FE2257036B900A1231A /* ContMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C2FD7257036B900A1231A /* ContMenu.swift */; };
 		30A357BC255B316E00355509 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A357BB255B316E00355509 /* UIViewExtension.swift */; };
 		30F8B1592559C99200DBA8E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F8B1582559C99200DBA8E0 /* ViewController.swift */; };
@@ -25,6 +24,7 @@
 		30F8B1612559C99200DBA8E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30F8B15F2559C99200DBA8E0 /* LaunchScreen.storyboard */; };
 		30F8B16B2559CA4A00DBA8E0 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F8B1692559CA4A00DBA8E0 /* GridView.swift */; };
 		30F8B16C2559CA4A00DBA8E0 /* grid.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30F8B16A2559CA4A00DBA8E0 /* grid.xib */; };
+		B6C5EEAE2571B94F00EF0F96 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C5EEAD2571B94F00EF0F96 /* LaunchScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,6 @@
 		307C2FD3257036B900A1231A /* IfViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IfViewModifier.swift; sourceTree = "<group>"; };
 		307C2FD4257036B900A1231A /* PocNavegacao3App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PocNavegacao3App.swift; sourceTree = "<group>"; };
 		307C2FD5257036B900A1231A /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
-		307C2FD6257036B900A1231A /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		307C2FD7257036B900A1231A /* ContMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContMenu.swift; sourceTree = "<group>"; };
 		30A357BB255B316E00355509 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		30F8B1512559C99200DBA8E0 /* PixelArt App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PixelArt App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +47,7 @@
 		30F8B1622559C99200DBA8E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30F8B1692559CA4A00DBA8E0 /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		30F8B16A2559CA4A00DBA8E0 /* grid.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = grid.xib; sourceTree = "<group>"; };
+		B6C5EEAD2571B94F00EF0F96 /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,13 +80,13 @@
 		30F8B1532559C99200DBA8E0 /* PixelArt App */ = {
 			isa = PBXGroup;
 			children = (
+				B6C5EEAD2571B94F00EF0F96 /* LaunchScreen.swift */,
 				307C2FD2257036B900A1231A /* arrayModifier.swift */,
 				307C2FD0257036B900A1231A /* ContentView.swift */,
 				307C2FD7257036B900A1231A /* ContMenu.swift */,
 				307C2FD1257036B900A1231A /* CustomController.swift */,
 				307C2FCD257036B900A1231A /* Galeria.swift */,
 				307C2FD5257036B900A1231A /* Home.swift */,
-				307C2FD6257036B900A1231A /* HomeViewModel.swift */,
 				307C2FD3257036B900A1231A /* IfViewModifier.swift */,
 				307C2FCE257036B900A1231A /* PixelArtModel.swift */,
 				307C2FCF257036B900A1231A /* PixelArtViewModel.swift */,
@@ -176,6 +176,7 @@
 			files = (
 				307C2FD9257036B900A1231A /* PixelArtModel.swift in Sources */,
 				30A357BC255B316E00355509 /* UIViewExtension.swift in Sources */,
+				B6C5EEAE2571B94F00EF0F96 /* LaunchScreen.swift in Sources */,
 				307C2FE2257036B900A1231A /* ContMenu.swift in Sources */,
 				307C2FDD257036B900A1231A /* arrayModifier.swift in Sources */,
 				30F8B16B2559CA4A00DBA8E0 /* GridView.swift in Sources */,
@@ -186,7 +187,6 @@
 				307C2FDF257036B900A1231A /* PocNavegacao3App.swift in Sources */,
 				307C2FDB257036B900A1231A /* ContentView.swift in Sources */,
 				307C2FD8257036B900A1231A /* Galeria.swift in Sources */,
-				307C2FE1257036B900A1231A /* HomeViewModel.swift in Sources */,
 				307C2FDA257036B900A1231A /* PixelArtViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,9 +21,7 @@ struct ContentView: View {
     
     var body: some View {
         if test{
-            CustomController().onDisappear{
-                test = false
-            }
+//            CustomController(estouaparecendo: $test)
         }else{
             NavigationView {
                 TabView (selection: $pixelArtViewModel.nav.tabSelecionada){
@@ -60,27 +58,25 @@ struct ContentView: View {
                                         .font(.title)
                                 },
                                 trailing:
-                                    Button(action:  {
-                                        print("oi")
-                                        pixelArtViewModel.createFakeData()
-                                    }) {
-                                        Image(systemName: "plus")
-                                            .font(.title)
-                                    }
+                                    AddButton(destination: CustomController().onDisappear(perform: {
+                                        pixelArtViewModel.nav.fetch()
+                                    }))
                             )
                     }
                     .if(pixelArtViewModel.nav.AlbumAberto == nil) {
                         $0
-                            .navigationBarTitle("")
+                            .navigationBarTitle(pixelArtViewModel.nav.tabSelecionada == .home ? "Seus Desenhos" : "Álbuns")
                             .navigationBarTitleDisplayMode(.automatic)
                             .navigationBarItems(trailing:
-                                                    Button(action:  {
-                                                        test = true
-                                                    }) {
-                                                        Image(systemName: "plus")
-                                                            .font(.title)
-                                                    }
-    //                            AddButton(destination: CustomController())
+//                                                    Button(action:  {
+//                                                        test = true
+//                                                    }) {
+//                                                        Image(systemName: "plus")
+//                                                            .font(.title)
+//                                                    }
+                                                    AddButton(destination: CustomController().onDisappear(perform: {
+                                                        pixelArtViewModel.nav.fetch()
+                                                    }))
                             )
                     }
             }

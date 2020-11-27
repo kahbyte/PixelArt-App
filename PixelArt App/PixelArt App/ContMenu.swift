@@ -14,7 +14,7 @@ struct ContMenu: View {
     var pixelArt: PixelArt
     
     var body: some View {
-        Group{            
+        Group{
             Button(action: { pixelArtViewModel.saveOrRemoveFromAlbum(pixelArt: pixelArt) }) {
                 HStack{
                     if (pixelArtViewModel.nav.tabSelecionada == Tab.home) {
@@ -52,7 +52,7 @@ struct ContMenu: View {
             }
             
             Button(action: {
-                pixelArtViewModel.nav.confirmandoDelete = true
+                pixelArtViewModel.deletePX(px: pixelArt)
                 
             }) {
                 HStack{
