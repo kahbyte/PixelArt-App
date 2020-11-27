@@ -12,12 +12,9 @@ import UIKit
 var color: UIColor = .black
 var corFundo: UIColor! = .clear
 
-var red: CGFloat!
-var green: CGFloat!
-var blue: CGFloat!
-
 var hexCode = String()
-var hexStrings = ["", "", ""]
+var hexStrings = ["00", "00", "00"]
+
 
 var isPanGestureRecognizerActive: Bool?
 
@@ -47,6 +44,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet var contentView: UIView!
     
     let generator = UIImpactFeedbackGenerator(style: .medium)
+    let stronGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     
     var cells = [String: UIView]()
@@ -102,7 +100,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         contentView.layer.borderWidth = 0.4
         contentView.layer.borderColor = UIColor.black.cgColor
         
-        
         initGrid()
     }
     
@@ -132,7 +129,6 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     
     @objc func handleTouch(gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: contentView)
-        
         
         let width = contentView.frame.width / CGFloat(numViewPerRow)
         
@@ -177,14 +173,14 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .line, bitsInAction: counter)
             recentActions.append(action)
         }
-
     }
     
     func calledTool(i: Int, j: Int) {
         switch tool {
         case .pen:
-            draw(i: i, j: j)
-
+            if i < numViewPerRow && j < numViewPerRow && i >= 0 && j >= 0{
+                draw(i: i, j: j)
+            }
         case .eraser:
             erase(i: i, j: j)
 
@@ -217,7 +213,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             recentActions.append(action)
             
             cellView?.backgroundColor = color
-            generator.impactOccurred(intensity: 0.7)
+            
+            hapticFeedback(tool: .pen)
         }
     }
     
@@ -228,7 +225,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         
         if cellView?.backgroundColor != .clear {
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser, bitsInAction: 0)
-            
+           
+            hapticFeedback(tool: .eraser)
             cellView?.backgroundColor = .clear
             recentActions.append(action)
         }
@@ -239,6 +237,8 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let cellView = cells[ident]
         
         corFundo = cellView?.backgroundColor
+        
+        hapticFeedback(tool: .bucket)
         fillColor(i: i, j: j)
         let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .bucket, bitsInAction: counter)
         recentActions.append(action)
@@ -342,10 +342,12 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             recentActions.append(action)
             cell?.backgroundColor = color
             counter += 1
-            fillColor(i: i + 1, j: j)
-            fillColor(i: i - 1, j: j)
-            fillColor(i: i, j: j + 1)
-            fillColor(i: i, j: j - 1)
+           DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.fillColor(i: i + 1, j: j)
+                self.fillColor(i: i - 1, j: j)
+                self.fillColor(i: i, j: j + 1)
+                self.fillColor(i: i, j: j - 1)
+            }
         }
     }
     
@@ -371,6 +373,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             }
         }
         
+        hapticFeedback(tool: .line)
     }
     
     func lineEquation(x1: Int, x2: Int, y1: Int, y2: Int, f: Int, g: Int, h: Int){
@@ -542,7 +545,22 @@ class GridView: UIView, UIGestureRecognizerDelegate {
     }
     
     func hapticFeedback(tool: Tool) {
-        
+        switch tool {
+        case .pen:
+            generator.impactOccurred(intensity: 0.7)
+        case .eraser:
+            generator.impactOccurred(intensity: 0.4)
+        case .bucket:
+            stronGenerator.impactOccurred()
+        case .line:
+            generator.impactOccurred(intensity: 0.8)
+        case .symmetryY:
+            generator.impactOccurred(intensity: 0.7)
+        case .symmetryX:
+            generator.impactOccurred(intensity: 0.7)
+        case .symmetryXY:
+            generator.impactOccurred(intensity: 0.7)
+        }
     }
     
 }

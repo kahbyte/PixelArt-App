@@ -11,12 +11,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet var colorMenu: ColorMenu!
-    @IBOutlet var colorBttn: UIButton!
+    @IBOutlet weak var colorBttn: UIButton!
+    let colorPicker = UIColorPickerViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        colorPicker.delegate = self
         scrollView.delegate = self
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
@@ -46,8 +47,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             scaledGridView.drawHierarchy(in: scaledGridView.bounds, afterScreenUpdates: true)
         }
         
+        _ = saveImage(image: image)
+        
         let share = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-
+        
         present(share, animated: true, completion: nil)
         
         scaledGridView.removeFromSuperview()
@@ -67,8 +70,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         let width = hdView.frame.width / 31
         print("scaleMultiplier: \(scaleMultiplier)")
         
-        /*scalling everything
-         I've been through hell*/
         for j in 1 ... 31 {
             for i in 1 ... 31 {
                 let key = "\(i)|\(j)"
@@ -82,15 +83,36 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         return hdView
     }
     
+    func saveImage(image: UIImage) -> Bool {
+        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
+            return false
+        }
+        
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return false
+        }
+        
+        do {
+            let str = "draw_\(UUID())"
+            try data.write(to: directory.appendingPathComponent("\(str).png")!)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
+    }
     
-    
+    private func selectColor(){
+        colorPicker.supportsAlpha = true
+        colorPicker.selectedColor = color
+        present(colorPicker, animated: true)
+    }
+
     //MARK: IBActions!
     @IBAction func pen(_ sender: Any) {
         tool = .pen
-        
         gridView.awakeFromNib()
     }
-
     
     @IBAction func eraser(_ sender: Any) {
         tool = .eraser
@@ -100,49 +122,46 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func line(_ sender: Any) {
         tool = .line
-        
         gridView.awakeFromNib()
     }
     
     @IBAction func bucket(_ sender: Any) {
         tool = .bucket
-        
         gridView.awakeFromNib()
     }
-
-    @IBAction func colorBttn(_ sender: Any) {
-        if color == nil{
-            color = .black
-        }
-        
-        colorMenu.isHidden = false
-        colorMenu.layer.borderColor = color.cgColor
-        colorMenu.layer.borderWidth = 5.0
+    
+    @IBAction func colorBttn(_ sender: UIButton) {
+       selectColor()
     }
     
     @IBAction func symmetryY(_ sender: Any) {
         tool = .symmetryY
-        
         gridView.awakeFromNib()
     }
     
     @IBAction func symmetryX(_ sender: Any) {
         tool = .symmetryX
-        
         gridView.awakeFromNib()
     }
     
     @IBAction func symmetryXY(_ sender: Any) {
         tool = .symmetryXY
-        
         gridView.awakeFromNib()
-    
+        
     }
     @IBAction func undo(_ sender: Any) {
         gridView.undoAction()
     }
+
     @IBAction func redo(_ sender: Any) {
         gridView.redoAction()
+    }
+    
+}
+
+extension ViewController: UIColorPickerViewControllerDelegate{
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        color = viewController.selectedColor
     }
 }
 
