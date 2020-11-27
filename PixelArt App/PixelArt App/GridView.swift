@@ -342,12 +342,10 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             recentActions.append(action)
             cell?.backgroundColor = color
             counter += 1
-           DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                self.fillColor(i: i + 1, j: j)
-                self.fillColor(i: i - 1, j: j)
-                self.fillColor(i: i, j: j + 1)
-                self.fillColor(i: i, j: j - 1)
-            }
+            fillColor(i: i + 1, j: j)
+            fillColor(i: i - 1, j: j)
+            fillColor(i: i, j: j + 1)
+            fillColor(i: i, j: j - 1)
         }
     }
     

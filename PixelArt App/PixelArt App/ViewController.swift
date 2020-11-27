@@ -157,6 +157,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         gridView.redoAction()
     }
     
+    @IBAction func Volta(_ sender: Any) {
+        dismiss(animated: true, completion: .none)
+    }
+    
 }
 
 extension ViewController: UIColorPickerViewControllerDelegate{

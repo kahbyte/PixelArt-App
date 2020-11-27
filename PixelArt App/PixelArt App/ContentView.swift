@@ -17,62 +17,76 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var pixelArtViewModel : PixelArtViewModel
+    @State var test: Bool = false
     
     var body: some View {
-    
-        NavigationView {
-            TabView (selection: $pixelArtViewModel.nav.tabSelecionada){
-                
-                Home()
-                    .tabItem{
-                        VStack{
-                            Image("home")
-                            Text("Home")
-                        }
-                    }
-                    .tag(Tab.home)
-                Galeria()
-                    .tabItem{
-                        VStack{
-                            Image("album")
-                            Text("Home")
-                        }
-                    }
-                    .tag(Tab.album)
-                
+        if test{
+            CustomController().onDisappear{
+                test = false
             }
-                .if(pixelArtViewModel.nav.AlbumAberto != nil) {
-                    $0
-                        .navigationBarTitle(pixelArtViewModel.nav.AlbumAberto!.name)
-                        .navigationBarTitleDisplayMode(.inline)
-                        
-                        .navigationBarItems(
-                            leading:
-                                Button(action:  {
-                                pixelArtViewModel.exitAlbum()
-                            }) {
-                                Image(systemName: "chevron.left")
-                                    .font(.title)
-                            },
-                            trailing:
-                                Button(action:  {
-                                    print("oi")
-                                    pixelArtViewModel.createFakeData()
+        }else{
+            NavigationView {
+                TabView (selection: $pixelArtViewModel.nav.tabSelecionada){
+                    
+                    Home()
+                        .tabItem{
+                            VStack{
+                                Image("home")
+                                Text("Home")
+                            }
+                        }
+                        .tag(Tab.home)
+                    Galeria()
+                        .tabItem{
+                            VStack{
+                                Image("album")
+                                Text("Home")
+                            }
+                        }
+                        .tag(Tab.album)
+                    
+                }
+                    .if(pixelArtViewModel.nav.AlbumAberto != nil) {
+                        $0
+                            .navigationBarTitle(pixelArtViewModel.nav.AlbumAberto!.name)
+                            .navigationBarTitleDisplayMode(.inline)
+                            
+                            .navigationBarItems(
+                                leading:
+                                    Button(action:  {
+                                    pixelArtViewModel.exitAlbum()
                                 }) {
-                                    Image(systemName: "plus")
+                                    Image(systemName: "chevron.left")
                                         .font(.title)
-                                }
-                        )
-                }
-                .if(pixelArtViewModel.nav.AlbumAberto == nil) {
-                    $0
-                        .navigationBarTitle("")
-                        .navigationBarTitleDisplayMode(.automatic)
-                        .navigationBarItems(trailing:
-                            AddButton(destination: CustomController())
-                        )
-                }
+                                },
+                                trailing:
+                                    Button(action:  {
+                                        print("oi")
+                                        pixelArtViewModel.createFakeData()
+                                    }) {
+                                        Image(systemName: "plus")
+                                            .font(.title)
+                                    }
+                            )
+                    }
+                    .if(pixelArtViewModel.nav.AlbumAberto == nil) {
+                        $0
+                            .navigationBarTitle("")
+                            .navigationBarTitleDisplayMode(.automatic)
+                            .navigationBarItems(trailing:
+                                                    Button(action:  {
+                                                        test = true
+                                                    }) {
+                                                        Image(systemName: "plus")
+                                                            .font(.title)
+                                                    }
+    //                            AddButton(destination: CustomController())
+                            )
+                    }
+            }
         }
+        
+        
     
     }
 

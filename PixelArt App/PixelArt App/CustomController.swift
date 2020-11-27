@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CustomController : UIViewControllerRepresentable {
+    @Binding var estouaparecendo: Bool 
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<CustomController>) -> UIViewController {
         
@@ -17,6 +18,8 @@ struct CustomController : UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<CustomController>) {
-        
+        uiViewController.viewDidDisappear(animated: true){
+            
+        }
     }
 }
