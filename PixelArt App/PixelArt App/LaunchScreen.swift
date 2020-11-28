@@ -18,7 +18,10 @@ struct LaunchScreen: View {
             if self.splashScreenEnded {
                 ContentView().environmentObject(viewModel)
             } else {
-                Image("teste")
+                Image("testeSplash")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 500 ,height: 500)
             }
         }.onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
