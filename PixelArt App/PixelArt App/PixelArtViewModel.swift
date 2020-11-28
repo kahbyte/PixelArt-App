@@ -82,7 +82,6 @@ struct Navegacao {
         let enumerator = FileManager.default.enumerator(atPath: directory.path!)
 
         while let filename = enumerator?.nextObject() as? String {
-            print(filename)
             if filename.hasPrefix("alb_") && filename.hasSuffix(".png") {
                 albs.append(filename)
             }
