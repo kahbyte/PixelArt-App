@@ -56,8 +56,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             scaledGridView.drawHierarchy(in: scaledGridView.bounds, afterScreenUpdates: true)
         }
         
-        _ = saveImage(image: image)
-        
         let share = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         
         present(share, animated: true, completion: nil)
@@ -189,7 +187,20 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func save(_ sender: Any) {
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.zoomScale = 1.0
+        }
         
+        let scaledGridView = scaleViewsToHD(view: gridView.contentView)
+        
+        let renderer = UIGraphicsImageRenderer(size: scaledGridView.bounds.size)
+        
+        
+        let image = renderer.image { ctx in
+            scaledGridView.drawHierarchy(in: scaledGridView.bounds, afterScreenUpdates: true)
+        }
+        
+        _ = saveImage(image: image)
     }
     
     
