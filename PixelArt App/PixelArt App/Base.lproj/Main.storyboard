@@ -147,6 +147,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="21" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="QY7-AO-ese"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="21" id="gQk-aM-fIQ"/>
                                                     <constraint firstAttribute="width" constant="21" id="z2f-JP-TAA"/>
                                                 </constraints>
                                                 <state key="normal" title="Simetria H" image="Pictogramas em Pixel-21"/>
@@ -198,9 +199,16 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bucket" destination="gRB-RH-t5o" id="UeS-g1-Jj2"/>
                         <outlet property="colorBttn" destination="6K9-eX-bQE" id="8nZ-Om-EQ3"/>
+                        <outlet property="eraser" destination="Uk9-Ti-NBR" id="dbh-MM-uIe"/>
                         <outlet property="gridView" destination="ZaQ-Qp-QOm" id="o8L-1Y-lL2"/>
+                        <outlet property="line" destination="TwS-hl-CJZ" id="ZOb-it-2BX"/>
+                        <outlet property="pen" destination="BiN-r3-6HQ" id="gYR-0S-O6M"/>
                         <outlet property="scrollView" destination="moM-o9-xau" id="e2Y-to-qN0"/>
+                        <outlet property="symmetryX" destination="cG9-Hk-bBw" id="Q3d-FB-2nd"/>
+                        <outlet property="symmetryXY" destination="HML-nn-sAu" id="1RD-1k-g5e"/>
+                        <outlet property="symmetryY" destination="wgH-tW-qs2" id="k0O-0W-nBi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

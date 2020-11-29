@@ -9,6 +9,14 @@ import UIKit
 
 class ViewController: UIViewController, UIScrollViewDelegate {
     
+    @IBOutlet weak var pen: UIButton!
+    @IBOutlet weak var eraser: UIButton!
+    @IBOutlet weak var bucket: UIButton!
+    @IBOutlet weak var line: UIButton!
+    @IBOutlet weak var symmetryX: UIButton!
+    @IBOutlet weak var symmetryY: UIButton!
+    @IBOutlet weak var symmetryXY: UIButton!
+    
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var colorBttn: UIButton!
@@ -25,6 +33,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
         
         gridView.isUserInteractionEnabled = true
+        highlightSelected()
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -112,22 +121,26 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func pen(_ sender: Any) {
         tool = .pen
         gridView.awakeFromNib()
+        highlightSelected()
     }
     
     @IBAction func eraser(_ sender: Any) {
         tool = .eraser
         
         gridView.awakeFromNib()
+        highlightSelected()
     }
     
     @IBAction func line(_ sender: Any) {
         tool = .line
         gridView.awakeFromNib()
+        highlightSelected()
     }
     
     @IBAction func bucket(_ sender: Any) {
         tool = .bucket
         gridView.awakeFromNib()
+        highlightSelected()
     }
     
     @IBAction func colorBttn(_ sender: UIButton) {
@@ -137,16 +150,19 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func symmetryY(_ sender: Any) {
         tool = .symmetryY
         gridView.awakeFromNib()
+        highlightSelected()
     }
     
     @IBAction func symmetryX(_ sender: Any) {
         tool = .symmetryX
         gridView.awakeFromNib()
+        highlightSelected()
     }
     
     @IBAction func symmetryXY(_ sender: Any) {
         tool = .symmetryXY
         gridView.awakeFromNib()
+        highlightSelected()
         
     }
     @IBAction func undo(_ sender: Any) {
@@ -159,6 +175,67 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func Volta(_ sender: Any) {
         dismiss(animated: true, completion: .none)
+    }
+    
+    func highlightSelected() {
+        switch tool {
+        case .pen:
+            pen.isSelected = true
+            eraser.isSelected = false
+            bucket.isSelected = false
+            line.isSelected = false
+            symmetryX.isSelected = false
+            symmetryY.isSelected = false
+            symmetryXY.isSelected = false
+        case .eraser:
+            pen.isSelected = false
+            eraser.isSelected = true
+            bucket.isSelected = false
+            line.isSelected = false
+            symmetryX.isSelected = false
+            symmetryY.isSelected = false
+            symmetryXY.isSelected = false
+        case .bucket:
+            pen.isSelected = false
+            eraser.isSelected = false
+            bucket.isSelected = true
+            line.isSelected = false
+            symmetryX.isSelected = false
+            symmetryY.isSelected = false
+            symmetryXY.isSelected = false
+        case .line:
+            pen.isSelected = false
+            eraser.isSelected = false
+            bucket.isSelected = false
+            line.isSelected = true
+            symmetryX.isSelected = false
+            symmetryY.isSelected = false
+            symmetryXY.isSelected = false
+        case .symmetryY:
+            pen.isSelected = false
+            eraser.isSelected = false
+            bucket.isSelected = false
+            line.isSelected = false
+            symmetryX.isSelected = false
+            symmetryY.isSelected = true
+            symmetryXY.isSelected = false
+        case .symmetryX:
+            pen.isSelected = false
+            eraser.isSelected = false
+            bucket.isSelected = false
+            line.isSelected = false
+            symmetryX.isSelected = true
+            symmetryY.isSelected = false
+            symmetryXY.isSelected = false
+        case .symmetryXY:
+            pen.isSelected = false
+            eraser.isSelected = false
+            bucket.isSelected = false
+            line.isSelected = false
+            symmetryX.isSelected = false
+            symmetryY.isSelected = false
+            symmetryXY.isSelected = true
+        }
     }
     
 }
