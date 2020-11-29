@@ -70,6 +70,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         let newCells: [String: UIView] = gridView.cells
         
         let hdView = UIView()
+        let watermark = UIImageView()
         
         hdView.frame.size = CGSize(width: 1080, height: 1080)
         
@@ -176,6 +177,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func Volta(_ sender: Any) {
         dismiss(animated: true, completion: .none)
     }
+    
+    @IBAction func save(_ sender: Any) {
+        
+    }
+    
     
     func highlightSelected() {
         switch tool {

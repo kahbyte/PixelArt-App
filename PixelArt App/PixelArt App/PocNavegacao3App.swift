@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct PocNavegacao3App: App {
+//    UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.systemPurple
     var body: some Scene {
         WindowGroup {
             LaunchScreen()

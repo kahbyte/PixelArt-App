@@ -29,16 +29,16 @@ struct ContentView: View {
                     Home()
                         .tabItem{
                             VStack{
-                                Image("home")
-                                Text("Home")
+                                Image(pixelArtViewModel.nav.tabSelecionada == .home ? ("homeRoxo") : ("home"))
+                                Text("Home").foregroundColor(pixelArtViewModel.nav.tabSelecionada == .home ? Color.purple : Color.gray)
                             }
                         }
                         .tag(Tab.home)
                     Galeria()
                         .tabItem{
                             VStack{
-                                Image("album")
-                                Text("Home")
+                                Image(pixelArtViewModel.nav.tabSelecionada == .album ? ("albumRoxo") : ("album"))
+                                Text("Album").foregroundColor(pixelArtViewModel.nav.tabSelecionada == .album ? .purple : .gray)
                             }
                         }
                         .tag(Tab.album)

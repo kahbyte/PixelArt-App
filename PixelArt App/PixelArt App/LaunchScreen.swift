@@ -18,10 +18,16 @@ struct LaunchScreen: View {
             if self.splashScreenEnded {
                 ContentView().environmentObject(viewModel)
             } else {
-                Image("testeSplash")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 500 ,height: 500)
+                VStack{
+                    Image("mascote")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 325 ,height: 325)
+                    Image("titulo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 190, height: 49, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                }
             }
         }.onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {

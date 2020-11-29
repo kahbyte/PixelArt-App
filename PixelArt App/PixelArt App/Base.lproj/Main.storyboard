@@ -42,6 +42,7 @@
                                     <constraint firstAttribute="height" constant="21" id="bXh-n4-roB"/>
                                 </constraints>
                                 <state key="normal" title="Redo" image="Pictogramas em Pixel-23"/>
+                                <state key="highlighted" image="Pictogramas em Pixel-46"/>
                                 <connections>
                                     <action selector="redo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o5g-iZ-lai"/>
                                 </connections>
@@ -53,6 +54,7 @@
                                     <constraint firstAttribute="height" constant="21" id="oRV-fK-i3M"/>
                                 </constraints>
                                 <state key="normal" title="Undo" image="Pictogramas em Pixel-24"/>
+                                <state key="highlighted" image="Pictogramas em Pixel-47"/>
                                 <connections>
                                     <action selector="undo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dqh-CT-pxj"/>
                                 </connections>
@@ -184,13 +186,28 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVi-Cg-WbX">
+                                <rect key="frame" x="196.5" y="117.5" width="21" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="H5o-ck-8Le"/>
+                                    <constraint firstAttribute="width" constant="21" id="p1l-Sh-enn"/>
+                                </constraints>
+                                <state key="normal" title="save" image="save"/>
+                                <state key="selected" image="saveRoxo"/>
+                                <state key="highlighted" image="saveRoxo"/>
+                                <connections>
+                                    <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R3O-GO-BU2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Lst-U6-uAB" secondAttribute="trailing" constant="100" id="9oq-we-y9h"/>
                             <constraint firstItem="vJg-G7-5NB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="A8s-7i-edn"/>
+                            <constraint firstItem="YVi-Cg-WbX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BST-yi-WMP"/>
                             <constraint firstItem="vJg-G7-5NB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-320" id="CKq-oM-NTF"/>
+                            <constraint firstItem="YVi-Cg-WbX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-320" id="GF5-pk-b5w"/>
                             <constraint firstItem="moM-o9-xau" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-55" id="Nbu-55-rrC"/>
                             <constraint firstItem="fmz-w4-0Kj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VPO-Dz-6gY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fmz-w4-0Kj" secondAttribute="bottom" constant="10" id="d5E-tr-bX0"/>
@@ -225,6 +242,8 @@
         <image name="Pictogramas em Pixel-24" width="135" height="134"/>
         <image name="Pictogramas em Pixel-38" width="134" height="134"/>
         <image name="Pictogramas em Pixel-44" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-46" width="134" height="134"/>
+        <image name="Pictogramas em Pixel-47" width="135" height="134"/>
         <image name="Pictogramas em Pixel-49" width="135" height="134"/>
         <image name="Pictogramas em Pixel-50" width="134" height="134"/>
         <image name="Pictogramas em Pixel-51" width="135" height="134"/>
@@ -235,6 +254,8 @@
         <image name="Pictogramas em Pixel-59" width="134" height="134"/>
         <image name="Pictogramas em Pixel-60" width="134" height="134"/>
         <image name="Pictogramas em Pixel-61" width="134" height="134"/>
+        <image name="save" width="135" height="134"/>
+        <image name="saveRoxo" width="134" height="134"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
