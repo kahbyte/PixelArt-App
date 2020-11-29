@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/lucasclaro/Documents/GitHub/PixelArt-App/PixelArt App/BitArt.xcodeproj">
    </FileRef>
 </Workspace>

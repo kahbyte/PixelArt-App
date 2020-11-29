@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "30F8B1502559C99200DBA8E0"
-               BuildableName = "PixelArt App.app"
-               BlueprintName = "PixelArt App"
-               ReferencedContainer = "container:PixelArt App.xcodeproj">
+               BuildableName = "BitArt.app"
+               BlueprintName = "BitArt"
+               ReferencedContainer = "container:BitArt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "30F8B1502559C99200DBA8E0"
-            BuildableName = "PixelArt App.app"
-            BlueprintName = "PixelArt App"
-            ReferencedContainer = "container:PixelArt App.xcodeproj">
+            BuildableName = "BitArt.app"
+            BlueprintName = "BitArt"
+            ReferencedContainer = "container:BitArt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "30F8B1502559C99200DBA8E0"
-            BuildableName = "PixelArt App.app"
-            BlueprintName = "PixelArt App"
-            ReferencedContainer = "container:PixelArt App.xcodeproj">
+            BuildableName = "BitArt.app"
+            BlueprintName = "BitArt"
+            ReferencedContainer = "container:BitArt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

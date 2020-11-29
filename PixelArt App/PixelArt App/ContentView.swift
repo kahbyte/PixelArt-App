@@ -65,7 +65,7 @@ struct ContentView: View {
                     }
                     .if(pixelArtViewModel.nav.AlbumAberto == nil) {
                         $0
-                            .navigationBarTitle(pixelArtViewModel.nav.tabSelecionada == .home ? "Seus Desenhos" : "Álbuns")
+                            .navigationBarTitle(pixelArtViewModel.nav.tabSelecionada == .home ? "Meus Desenhos" : "Álbuns")
                             .navigationBarTitleDisplayMode(.automatic)
                             .navigationBarItems(trailing:
 //                                                    Button(action:  {
@@ -92,7 +92,7 @@ struct ContentView: View {
         
         var body: some View {
             NavigationLink(destination: self.destination) {
-                Image(systemName: "plus").font(.title)
+                Image("mais").font(.title)
             }
         }
     }
