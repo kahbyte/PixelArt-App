@@ -71,6 +71,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         let hdView = UIView()
         let watermark = UIImageView()
+        watermark.image = UIImage(named: "watermark")
         
         hdView.frame.size = CGSize(width: 1080, height: 1080)
         
@@ -90,7 +91,16 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
+        hdView.addSubview(watermark)
+        setWatermarkConstraints(view: watermark, superView: hdView)
         return hdView
+    }
+    
+    func setWatermarkConstraints(view: UIImageView, superView: UIView) {
+        view.leadingAnchor.constraint(equalTo: superView.leadingAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+        view.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
     
     func saveImage(image: UIImage) -> Bool {
