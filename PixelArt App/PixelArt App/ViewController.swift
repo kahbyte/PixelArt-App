@@ -16,6 +16,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var symmetryX: UIButton!
     @IBOutlet weak var symmetryY: UIButton!
     @IBOutlet weak var symmetryXY: UIButton!
+    @IBOutlet weak var VStack: UIStackView!
     
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -33,6 +34,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
         
         gridView.isUserInteractionEnabled = true
+//        VStack.layer.borderWidth = 0.3
         highlightSelected()
     }
     

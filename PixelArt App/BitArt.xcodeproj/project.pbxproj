@@ -39,7 +39,7 @@
 		307C2FD5257036B900A1231A /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		307C2FD7257036B900A1231A /* ContMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContMenu.swift; sourceTree = "<group>"; };
 		30A357BB255B316E00355509 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		30F8B1512559C99200DBA8E0 /* PixelArt App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PixelArt App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30F8B1512559C99200DBA8E0 /* BitArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30F8B1582559C99200DBA8E0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		30F8B15B2559C99200DBA8E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		30F8B15D2559C99200DBA8E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 		30F8B1522559C99200DBA8E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				30F8B1512559C99200DBA8E0 /* PixelArt App.app */,
+				30F8B1512559C99200DBA8E0 /* BitArt.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,9 +106,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		30F8B1502559C99200DBA8E0 /* PixelArt App */ = {
+		30F8B1502559C99200DBA8E0 /* BitArt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 30F8B1652559C99200DBA8E0 /* Build configuration list for PBXNativeTarget "PixelArt App" */;
+			buildConfigurationList = 30F8B1652559C99200DBA8E0 /* Build configuration list for PBXNativeTarget "BitArt" */;
 			buildPhases = (
 				30F8B14D2559C99200DBA8E0 /* Sources */,
 				30F8B14E2559C99200DBA8E0 /* Frameworks */,
@@ -118,9 +118,9 @@
 			);
 			dependencies = (
 			);
-			name = "PixelArt App";
+			name = BitArt;
 			productName = "PixelArt App";
-			productReference = 30F8B1512559C99200DBA8E0 /* PixelArt App.app */;
+			productReference = 30F8B1512559C99200DBA8E0 /* BitArt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -137,7 +137,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 30F8B14C2559C99200DBA8E0 /* Build configuration list for PBXProject "PixelArt App" */;
+			buildConfigurationList = 30F8B14C2559C99200DBA8E0 /* Build configuration list for PBXProject "BitArt" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -150,7 +150,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				30F8B1502559C99200DBA8E0 /* PixelArt App */,
+				30F8B1502559C99200DBA8E0 /* BitArt */,
 			);
 		};
 /* End PBXProject section */
@@ -370,7 +370,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		30F8B14C2559C99200DBA8E0 /* Build configuration list for PBXProject "PixelArt App" */ = {
+		30F8B14C2559C99200DBA8E0 /* Build configuration list for PBXProject "BitArt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				30F8B1632559C99200DBA8E0 /* Debug */,
@@ -379,7 +379,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		30F8B1652559C99200DBA8E0 /* Build configuration list for PBXNativeTarget "PixelArt App" */ = {
+		30F8B1652559C99200DBA8E0 /* Build configuration list for PBXNativeTarget "BitArt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				30F8B1662559C99200DBA8E0 /* Debug */,
