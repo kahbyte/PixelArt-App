@@ -101,6 +101,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         contentView.layer.borderColor = UIColor.black.cgColor
         
         initGrid()
+        //a
     }
     
     private func initGrid() {
