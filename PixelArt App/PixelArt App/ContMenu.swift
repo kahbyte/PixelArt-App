@@ -19,15 +19,15 @@ struct ContMenu: View {
                 HStack{
                     if (pixelArtViewModel.nav.tabSelecionada == Tab.home) {
                         if pixelArt.album == nil {
-                            Text("Adicionar à um Álbum")
+                            Text("Add to Album")
                         } else {
-                            Text("Ver no Álbum")
+                            Text("Open in Album")
                         }
                         Spacer()
                         Image(systemName: "folder")
 
                     } else {
-                        Text("Remover do Álbum")
+                        Text("Remove from Album")
                         Spacer()
                         Image(systemName: "clear")
                     }
@@ -37,7 +37,7 @@ struct ContMenu: View {
             
             Button(action: {}) {
                 HStack{
-                    Text("Compartilhar")
+                    Text("Share")
                     Spacer()
                     Image(systemName: "square.and.arrow.up")
                 }
@@ -45,7 +45,7 @@ struct ContMenu: View {
             
             Button(action: {}) {
                 HStack{
-                    Text("Editar")
+                    Text("Edit")
                     Spacer()
                     Image(systemName: "pencil")
                 }
@@ -56,7 +56,7 @@ struct ContMenu: View {
                 
             }) {
                 HStack{
-                    Text("Excluir")
+                    Text("Delete")
                     Spacer()
                     Image(systemName: "trash")
                 }

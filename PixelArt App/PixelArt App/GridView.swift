@@ -479,7 +479,9 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             case .none:
                 return
             }
+            
         }
+        generator.impactOccurred(intensity: 0.7)
     }
     
     func redoAction() {
@@ -541,6 +543,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
                 return
             }
         }
+        generator.impactOccurred(intensity: 0.7)
     }
     
     func hapticFeedback(tool: Tool) {

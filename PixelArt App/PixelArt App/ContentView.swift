@@ -37,8 +37,8 @@ struct ContentView: View {
                     Galeria()
                         .tabItem{
                             VStack{
-                                Image(pixelArtViewModel.nav.tabSelecionada == .album ? ("albumRoxo") : ("album"))
-                                Text("Album").foregroundColor(pixelArtViewModel.nav.tabSelecionada == .album ? .purple : .gray)
+                                Image(pixelArtViewModel.nav.tabSelecionada == .album ? ("albunsRoxo") : ("albunsCinza"))
+                                Text("Albuns").foregroundColor(pixelArtViewModel.nav.tabSelecionada == .album ? .purple : .gray)
                             }
                         }
                         .tag(Tab.album)
@@ -65,7 +65,7 @@ struct ContentView: View {
                     }
                     .if(pixelArtViewModel.nav.AlbumAberto == nil) {
                         $0
-                            .navigationBarTitle(pixelArtViewModel.nav.tabSelecionada == .home ? "Meus Desenhos" : "Álbuns")
+                            .navigationBarTitle(pixelArtViewModel.nav.tabSelecionada == .home ? "My Drawings" : "Albuns")
                             .navigationBarTitleDisplayMode(.automatic)
                             .navigationBarItems(trailing:
 //                                                    Button(action:  {

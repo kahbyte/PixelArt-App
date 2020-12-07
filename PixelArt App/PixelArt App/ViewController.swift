@@ -18,7 +18,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var symmetryXY: UIButton!
     @IBOutlet weak var VStack: UIStackView!
     
-    
+    @IBOutlet weak var penLabel: UILabel!
+    @IBOutlet weak var eraseLabel: UILabel!
+    @IBOutlet weak var bucketLabel: UILabel!
+    @IBOutlet weak var exportLabel: UILabel!
+    @IBOutlet weak var lineLabel: UILabel!
+    @IBOutlet weak var colorLabel: UILabel!
+    @IBOutlet weak var SymmetryXLabel: UILabel!
+    @IBOutlet weak var symmetryYLabel: UILabel!
+    @IBOutlet weak var fullSymmetryLabel: UILabel!
     
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -218,6 +226,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             symmetryX.isSelected = false
             symmetryY.isSelected = false
             symmetryXY.isSelected = false
+            
+            penLabel.textColor = UIColor(red: 98/255, green: 26/255, blue: 238/255, alpha: 1)
+            eraseLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            bucketLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            lineLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            SymmetryXLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            fullSymmetryLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            
+            
+            
         case .eraser:
             pen.isSelected = false
             eraser.isSelected = true
@@ -226,6 +245,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             symmetryX.isSelected = false
             symmetryY.isSelected = false
             symmetryXY.isSelected = false
+            
+            penLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            eraseLabel.textColor = UIColor(red: 92/255, green: 26/255, blue: 238/255, alpha: 1)
+            bucketLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            lineLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            fullSymmetryLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            
         case .bucket:
             pen.isSelected = false
             eraser.isSelected = false
@@ -234,6 +262,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             symmetryX.isSelected = false
             symmetryY.isSelected = false
             symmetryXY.isSelected = false
+            
+            penLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            eraseLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            bucketLabel.textColor = UIColor(red: 92/255, green: 26/255, blue: 238/255, alpha: 1)
+            lineLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            fullSymmetryLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            
         case .line:
             pen.isSelected = false
             eraser.isSelected = false
@@ -242,6 +279,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             symmetryX.isSelected = false
             symmetryY.isSelected = false
             symmetryXY.isSelected = false
+            
+            penLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            eraseLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            bucketLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            lineLabel.textColor = UIColor(red: 92/255, green: 26/255, blue: 238/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            fullSymmetryLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            
         case .symmetryY:
             pen.isSelected = false
             eraser.isSelected = false
@@ -250,6 +296,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             symmetryX.isSelected = false
             symmetryY.isSelected = true
             symmetryXY.isSelected = false
+            
+            penLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            eraseLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            bucketLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            lineLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 92/255, green: 26/255, blue: 238/255, alpha: 1)
+            SymmetryXLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            fullSymmetryLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            
         case .symmetryX:
             pen.isSelected = false
             eraser.isSelected = false
@@ -258,6 +313,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             symmetryX.isSelected = true
             symmetryY.isSelected = false
             symmetryXY.isSelected = false
+            
+            penLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            eraseLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            bucketLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            lineLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            SymmetryXLabel.textColor = UIColor(red: 92/255, green: 26/255, blue: 238/255, alpha: 1)
+            fullSymmetryLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            
         case .symmetryXY:
             pen.isSelected = false
             eraser.isSelected = false
@@ -266,6 +330,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             symmetryX.isSelected = false
             symmetryY.isSelected = false
             symmetryXY.isSelected = true
+            
+            penLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            eraseLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            bucketLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            lineLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            symmetryYLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+            fullSymmetryLabel.textColor = UIColor(red: 92/255, green: 26/255, blue: 238/255, alpha: 1)
+            
         }
     }
     

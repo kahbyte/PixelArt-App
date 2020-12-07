@@ -14,19 +14,11 @@ struct CustomController : UIViewControllerRepresentable {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "Home")
-//        controller.delegate = context.coordinator
         return controller
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<CustomController>) {
 
     }
-    
-    class Coordinator {
-        
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
+
 }
