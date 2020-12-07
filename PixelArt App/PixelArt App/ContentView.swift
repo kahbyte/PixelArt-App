@@ -80,6 +80,7 @@ struct ContentView: View {
                             )
                     }
             }
+            .accentColor(Color(UIColor(red: 98/255, green: 26/255, blue: 238/255, alpha: 1 )))
         }
         
         

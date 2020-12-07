@@ -18,6 +18,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var symmetryXY: UIButton!
     @IBOutlet weak var VStack: UIStackView!
     
+    
+    
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var colorBttn: UIButton!
