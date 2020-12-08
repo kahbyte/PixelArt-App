@@ -136,7 +136,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let i = Int(location.x / width)
         let j = Int(location.y / width)
         
-        if tool != .bucket {
+        if tool != .bucket && i >= 0 && i < numViewPerRow && j >= 0 && j < numViewPerRow {
             calledTool(i: i, j: j)
         }
     }
@@ -166,13 +166,15 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             
         }
         
-        calledTool(i: x2, j: y2)
-        
-        if tool == .line{
-            let ident = "\(i + 1)|\(j + 1)"
-            let cellView = cells[ident]
-            let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .line, bitsInAction: counter)
-            recentActions.append(action)
+        if i >= 0 && i < numViewPerRow && j >= 0 && j < numViewPerRow {
+            calledTool(i: x2, j: y2)
+            
+            if tool == .line{
+                let ident = "\(i + 1)|\(j + 1)"
+                let cellView = cells[ident]
+                let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .line, bitsInAction: counter)
+                recentActions.append(action)
+            }
         }
     }
     
@@ -184,26 +186,26 @@ class GridView: UIView, UIGestureRecognizerDelegate {
             }
         case .eraser:
             erase(i: i, j: j)
-
+            
         case .bucket:
             bucket(i: i, j: j)
-        return
-
+            return
+            
         case .line:
             doLine(x1: x1, x2: x2, y1: y1, y2: y2)
-
+            
         case .symmetryX:
             doSymmetry(i: i, j: j)
-
+            
         case .symmetryY:
             doSymmetry(i: i, j: j)
-
+            
         case .symmetryXY:
             doSymmetry(i: i, j: j)
         }
     }
     
-
+    
     //MARK: Grid functions
     func draw(i: Int, j: Int) {
         let ident = "\(i + 1)|\(j + 1)"
@@ -226,7 +228,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         
         if cellView?.backgroundColor != .clear {
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: .clear, lastAction: .eraser, bitsInAction: 0)
-           
+            
             hapticFeedback(tool: .eraser)
             cellView?.backgroundColor = .clear
             recentActions.append(action)
@@ -264,7 +266,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         let ident4 = "\(i4)|\(j4)"
         let cellView4 = cells[ident4]
         
-        if i >= 0 && i < numViewPerRow && j >= 0 && j < numViewPerRow{
+        if i >= 0 && i < numViewPerRow && j >= 0 && j < numViewPerRow {
             switch tool {
             case .symmetryX:
                 if color != cellView1?.backgroundColor || color != cellView2?.backgroundColor{
@@ -321,15 +323,15 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         switch tool {
         case .symmetryX:
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .symmetryX, bitsInAction: counter)
-                recentActions.append(action)
+            recentActions.append(action)
             
         case .symmetryY:
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .symmetryY, bitsInAction: counter)
-                recentActions.append(action)
+            recentActions.append(action)
             
         case .symmetryXY:
             let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .symmetryXY, bitsInAction: counter)
-                recentActions.append(action)
+            recentActions.append(action)
         default:
             print("F")
         }
@@ -419,7 +421,7 @@ class GridView: UIView, UIGestureRecognizerDelegate {
         
         let action = Action(key: ident, lastColor: (cellView?.backgroundColor)!, currentColor: color, lastAction: .pen, bitsInAction: 0)
         recentActions.append(action)
-    
+        
         cellView?.backgroundColor = color
         counter += 1
     }

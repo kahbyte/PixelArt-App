@@ -43,6 +43,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = 1
         scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
         
+        colorBttn.backgroundColor = color
+        colorBttn.layer.cornerRadius = colorBttn.bounds.size.width * 0.5
+        colorBttn.layer.borderWidth = 3
+        colorBttn.layer.borderColor = UIColor(red: 98/255, green: 26/255, blue: 238/255, alpha: 1).cgColor
+        
         gridView.isUserInteractionEnabled = true
 //        VStack.layer.borderWidth = 0.3
         highlightSelected()
@@ -347,6 +352,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 extension ViewController: UIColorPickerViewControllerDelegate{
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         color = viewController.selectedColor
+    }
+    
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+        colorBttn.backgroundColor = color
     }
 }
 
