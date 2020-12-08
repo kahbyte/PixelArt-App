@@ -27,7 +27,7 @@ struct Galeria: View {
                         Image(uiImage: pixelArtViewModel.nav.salvandoEmAlbum?.image ?? UIImage(imageLiteralResourceName: "teste"))
                             .resizable()
                             .frame(width: 60, height: 60, alignment:  .center)
-                        Text("Escolha um álbum para esse desenho").font(.callout)
+                        Text("Choose an album for this drawing").font(.callout)
                     }
                     .padding(.top)
                     
@@ -40,7 +40,7 @@ struct Galeria: View {
                         TextField("Nome: ", text: $pixelArtViewModel.nav.nomeAlbum)
                         Spacer()
                         Button(action: { pixelArtViewModel.newAlbum() }) {
-                            Text("Salvar")
+                            Text("Save")
                         }
                         Button(action: {
                             withAnimation {
@@ -48,7 +48,7 @@ struct Galeria: View {
                                 pixelArtViewModel.nav.nomeAlbum = ""
                             }
                         }) {
-                            Text("Cancelar")
+                            Text("Cancel")
                                 .foregroundColor(Color.red)
                         }
                     }
@@ -70,7 +70,7 @@ struct Galeria: View {
                             VStack(alignment: .leading) {
                                 Image("novoAlbum").resizable()
                                     .frame(minWidth: 150, idealWidth: 150, maxWidth: 150, minHeight: 150, idealHeight: 150, maxHeight: 150, alignment: .center)
-                                Text("Novo Álbum...")
+                                Text("New Album...")
                                 
                             }
                                 .padding()
@@ -99,7 +99,7 @@ struct Galeria: View {
                             .contextMenu() {
                                 Button(action: { pixelArtViewModel.DeleteAlbum(album: item) }){
                                     HStack{
-                                        Text("Excluir Album")
+                                        Text("Delete Album")
                                         Spacer()
                                         Image(systemName: "trash")
                                     }
